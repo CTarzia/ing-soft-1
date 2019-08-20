@@ -1,0 +1,297 @@
+
+
+----SNAPSHOT----(15 August 2019 18:25:10) clase2.image priorSource: 12633741!
+
+1.!
+
+-1!
+
+3.14.!
+
+true.!
+
+false.!
+
+nil.!
+
+meter.!
+
+centimeter.!
+
+hour.!
+
+minute.!
+
+day.!
+
+March.!
+
+Monday.!
+
+'hola'.!
+
+$h.!
+
+1.
+-1.
+3.14.
+true.
+false.
+nil.
+meter.
+centimeter.
+hour.
+minute.
+day.
+March.
+Monday.
+'hola'.
+$h.!
+
+10 factorial.!
+
+100 factorial / 99 factorial.!
+
+true not.!
+
+false not.!
+
+true & true.!
+
+true & false.!
+
+true | false.!
+
+false | false.!
+
+10*meter.!
+
+(10*meter)+(20*meter).!
+
+(10*meter)+(200*centimeter).!
+
+(10*meter)*(20*meter).!
+
+10*hour.!
+
+(10*hour)+(60*minute)!
+
+(10*hour)+(60*minute) convertTo: hour!
+
+March/21.!
+
+March/21/2019.!
+
+January/1/2019 distanceTo: March/21/2019.!
+
+March/21/2019 at: 18:30.!
+
+(10*meter) distanceTo: (20*meter). !
+
+ObjectBuilder create: #anObject
+	collaboratorNames: ''
+	in: 'ejercicio2'
+	!
+
+!classDefinition: #anObject category: #ejercicio2!
+DenotativeObject subclass: #anObject
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio2'!
+
+!classDefinition: 'anObject class' category: #ejercicio2!
+anObject class
+	instanceVariableNames: ''!
+!anObject class methodsFor: 'nil' stamp: 'gwf 8/15/2019 19:52:35'!
+turnOn
+	"comment stating purpose of message"
+! !
+
+anObject turnOn!
+!anObject class methodsFor: 'nil' stamp: 'gwf 8/15/2019 19:53:37'!
+turnOff
+	"comment stating purpose of message"
+! !
+!anObject class methodsFor: 'nil' stamp: 'gwf 8/15/2019 19:54:15'!
+speedUp
+! !
+!anObject class methodsFor: 'nil' stamp: 'gwf 8/15/2019 19:54:32'!
+break! !
+!anObject class methodsFor: 'nil' stamp: 'gwf 8/15/2019 19:55:21'!
+openTrunk! !
+!auto class methodsFor: 'nil' stamp: 'gwf 8/15/2019 19:58:30'!
+asHtml
+! !
+!auto class methodsFor: 'nil' stamp: 'gwf 8/15/2019 19:58:42'!
+save! !
+!auto class methodsFor: 'nil' stamp: 'gwf 8/15/2019 19:58:55'!
+asJson! !
+
+----SNAPSHOT----(15 August 2019 20:06:40) clase2.image priorSource: 12633897!
+
+----SNAPSHOT----(15 August 2019 20:06:49) clase2.image priorSource: 12635881!
+
+ObjectBuilder create: #AlanTuring
+	collaboratorNames: ''
+	in: 'ejercicio3'
+	!
+
+!classDefinition: #AlanTuring category: #ejercicio3!
+DenotativeObject subclass: #AlanTuring
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+!classDefinition: 'AlanTuring class' category: #ejercicio3!
+AlanTuring class
+	instanceVariableNames: ''!
+
+AlanTuring!
+
+AlanTuring
+	collaboratorNames: 'dateOfBirth'
+	in: 'ejercicio3'!
+
+!classDefinition: #AlanTuring category: #ejercicio3!
+DenotativeObject subclass: #AlanTuring
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+!classDefinition: 'AlanTuring class' category: #ejercicio3!
+AlanTuring class
+	instanceVariableNames: 'dateOfBirth'!
+
+AlanTuring!
+
+AlanTuring dateOfBirth!
+
+AlanTuring
+	collaboratorNames: ''
+	in: 'ejercicio3'!
+
+!classDefinition: #AlanTuring category: #ejercicio3!
+DenotativeObject subclass: #AlanTuring
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+!classDefinition: 'AlanTuring class' category: #ejercicio3!
+AlanTuring class
+	instanceVariableNames: ''!
+
+AlanTuring dateOfBirth!
+
+AlanTuring printString!
+
+AlanTuring dateOfBirth!
+!AlanTuring class methodsFor: 'personal info' stamp: 'gwf 8/15/2019 20:46:43'!
+dateOfBirth
+	self shouldBeImplemented.! !
+!AlanTuring class methodsFor: 'personal info' stamp: 'gwf 8/15/2019 20:47:29' prior: 50726566!
+dateOfBirth
+ 	^June/23/1912! !
+
+AlanTuring dateOfBirth!
+
+ObjectBuilder create: #AlonsoChurch
+	collaboratorNames: ''
+	in: 'ejercicio3'
+	!
+
+!classDefinition: #AlonsoChurch category: #ejercicio3!
+DenotativeObject subclass: #AlonsoChurch
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+!classDefinition: 'AlonsoChurch class' category: #ejercicio3!
+AlonsoChurch class
+	instanceVariableNames: ''!
+!AlonsoChurch class methodsFor: 'nil' stamp: 'gwf 8/15/2019 20:52:58'!
+dateOfBirth
+	^June/14/1903! !
+
+AlonsoChurch dateOfBirth inspect!
+
+ObjectBuilder create: #AlanKay
+	collaboratorNames: ''
+	in: 'ejercicio3'
+	!
+
+!classDefinition: #AlanKay category: #ejercicio3!
+DenotativeObject subclass: #AlanKay
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+!classDefinition: 'AlanKay class' category: #ejercicio3!
+AlanKay class
+	instanceVariableNames: ''!
+
+ObjectBuilder create: #DanIngalls
+	collaboratorNames: ''
+	in: 'ejercicio3'
+	!
+
+!classDefinition: #DanIngalls category: #ejercicio3!
+DenotativeObject subclass: #DanIngalls
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+!classDefinition: 'DanIngalls class' category: #ejercicio3!
+DanIngalls class
+	instanceVariableNames: ''!
+!AlanKay class methodsFor: 'nil' stamp: 'gwf 8/15/2019 20:56:06'!
+dateOfBirth
+	^May/17/1940! !
+!DanIngalls class methodsFor: 'nil' stamp: 'gwf 8/15/2019 20:59:27'!
+dateOfBirth
+	^December/23/1944! !
+!AlonsoChurch class methodsFor: 'nil' stamp: 'gwf 8/15/2019 21:01:16'!
+ageDifferenceWithAlanTuring
+	^AlanTuring dateOfBirth distanceTo: self dateOfBirth ! !
+
+AlonsoChurch ageDifferenceWithAlanTuring!
+!AlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gwf 8/15/2019 21:01:53' prior: 50726624!
+ageDifferenceWithAlanTuring
+	^  self dateOfBirth  distanceTo:AlanTuring dateOfBirth! !
+
+AlonsoChurch ageDifferenceWithAlanTuring!
+!AlanKay class methodsFor: 'nil' stamp: 'gwf 8/15/2019 21:02:42'!
+ageDifferenceWithDanIngalls
+	^  self dateOfBirth distanceTo: DanIngalls dateOfBirth! !
+
+AlanKay ageDifferenceWithDanIngalls!
+!AlanKay class methodsFor: 'as yet unclassified' stamp: 'gwf 8/15/2019 21:04:33' prior: 50726639!
+ageDifferenceWithDanIngalls
+	^  (self dateOfBirth distanceTo: DanIngalls dateOfBirth) convertTo:year! !
+
+AlanKay ageDifferenceWithDanIngalls.!
+!AlanKay class methodsFor: 'as yet unclassified' stamp: 'gwf 8/15/2019 21:05:45' prior: 50726646!
+ageDifferenceWithDanIngalls
+	^  self dateOfBirth distanceTo: DanIngalls dateOfBirth! !
+!AlanKay class methodsFor: 'as yet unclassified' stamp: 'gwf 8/15/2019 21:17:14' prior: 50726654!
+ageDifferenceWithDanIngalls
+	^  self dateOfBirth year distanceTo: DanIngalls dateOfBirth year ! !
+
+AlanKay ageDifferenceWithDanIngalls.!
+
+AlonsoChurch  ageDifferenceWithAlanTuring !
+!AlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gwf 8/15/2019 21:18:04' prior: 50726632!
+ageDifferenceWithAlanTuring
+	^  self dateOfBirth year distanceTo:AlanTuring dateOfBirth year! !
+
+AlonsoChurch  ageDifferenceWithAlanTuring !
+
+----SNAPSHOT----(16 August 2019 14:13:23) clase2.image priorSource: 12635960!
+
+----QUIT----(16 August 2019 14:13:28) clase2.image priorSource: 12640812!

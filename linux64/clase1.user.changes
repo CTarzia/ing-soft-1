@@ -1,0 +1,10 @@
+
+
+----STARTUP---- (15 August 2019 18:23:26) as /home/chiara/Documents/UBA/ing-soft-1/linux64/CuisUniversity-3839.image!
+
+
+----SNAPSHOT----(15 August 2019 18:23:43) clase1.image priorSource: 12633533!
+
+Smalltalk removeClassNamed: #bill!
+
+Smalltalk removeClassNamed: #saludador!
