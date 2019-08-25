@@ -295,3 +295,73 @@ AlonsoChurch  ageDifferenceWithAlanTuring !
 ----SNAPSHOT----(16 August 2019 14:13:23) clase2.image priorSource: 12635960!
 
 ----QUIT----(16 August 2019 14:13:28) clase2.image priorSource: 12640812!
+
+----STARTUP---- (22 August 2019 20:21:58) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/linux64/clase2.image!
+
+
+AlanKay
+	collaboratorNames: 'currentCompany'
+	in: 'ejercicio3'!
+
+!classDefinition: #AlanKay category: #ejercicio3!
+DenotativeObject subclass: #AlanKay
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+!classDefinition: 'AlanKay class' category: #ejercicio3!
+AlanKay class
+	instanceVariableNames: 'currentCompany'!
+
+AlanKay collaboratorNamed: 'currentCompany'.!
+
+AlanKay collaboratorNamed: 'currentCompany'.!
+
+self value!
+
+self value.!
+
+self value: 'VPRI'.!
+
+self value.!
+
+AlanKay!
+
+currentCompany lines !
+
+currentCompany name !
+!AlonsoChurch class methodsFor: 'nil' stamp: 'gc 8/22/2019 20:35:03'!
+ageDifferenceWith: aPerson
+	^  self dateOfBirth year distanceTo:aPerson dateOfBirth year! !
+!AlonsoChurch class methodsFor: 'nil' stamp: 'gc 8/22/2019 20:35:22'!
+isBiggerThan: aPerson
+    ^(self ageDifferenceWith: aPerson) positive! !
+!AlonsoChurch class methodsFor: 'nil' stamp: 'gc 8/22/2019 20:41:08'!
+m1: collaborator1
+   | |
+
+   ^thisContext! !
+!AlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/22/2019 20:41:17' prior: 50726714!
+m1: collaborator1
+   | temp1 |
+
+   ^thisContext! !
+
+self tempsAndValues.!
+
+self tempAt: 1.!
+
+self tempAt: 2.!
+
+self tempAt: 2 put: 20.!
+
+self tempAt: 2.!
+
+self tempsAndValues.!
+
+----SNAPSHOT----(22 August 2019 21:17:33) clase2.image priorSource: 12640891!
+
+----SNAPSHOT----(22 August 2019 21:40:10) clase2.image priorSource: 12642448!
+
+----QUIT----(22 August 2019 21:40:16) clase2.image priorSource: 12642527!
