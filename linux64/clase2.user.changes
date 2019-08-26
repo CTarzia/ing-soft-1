@@ -365,3 +365,213 @@ self tempsAndValues.!
 ----SNAPSHOT----(22 August 2019 21:40:10) clase2.image priorSource: 12642448!
 
 ----QUIT----(22 August 2019 21:40:16) clase2.image priorSource: 12642527!
+
+----STARTUP---- (25 August 2019 17:43:43) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/linux64/clase2.image!
+
+
+self setSelectionIndex: 1.!
+
+self setSelectionIndex: 1.!
+
+self getListSize !
+
+self getListSize!
+
+self getListSize !
+
+self getListSize !
+
+self getListSize!
+
+self getListSize.!
+
+self getListSize.!
+
+self getListSize !
+
+self setSelectionIndex: 1.!
+
+self setSelectionIndex: 3.!
+
+self setSelectionIndex: 1.  !
+
+self selection: #fail.!
+
+self setSelectionIndex: 1.  !
+
+self setSelectionIndex: 1.  !
+
+self setSelectionIndex: 3. true !
+
+self send.!
+
+self send.!
+
+self send.!
+
+self send.!
+
+self send.!
+
+self send.!
+
+self send.!
+
+self send.!
+
+self restart !
+
+self send!
+
+self send!
+
+self restart !
+
+self restart !
+
+self restart !
+
+self reset !
+
+self restart !
+
+self restart !
+!AlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:12:02' prior: 50726588!
+dateOfBirth
+	^June/14/1905! !
+!AlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:12:21' prior: 50726760!
+dateOfBirth
+	^June/1/1905! !
+
+self reset!
+
+self restart !
+
+self send!
+
+self restart !
+
+10 factorial.!
+
+[ 10 factorial ].!
+
+[ 10 factorial ] value.!
+
+[ :anInteger | anInteger factorial ] value: 10.!
+
+[ :anInteger | anInteger factorial ] value: 100.!
+
+factorialBlock := [ :anInteger | anInteger factorial ].!
+
+factorialBlock value: 10.!
+
+factorialSumBlock := [ :anIntegerToFact1 :anIntegerToFact2 | anIntegerToFact1 factorial + anIntegerToFact2 factorial ].!
+
+factorialSumBlock value: 10 value: 20.!
+
+factorialSumBlock valueWithArguments: #(10 20)!
+
+plusTenByTwentyBlock := [ :anAdder | | anAdderPlusTen | anAdderPlusTen := anAdder + 10. anAdderPlusTen * 20 ].!
+
+plusTenByTwentyBlock value: 5.!
+
+plusTenByTwentyBlock value: 100.!
+
+sum := 0.!
+
+5 timesRepeat: [ sum := sum + 10 ].!
+
+sum.!
+
+sum := 0.!
+
+[ sum < 50 ] whileTrue: [ sum := sum + 10 ].!
+
+sum. !
+
+10 > 5 ifTrue: [ 'Yes!! 10 is greater that five' ] ifFalse: [ 'Nop, it is not' ].!
+
+sum := 0.!
+
+#(1 2 3 4 5) do: [ :anInteger | sum := sum + anInteger ].!
+
+sum!
+
+#(1 2 3 4 5) inject: 0 into: [ :acum :anInteger | acum + anInteger ]!
+
+DenotativeObject subclass: #CloneOfAlonsoChurch
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+!classDefinition: #CloneOfAlonsoChurch category: #ejercicio3!
+DenotativeObject subclass: #CloneOfAlonsoChurch
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ejercicio3'!
+
+CloneOfAlonsoChurch class
+	instanceVariableNames: ''!
+
+!classDefinition: 'CloneOfAlonsoChurch class' category: #ejercicio3!
+CloneOfAlonsoChurch class
+	instanceVariableNames: ''!
+!CloneOfAlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:36:05'!
+ageDifferenceWith: aPerson
+	^  self dateOfBirth year distanceTo:aPerson dateOfBirth year! !
+!CloneOfAlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:36:05'!
+ageDifferenceWithAlanTuring
+	^  self dateOfBirth year distanceTo:AlanTuring dateOfBirth year! !
+!CloneOfAlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:36:05'!
+dateOfBirth
+	^June/1/1905! !
+!CloneOfAlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:36:05'!
+isBiggerThan: aPerson
+    ^(self ageDifferenceWith: aPerson) positive! !
+!CloneOfAlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:36:05'!
+m1: collaborator1
+   | temp1 |
+
+   ^thisContext! !
+!CloneOfAlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:37:10' prior: 50726831!
+dateOfBirth
+	^June/14/1903! !
+!AlonsoChurch class methodsFor: 'as yet unclassified' stamp: 'gc 8/25/2019 18:37:19' prior: 50726765!
+dateOfBirth
+	^June/14/1903! !
+
+CloneOfAlonsoChurch dateOfBirth !
+
+CloneOfAlonsoChurch ageDifferenceWith: AlanTuring !
+
+(June/23/2019) = (June/23/2019).!
+
+(June/23/2019) == (June/23/2019).!
+
+100 factorial = 100 factorial.!
+
+100 factorial == 100 factorial.!
+
+AlonsoChurch == AlonsoChurch !
+
+AlonsoChurch = CloneOfAlonsoChurch !
+
+true == true!
+
+5 == 5!
+
+('ho','la') = ('ho','la').  !
+
+('ho','la') == ('ho', 'la').!
+
+AlonsoChurch == CloneOfAlonsoChurch !
+
+AlonsoChurch = CloneOfAlonsoChurch !
+
+2 = 3!
+
+----SNAPSHOT----(25 August 2019 18:43:25) clase2.image priorSource: 12642606!
+
+----QUIT----(25 August 2019 18:43:33) clase2.image priorSource: 12646992!
