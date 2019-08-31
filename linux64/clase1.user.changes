@@ -3785,3 +3785,1093 @@ test06FalsoSiFalsoEvaluaElClosure
 ----SNAPSHOT----(26 August 2019 21:22:01) clase1.image priorSource: 12748734!
 
 ----QUIT----(26 August 2019 21:22:12) clase1.image priorSource: 12748813!
+
+----STARTUP---- (31 August 2019 15:12:36) as /home/chiara/Documents/UBA/ing-soft-1/linux64/clase1.image!
+
+!I class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:15:12'!
+restaReversa: unNumeroDePeano
+	^unNumeroDePeano previous
+ 	! !
+!I class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:15:21' prior: 50730059!
+restaReversa: unNumeroDePeano
+	^unNumeroDePeano previous
+! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:18:14'!
+restaReversa: unNumeroDePeano
+	unNumeroDePeano restaReversa: self! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:24:18' prior: 50730069!
+restaReversa: unNumeroDePeano
+	
+	"self restaReversa:  unNumeroDePeano previous "! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:24:44' prior: 50728730!
+- unNumeroDePeano
+	unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:25:31' prior: 50730074!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:25:45' prior: 50730088!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:25:57' prior: 50730080!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+
+II - I!
+
+II - II!
+
+II - II!
+
+II + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:26:22'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+III - I!
+
+III - II!
+
+III - III!
+
+IIII - II!
+
+IIII - III!
+
+IIII - I!
+
+I - II!
+
+II - II!
+
+II - II !
+
+III - III !
+
+I restaReversa: I!
+
+I restaReversa: I!
+
+I restaReversa: II!
+
+I restaReversa: III!
+
+II restaReversa: I!
+
+II restaReversa: II!
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:23' prior: 50730100!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self previous.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+
+II + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:37'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:37'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:37'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self previous.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self previous.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:32:38'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+IIII - II!
+
+IIII - IIII!
+
+IIII - IIII!
+
+IIII - IIII!
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:33:03' prior: 50730238!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+
+IIII - IIII!
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:33:54' prior: 50730374!
+- unNumeroDePeano
+	^unNumeroDePeano previous restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+
+II + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+- unNumeroDePeano
+	^unNumeroDePeano previous restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+- unNumeroDePeano
+	^unNumeroDePeano previous restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:24'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+II -I!
+
+III - II!
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:34:52' prior: 50730385!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+
+II-II!
+
+II restaReversa: II !
+
+I restaReversa: II  !
+
+I  + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:36:23'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:36:23'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:36:23'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:36:23'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:36:23'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:36:23'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:36:23'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:36:23'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+III restaReversa: II!
+
+III-II !
+
+II - III!
+
+I - III!
+
+I + III!
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:37:38'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:37:38'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:37:38'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:37:38'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:37:38'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:37:38'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:37:38'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:37:38'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+II-IIII!
+
+III-IIII!
+
+IIII-II!
+
+IIII-I!
+
+IIII-III!
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:40:05' prior: 50730094!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:45:21'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+
+II / I!
+!I class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:47:48'!
+/ unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^I] ifFalse: []
+	^unNumeroDePeano! !
+!I class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:35' prior: 50730671!
+/ unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^I] ifFalse: [self Error]! !
+
+II / I!
+
+II + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:47'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:48'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:48'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:48'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:48'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:48'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:48'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:48:48'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+II / II!
+
+III / II!
+
+IIII / II!
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:50:05' prior: 50728842!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:51:02' prior: 50730818!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ self + (self * unNumeroDePeano previous)! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:51:43' prior: 50730825!
+* unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^self].
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!II class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:51:55' prior: 50730832!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+
+II + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:16'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+III * II!
+
+DenotativeObject subclass: #IIIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIIII class' category: #'Numeros De Peano'!
+IIIII class
+	instanceVariableNames: 'next previous'!
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+previous
+	^previous! !
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+DenotativeObject subclass: #IIIIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIIIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIIIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIIIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIIIII class' category: #'Numeros De Peano'!
+IIIIII class
+	instanceVariableNames: 'next previous'!
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.
+	
+	"unNumeroDePeano = I ifTrue: [^self previous].
+	^ self previous - unNumeroDePeano previous"! !
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+previous
+	^previous! !
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIIIII class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 15:52:22'!
+restaReversa: unNumeroDePeano
+	
+	^ unNumeroDePeano previous restaReversa: self.! !
+
+II * III !
+
+I * III   !
+
+II * I!
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIIIII!
+
+Smalltalk removeClassNamed: #IIIII!
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+
+----SNAPSHOT----(31 August 2019 15:53:25) clase1.image priorSource: 12748892!
+
+----QUIT----(31 August 2019 15:53:30) clase1.image priorSource: 12783002!
