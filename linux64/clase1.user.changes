@@ -5370,3 +5370,504 @@ descripcionDeErrorDeNumerosNegativosNoSoportados
 ----SNAPSHOT----(31 August 2019 18:00:27) clase1.image priorSource: 12809209!
 
 ----QUIT----(31 August 2019 18:00:32) clase1.image priorSource: 12809288!
+
+----STARTUP---- (1 September 2019 19:14:22) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/linux64/clase1.image!
+
+!PeanoTest class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:16:34' prior: 50731902!
+test12DivisionNoSoportaDividirPorUnNumeroMayor
+
+	Assert should: [ III /  IIII ] signal: Error withDescription: II descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor.
+	
+	"Assert should: [ I /  II] signal: Error withDescription: I descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor"
+! !
+!PeanoTest class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:16:52' prior: 50731950!
+test12DivisionNoSoportaDividirPorUnNumeroMayor
+
+	"Assert should: [ III /  IIII ] signal: Error withDescription: II descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor."
+	
+	Assert should: [ I /  II] signal: Error withDescription: I descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor
+! !
+!PeanoTest class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:17:04' prior: 50731963!
+test12DivisionNoSoportaDividirPorUnNumeroMayor
+
+	Assert should: [ III /  IIII ] signal: Error withDescription: II descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor.
+	
+	Assert should: [ I /  II] signal: Error withDescription: I descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor
+! !
+!I class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:28:13'!
+> unNumeroDePeano
+	^false! !
+!II class methodsFor: 'nil' stamp: 'g 9/1/2019 19:29:29'!
+> unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^true].
+	^self previous > unNumeroDePeano previous! !
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+!II class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:22' prior: 50730664!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ]
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+
+II + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ]
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+> unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^true].
+	^self previous > unNumeroDePeano previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor
+	^'No se puede dividir por un numero mayor'! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+restaReversa: unNumeroDePeano
+	^ self previous restaReversa: unNumeroDePeano previous! !
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ]
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+> unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^true].
+	^self previous > unNumeroDePeano previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor
+	^'No se puede dividir por un numero mayor'! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:30:27'!
+restaReversa: unNumeroDePeano
+	^ self previous restaReversa: unNumeroDePeano previous! !
+
+I > II!
+
+II > I!
+
+IIII > II!
+
+IIII > IIII!
+
+IIII > II!
+
+IIII > III!
+
+III > I!
+
+III > II!
+
+III / IIII!
+!II class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:31:25' prior: 50732000!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [^self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ]
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!I class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:31:49' prior: 50731492!
+/ unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^I] ifFalse: [^self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ].! !
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+
+II + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [^self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ]
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+> unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^true].
+	^self previous > unNumeroDePeano previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor
+	^'No se puede dividir por un numero mayor'! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+restaReversa: unNumeroDePeano
+	^ self previous restaReversa: unNumeroDePeano previous! !
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [^self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ]
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+> unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^true].
+	^self previous > unNumeroDePeano previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor
+	^'No se puede dividir por un numero mayor'! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:04'!
+restaReversa: unNumeroDePeano
+	^ self previous restaReversa: unNumeroDePeano previous! !
+
+III / IIII!
+!II class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:32' prior: 50732171!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [^self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+
+II removeAllNext !
+
+Smalltalk removeClassNamed: #IIII!
+
+Smalltalk removeClassNamed: #III!
+
+II + II!
+
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #III category: #'Numeros De Peano'!
+DenotativeObject subclass: #III
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+III class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'III class' category: #'Numeros De Peano'!
+III class
+	instanceVariableNames: 'next previous'!
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [^self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+> unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^true].
+	^self previous > unNumeroDePeano previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor
+	^'No se puede dividir por un numero mayor'! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+previous
+	^previous! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!III class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:40'!
+restaReversa: unNumeroDePeano
+	^ self previous restaReversa: unNumeroDePeano previous! !
+
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+!classDefinition: #IIII category: #'Numeros De Peano'!
+DenotativeObject subclass: #IIII
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros De Peano'!
+
+IIII class
+	instanceVariableNames: 'next previous'!
+
+!classDefinition: 'IIII class' category: #'Numeros De Peano'!
+IIII class
+	instanceVariableNames: 'next previous'!
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+* unNumeroDePeano
+	^ unNumeroDePeano + (self previous * unNumeroDePeano)! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
++ unNumeroDePeano
+	^self previous + unNumeroDePeano next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+- unNumeroDePeano
+	^unNumeroDePeano restaReversa: self.! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+/ unNumeroDePeano
+	unNumeroDePeano = self ifTrue: [^I].
+	unNumeroDePeano > self ifTrue: [^self error: self descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor ].
+	^ I + (self - unNumeroDePeano / unNumeroDePeano ).! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+> unNumeroDePeano
+	unNumeroDePeano = I ifTrue: [^true].
+	^self previous > unNumeroDePeano previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+descripcionDeErrorDeNoSePuedeDividirPorUnNumeroMayor
+	^'No se puede dividir por un numero mayor'! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+next
+	next ifNil:[
+		next _ self cloneNamed: self name , 'I'.
+		next previous: self.
+	].
+	^next! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+previous
+	^previous! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+previous: unNumeroDePeano
+	previous _ unNumeroDePeano! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+removeAllNext
+
+	next ifNotNil:
+	[
+		next removeAllNext.
+		next removeFromSystem.
+		next := nil.
+	]! !
+!IIII class methodsFor: 'as yet unclassified' stamp: 'g 9/1/2019 19:32:41'!
+restaReversa: unNumeroDePeano
+	^ self previous restaReversa: unNumeroDePeano previous! !
+
+III / IIII!
+
+Smalltalk removeClassNamed: #PeanoTest!
+
+----End fileIn of /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/linux64/PeanoTest.st----!
+
+----SNAPSHOT----(1 September 2019 19:34:22) clase1.image priorSource: 12809367!
+
+----SNAPSHOT----(1 September 2019 19:34:44) clase1.image priorSource: 12831101!
+
+----QUIT----(1 September 2019 19:34:48) clase1.image priorSource: 12831182!
