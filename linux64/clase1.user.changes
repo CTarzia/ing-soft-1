@@ -5871,3 +5871,14 @@ Smalltalk removeClassNamed: #PeanoTest!
 ----SNAPSHOT----(1 September 2019 19:34:44) clase1.image priorSource: 12831101!
 
 ----QUIT----(1 September 2019 19:34:48) clase1.image priorSource: 12831182!
+
+----STARTUP---- (2 September 2019 16:22:42) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/linux64/clase1.image!
+
+
+	self subclassResponsibility!
+
+	self subclassResponsibility!
+
+	self subclassResponsibility!
+
+----QUIT----(2 September 2019 16:33:07) clase1.image priorSource: 12831263!
