@@ -1,0 +1,457 @@
+
+
+----SNAPSHOT----(31 August 2019 16:28:37) Cuis5.0-3839.image priorSource: 12798846!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:29:57'!
+takeSample
+! !
+
+Rover
+	collaboratorNames: 'hardness porosity'
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+
+!classDefinition: 'Rover class' category: #ToTheMoon!
+Rover class
+	instanceVariableNames: 'hardness porosity'!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:32:10' prior: 50731607!
+rotateSide: aSide Speed: aSpeed Time: aTime
+	"side := aSide.
+	speed := aSpeed .
+	timeRemaining := aTime ."! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:33:01' prior: 50731635!
+rotateSide: aSide Speed: aSpeed Time: aTime
+	"side := aSide.
+	speed := aSpeed .
+	timeRemaining := aTime ."! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:33:09' prior: 50731642!
+rotateSide: aSide Speed: aSpeed Time: aTime! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:38:47'!
+dig
+	hardness > 5 & porosity < 5 ifTrue:[self rotateSide: 'clockwise' Speed: 150 Time: 10 *minute ].
+	hardness < 5 & porosity > 5 ifTrue:[self rotateSide: 'counter clockwise' Speed: 100 Time: 5 *minute ]! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:41:28' prior: 50731653!
+dig
+|speed time side|
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' ].
+	hardness < 5 & porosity > 5 ifTrue:[self rotateSide: 'counter clockwise' Speed: 100 Time: 5 *minute ].
+	self rotateSide: 'clockwise' Speed: 150 Time: 10 *minute 
+	self takeSample .! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:44:19' prior: 50731663!
+dig
+|speed time side|
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	
+	self rotateSide: side Speed: speed Time: time. 
+	self takeSample .
+	side := self reverseSide: side.
+	self rotateSide:  side Speed: speed Time: time. ! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:45:28'!
+reverseSide: side
+	side = 'clockwise' ifTrue:[^ 'counter clockwise'].
+	^ 'counter clockwise'.
+! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:45:33' prior: 50731691!
+reverseSide: side
+	side = 'clockwise' ifTrue:[^ 'counter clockwise'].
+	^ 'clockwise'.
+! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:49:35' prior: 50731676!
+dig
+|speed time side|
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5 ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ].	
+	
+	self rotateSide: side Speed: speed Time: time. 
+	self takeSample .
+	side := self reverseSide: side.
+	self rotateSide:  side Speed: speed Time: time. ! !
+
+Rover
+	collaboratorNames: 'hardness porosity speed side time'
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+
+Rover
+	collaboratorNames: 'hardness porosity speed side time'
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:50:36' prior: 50731703!
+dig
+	"
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5 ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ].	
+	
+	self rotateSide: side Speed: speed Time: time. 
+	self takeSample .
+	side := self reverseSide: side.
+	self rotateSide:  side Speed: speed Time: time. 
+	"! !
+
+Rover
+	collaboratorNames: 'hardness porosity speed time side'
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+
+Rover
+	collaboratorNames: 'hardness porosity hola'
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+
+!classDefinition: 'Rover class' category: #ToTheMoon!
+Rover class
+	instanceVariableNames: 'hardness porosity hola'!
+
+Rover
+	collaboratorNames: 'hardness porosity speed'
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+
+!classDefinition: 'Rover class' category: #ToTheMoon!
+Rover class
+	instanceVariableNames: 'hardness porosity speed'!
+
+Rover
+	collaboratorNames: 'hardness porosity speed time '
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+
+!classDefinition: 'Rover class' category: #ToTheMoon!
+Rover class
+	instanceVariableNames: 'hardness porosity speed time'!
+
+Rover
+	collaboratorNames: 'hardness porosity speed time side'
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:51:40' prior: 50731697!
+reverseSide: mySide
+	mySide = 'clockwise' ifTrue:[^ 'counter clockwise'].
+	^ 'clockwise'.
+! !
+
+Rover
+	collaboratorNames: 'hardness porosity speed time side'
+	in: 'ToTheMoon'!
+
+!classDefinition: #Rover category: #ToTheMoon!
+DenotativeObject subclass: #Rover
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ToTheMoon'!
+
+!classDefinition: 'Rover class' category: #ToTheMoon!
+Rover class
+	instanceVariableNames: 'hardness porosity speed time side'!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:53:26' prior: 50731738!
+dig
+	self configureValues.
+	self rotateSide: side Speed: speed Time: time. 
+	self takeSample .
+	side := self reverseSide: side.
+	self rotateSide:  side Speed: speed Time: time. 
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:53:38' prior: 50731825!
+dig
+	self configureValues: 'enter'.
+	self rotateSide: side Speed: speed Time: time. 
+	self takeSample .
+	side := self reverseSide: side.
+	self rotateSide:  side Speed: speed Time: time. 
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:54:00'!
+configureValues: direction
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5 ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ].	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:54:23' prior: 50731843!
+configureValues: direction
+	
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5  & direction = 'enter' ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ].	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:55:14' prior: 50731857!
+configureValues: direction
+	
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5  & direction = 'enter' ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ]. 	
+	
+	hardness = 5 & porosity = 5  & direction = 'exit' ifTrue:[speed := 100. time := 10 * minute . side := ' counter clockwise'. ]. 	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:55:22' prior: 50731872!
+configureValues: direction
+	
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5  & direction = 'enter' ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ]. 	
+	hardness = 5 & porosity = 5  & direction = 'exit' ifTrue:[speed := 100. time := 10 * minute . side := 'counter clockwise'. ]. 	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:55:36' prior: 50731891!
+configureValues: direction
+	
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5  & direction = 'enter' ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ]. 	
+	hardness = 5 & porosity = 5  & direction = 'exit' ifTrue:[speed := 100. time := 10 * minute . side := 'clockwise'. ]. 	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:56:11'!
+rotate! !
+
+Rover class removeSelector: #reverseSide:!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:57:50'!
+reverseSide
+	side = 'clockwise' ifTrue:[side:= 'counter clockwise'] ifFalse: [side:='clockwise'].! !
+
+Rover class removeSelector: #rotateSide:Speed:Time:!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:59:10' prior: 50731834!
+dig
+	self configureValues: 'enter'.
+	self rotate.
+	self takeSample.
+	self configureValues: 'exit'/
+	self reverseSide
+	
+	self rotate.
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:59:12' prior: 50731941!
+dig
+	self configureValues: 'enter'.
+	self rotate.
+	self takeSample.
+	self configureValues: 'exit'.
+	self reverseSide
+	
+	self rotate.
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 16:59:41' prior: 50731949!
+dig
+	self configureValues: 'enter'.
+	self rotate.
+	self takeSample.
+	self configureValues: 'exit'.
+	self reverseSide.
+	self rotate.
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:00:13'!
+resetValues
+	speed := 0. time := 0 * minute . side := 'clockwise' .
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:00:24' prior: 50731957!
+dig
+	self configureValues: 'enter'.
+	self rotate.
+	self takeSample.
+	self configureValues: 'exit'.
+	self reverseSide.
+	self rotate.
+	self resetValues .
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:00:53'!
+turnOn
+	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:01:46' prior: 50731978!
+turnOn
+	self resetValues.
+	hardness := 0.
+	porosity := 0.
+	! !
+
+Rover  turnOn !
+
+Rover readHardness: 4 Porosity: 7 !
+
+Rover dig!
+
+Rover  turnOn !
+
+Rover  readHardness:  5 Porosity: 5 !
+
+Rover  dig!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:05:17' prior: 50731910!
+configureValues: direction
+	
+	hardness > 5 & porosity < 5 ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5  & direction = 'enter' ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ]. 	
+	hardness = 5 & porosity = 5  & direction = 'exit' ifTrue:[speed := 100. time := 10 * minute . side := 'clockwise'. ]. 	
+	! !
+
+----SNAPSHOT----(31 August 2019 17:05:54) Cuis5.0-3839.image priorSource: 12798922!
+
+----SNAPSHOT----(31 August 2019 17:05:56) Cuis5.0-3839.image priorSource: 12811484!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:06:52' prior: 50731992!
+configureValues: direction
+	
+	hardness > 5 & porosity < 5 ifTrue:[speed _ 150. time _ 10 * minute . side _ 'clockwise' .].
+	hardness < 5 & porosity > 5 ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & porosity = 5  & direction = 'enter' ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ]. 	
+	hardness = 5 & porosity = 5  & direction = 'exit' ifTrue:[speed := 100. time := 10 * minute . side := 'clockwise'. ]. 	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:08:05' prior: 50732016!
+configureValues: direction
+	
+	hardness > 5 & (porosity < 5) ifTrue:[speed _ 150. time _ 10 * minute . side _ 'clockwise' .].
+	hardness < 5 & (porosity > 5) ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & (porosity = 5)  & (direction = 'enter') ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ]. 	
+	hardness = 5 & (porosity = 5)  & (direction = 'exit') ifTrue:[speed := 100. time := 10 * minute . side := 'clockwise'. ]. 	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:09:20' prior: 50732034!
+configureValues: direction
+	
+	hardness > 5 & (porosity < 5) ifTrue:[speed := 150. time := 10 * minute . side := 'clockwise' .].
+	hardness < 5 & (porosity > 5) ifTrue:[speed := 100. time := 5 * minute . side := 'counter clockwise'. ].
+	hardness = 5 & (porosity = 5)  & (direction = 'enter') ifTrue:[speed := 150. time := 5 * minute . side := 'clockwise'. ]. 	
+	hardness = 5 & (porosity = 5)  & (direction = 'exit') ifTrue:[speed := 100. time := 10 * minute . side := 'clockwise'. ]. 	
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:10:02'!
+rotate: direction
+! !
+
+Rover class removeSelector: #rotate!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:10:30' prior: 50731970!
+dig
+	self configureValues: 'enter'.
+	self rotate:'enter'.
+	self takeSample.
+	self configureValues: 'exit'.
+	self reverseSide.
+	self rotate: 'enter'.
+	self resetValues .
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:10:34' prior: 50732076!
+dig
+	self configureValues: 'enter'.
+	self rotate:'enter'.
+	self takeSample.
+	self configureValues: 'exit'.
+	self reverseSide.
+	self rotate: 'exit'.
+	self resetValues .
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:12:09' prior: 50732071!
+rotate: direction
+	direction = 'enter' ifTrue: [^'Ya entre'].
+	^'Ya sali'.! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:12:27' prior: 50731620!
+takeSample
+	^'Tomando muestra'.! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:12:44' prior: 50731982!
+turnOn
+	self resetValues.
+	hardness := 0.
+	porosity := 0.
+	^'Encendiendo...'
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:12:54' prior: 50732105!
+turnOn
+	self resetValues.
+	hardness := 0.
+	porosity := 0.
+	^'Encendido'
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:13:04' prior: 50732100!
+takeSample
+	^'Tome la muestra'.! !
+
+Rover turnOn !
+
+Rover dig!
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:15:09' prior: 50732085!
+dig
+	self configureValues: 'enter'.
+	self rotate:'enter'.
+	self takeSample.
+	self configureValues: 'exit'.
+	self reverseSide.
+	self rotate: 'exit'.
+	self resetValues .
+	^'Ya excave, tome la muuestra y sali.'.
+	! !
+!Rover class methodsFor: 'as yet unclassified' stamp: 'f 8/31/2019 17:15:15' prior: 50732122!
+dig
+	self configureValues: 'enter'.
+	self rotate:'enter'.
+	self takeSample.
+	self configureValues: 'exit'.
+	self reverseSide.
+	self rotate: 'exit'.
+	self resetValues .
+	^'Ya excave, tome la muestra y sali.'.
+	! !
+
+Rover dig!
+
+----SNAPSHOT----(31 August 2019 17:26:03) Cuis5.0-3839.image priorSource: 12811569!
+
+----QUIT----(31 August 2019 17:26:20) Cuis5.0-3839.image priorSource: 12815712!
+
+----STARTUP---- (31 August 2019 17:27:35) as /home/chiara/Documents/UBA/ing-soft-1/linux64/Ejercicio 00-ToTheMoon/TTMentrega.image!
+
+!Rover class methodsFor: 'as yet unclassified' stamp: 'GZCT 8/31/2019 17:31:12'!
+initializeCollaboratorsFromFile
+	"Auto generated method for loading purposes - Do not modify it"
+
+	hardness := 0.
+	porosity := 0.
+	speed := 0.
+	time := (SimpleMeasure basicNew instVarAt: 1 put: 0; instVarAt: 2 put: (ProportionalDerivedUnit basicNew instVarAt: 1 put: 'minute'; instVarAt: 2 put: 'minutes'; instVarAt: 3 put: 'NO SIGN'; instVarAt: 4 put: (BaseUnit basicNew instVarAt: 1 put: 'day'; instVarAt: 2 put: 'days'; instVarAt: 3 put: 'NO SIGN'; yourself); instVarAt: 5 put: (1/1440); yourself); yourself).
+	side := 'clockwise'.! !
+
+Rover class removeSelector: #initializeCollaboratorsFromFile!
+
+----QUIT----(31 August 2019 17:32:09) TTMentrega.image priorSource: 12815797!
