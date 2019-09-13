@@ -5882,3 +5882,343 @@ Smalltalk removeClassNamed: #PeanoTest!
 	self subclassResponsibility!
 
 ----QUIT----(2 September 2019 16:33:07) clase1.image priorSource: 12831263!
+
+----STARTUP---- (12 September 2019 20:25:21) as /home/chiara/Documents/UBA/ing-soft-1/linux64/clase1.image!
+
+
+----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/19-Numeros/Pre-Numero-Ejercicio.st----!
+
+----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/19-Numeros/Pre-Numero-Ejercicio Solu.st----!
+
+----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/19-Numeros/Numero-Ejercicio.st----!
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:36:56' prior: 50733749!
++ anAdder 
+	anAdder type = Entero 
+	^self class with: value + anAdder integerValue
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:38:57' prior: 50733980!
++ anAdder 
+	anAdder type = #Entero ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	^Fraccion with: value + anAdder integerValue
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:40:33' prior: 50733986!
++ anAdder 
+	anAdder type = #Entero ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	^Fraccion initializeWith: (value * anAdder denominator +  anAdder  numerator ) over: anAdder denominator 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:42:09' prior: 50733994!
++ anAdder 
+	anAdder isKindOf: self class ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	^Fraccion initializeWith: (value * anAdder denominator +  anAdder  numerator ) over: anAdder denominator 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:42:37' prior: 50734004!
++ anAdder 
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	^Fraccion initializeWith: (value * anAdder denominator +  anAdder  numerator ) over: anAdder denominator 
+! !
+
+----STARTUP---- (12 September 2019 20:44:50) as /home/chiara/Documents/UBA/ing-soft-1/linux64/clase1.image!
+
+
+----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/19-Numeros/Numero-Ejercicio.st----!
+
+----SNAPSHOT----(12 September 2019 20:45:58) clase1.image priorSource: 12831554!
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:46:41' prior: 50733021!
++ anAdder 
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	^Fraccion initializeWith: (value * anAdder denominator +  anAdder  numerator ) over: anAdder denominator 
+! !
+
+----SNAPSHOT----(12 September 2019 20:47:54) clase1.image priorSource: 12850862!
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:52:38' prior: 50733243!
++ anAdder 
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	^Fraccion initializeWith: (self value * anAdder denominator +  anAdder  numerator ) over: anAdder denominator 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:52:55' prior: 50733256!
++ anAdder 
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	^Fraccion initializeWith: (self class with: value * anAdder denominator +  anAdder  numerator ) over: anAdder denominator 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:53:35' prior: 50733266!
++ anAdder 
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	^Fraccion initializeWith: (self class with: value * (self class with: anAdder denominator) +  anAdder  numerator ) over: anAdder denominator 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:55:28' prior: 50733277!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	numerador _ 1.
+	denominador _ anAdder denominator
+	^Fraccion initializeWith: (self class with: value * (self class with: anAdder denominator) +  anAdder  numerator ) over: anAdder denominator 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:56:12' prior: 50733288!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+	numerador _  (self class with: value * (self class with: anAdder denominator) +  anAdder  numerator ) .
+	denominador _ anAdder denominator.
+	^Fraccion initializeWith: numerador over: denominador 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:57:13' prior: 50733302!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+
+	numerador _  (self value * anAdder denominator +  anAdder  numerator ) .
+	denominador _ anAdder denominator.
+	^Fraccion initializeWith: numerador over: denominador 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 20:57:58' prior: 50733316!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+
+	numerador _  self value * anAdder denominator +  anAdder  numerator .
+	denominador _ anAdder denominator.
+	^Fraccion initializeWith: numerador over: denominador 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:07:01' prior: 50733329!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+
+	numerador _  self value * anAdder denominator +  anAdder  numerator .
+	denominador _ anAdder denominator.
+	^ Fraccion 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:08:02' prior: 50733342!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+
+	numerador _  self value * anAdder denominator +  anAdder  numerator .
+	denominador _ anAdder denominator.
+	
+	^ Fraccion 
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:09:14' prior: 50733353!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+
+	numerador _  self value * anAdder denominator +  anAdder  numerator .
+	denominador _ anAdder denominator.
+	
+	^ self class with: numerador  / self class with: denominador .
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:10:02' prior: 50733364!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+
+	numerador _  self value * anAdder denominator +  anAdder  numerator .
+	denominador _ anAdder denominator.
+	
+	^ (self class with: numerador) / (self class with: denominador).
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:11:18' prior: 50733377!
++ anAdder 
+	|numerador denominador|
+	(anAdder isKindOf: self class) ifTrue: [
+	^self class with: value + anAdder integerValue
+	].
+
+	numerador _  self value * anAdder denominator +  anAdder  numerator .
+	denominador _ anAdder denominator.
+	
+	^ numerador / denominador.
+! !
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:13:30' prior: 50733134!
++ anAdder 
+	
+	| newNumerator newDenominator |
+	
+	(anAdder isKindOf: self class) ifTrue: [
+		newNumerator := (numerator * anAdder denominator) + (denominator * anAdder numerator).
+		newDenominator := denominator * anAdder denominator.
+	] ifFalse: [
+		newNumerator _  anAdder value * self denominator +  self  numerator .
+		newDenominator _ self denominator.
+	].
+	
+	^newNumerator / newDenominator 
+	
+! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:15:21' prior: 50733016!
+* aMultiplier 
+	
+	(self class isKindOf: aMultiplier) ifTrue: [
+		^self class with: value * aMultiplier integerValue
+	].
+	
+	
+	
+	! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:16:56' prior: 50733418!
+* aMultiplier 
+	|newNumerator newDenominator|
+	(self class isKindOf: aMultiplier) ifTrue: [
+		^self class with: value * aMultiplier integerValue
+	].
+	
+	newNumerator _  self value * aMultiplier numerator .
+	newDenominator _ aMultiplier denominator.
+	
+	^ newNumerator / newDenominator .
+	
+	
+	! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:17:40' prior: 50733425!
+* aMultiplier 
+	|newNumerator newDenominator|
+	(aMultiplier isKindOf: self class) ifTrue: [
+		^self class with: value * aMultiplier integerValue
+	].
+	
+	newNumerator _  self value * aMultiplier numerator .
+	newDenominator _ aMultiplier denominator.
+	
+	^ newNumerator / newDenominator .
+	
+	
+	! !
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:18:50' prior: 50733128!
+* aMultiplier 
+	|newNumerator newDenominator|
+	
+	(aMultiplier isKindOf: self class) ifTrue: [
+		^(numerator * aMultiplier numerator) / (denominator * aMultiplier denominator)		
+	].
+	
+	newNumerator _  self value * aMultiplier numerator .
+	newDenominator _ aMultiplier denominator.
+	
+	^ newNumerator / newDenominator .
+	
+	! !
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:19:24' prior: 50733451!
+* aMultiplier 
+	|newNumerator newDenominator|
+	
+	(aMultiplier isKindOf: self class) ifTrue: [
+		^(numerator * aMultiplier numerator) / (denominator * aMultiplier denominator)		
+	].
+	
+	newNumerator _  self numerator * aMultiplier value .
+	newDenominator _ self denominator.
+	
+	^ newNumerator / newDenominator .
+	
+	! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:21:32' prior: 50733031!
+/ aDivisor 
+		
+	|newNumerator newDenominator|
+	
+	(aDivisor isKindOf: self class) ifTrue: [
+		^Fraccion with: self over: aDivisor
+	].
+	
+	newNumerator _  self value * aDivisor denominator .
+	newDenominator _ aDivisor numerator .
+	
+	^ newNumerator / newDenominator .
+	
+	
+	
+	! !
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:22:38' prior: 50733155!
+/ aDivisor 
+	|newNumerator newDenominator|
+	
+	(aDivisor isKindOf: self class) ifTrue: [
+		
+	^(numerator * aDivisor denominator) / (denominator * aDivisor numerator)
+	].
+	
+	newNumerator _  self value * aDivisor denominator .
+	newDenominator _ aDivisor numerator .
+	
+	^ newNumerator / newDenominator .
+	
+	
+	
+	
+		
+	! !
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:39:21' prior: 50733490!
+/ aDivisor 
+	|newNumerator newDenominator|
+	
+	(aDivisor isKindOf: self class) ifTrue: [
+		^(numerator * aDivisor denominator) / (denominator * aDivisor numerator)
+	].
+	
+	newNumerator _  self numerator .
+	newDenominator _ aDivisor denominator * aDivisor value .
+	
+	^ newNumerator / newDenominator .
+	
+	
+	
+	
+		
+	! !
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'gc 9/12/2019 21:39:51' prior: 50733503!
+/ aDivisor 
+	|newNumerator newDenominator|
+	
+	(aDivisor isKindOf: self class) ifTrue: [
+		^(numerator * aDivisor denominator) / (denominator * aDivisor numerator)
+	].
+	
+	newNumerator _  self numerator .
+	newDenominator _ self denominator * aDivisor value .
+	
+	^ newNumerator / newDenominator .
+	
+	
+	
+	
+		
+	! !
+
+----SNAPSHOT----(12 September 2019 21:40:01) clase1.image priorSource: 12851255!
+
+----SNAPSHOT----(12 September 2019 21:40:07) clase1.image priorSource: 12860085!
+
+----QUIT----(12 September 2019 21:40:09) clase1.image priorSource: 12860167!
