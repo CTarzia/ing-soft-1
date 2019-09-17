@@ -6222,3 +6222,546 @@ Smalltalk removeClassNamed: #PeanoTest!
 ----SNAPSHOT----(12 September 2019 21:40:07) clase1.image priorSource: 12860085!
 
 ----QUIT----(12 September 2019 21:40:09) clase1.image priorSource: 12860167!
+
+----STARTUP---- (16 September 2019 19:09:57) as /home/chiara/Documents/UBA/ing-soft-1/linux64/clase1.image!
+
+
+----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/20-Stack/Stack-Exercise.st----!
+
+Object subclass: #OOStack
+	instanceVariableNames: 'pila'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #OOStack category: #'Stack-Exercise'!
+Object subclass: #OOStack
+	instanceVariableNames: 'pila'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Object subclass: #OOStack
+	instanceVariableNames: ''
+	classVariableNames: 'pila'
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Object subclass: #OOStack
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #OOStack category: #'Stack-Exercise'!
+Object subclass: #OOStack
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Object subclass: #NameOfSubclass
+	instanceVariableNames: 'pila'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #NameOfSubclass category: #'Stack-Exercise'!
+Object subclass: #NameOfSubclass
+	instanceVariableNames: 'pila'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Smalltalk removeClassNamed: #NameOfSubclass!
+
+Object subclass: #OOStack
+	instanceVariableNames: 'pila'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #OOStack category: #'Stack-Exercise'!
+Object subclass: #OOStack
+	instanceVariableNames: 'pila'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!OOStack methodsFor: 'nil' stamp: 'gc 9/16/2019 19:17:54'!
+isEmpty
+	^pila size = 0! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:19:53' prior: 50733740!
+isEmpty
+	^pila = {}! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:21:35' prior: 50733744!
+isEmpty
+	^pila = #()! !
+!OOStack methodsFor: 'nil' stamp: 'gc 9/16/2019 19:25:27'!
+initialize
+	pila _  OrderedCollection new.! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:25:41' prior: 50733748!
+isEmpty
+	^pila = OrderedCollection new! !
+
+Object subclass: #OOStack
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #OOStack category: #'Stack-Exercise'!
+Object subclass: #OOStack
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:26:49' prior: 50733751!
+initialize
+	stack _  OrderedCollection new.! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:26:56' prior: 50733756!
+isEmpty
+	^stack = OrderedCollection new! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:27:11'!
+push: anObject
+	^stack = OrderedCollection new! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:27:35' prior: 50733780!
+push: anObject
+	^stack add: anObject! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:28:56'!
+pop
+	^stack removeLast ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:33:26'!
+top
+	^stack last ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:34:11' prior: 50733789!
+pop
+	^stack removeLast ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:34:22'!
+size
+	^stack size! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:36:02' prior: 50733797!
+pop
+	self isEmpty ifTrue: [^self error: Error ].
+	^stack removeLast ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:36:45' prior: 50733805!
+pop
+	self isEmpty ifTrue: [^self error: self stackEmptyErrorDescription ].
+	^stack removeLast ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:44:39' prior: 50733811!
+pop
+	self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^stack removeLast ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 19:46:01' prior: 50733793!
+top
+	self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^stack last ! !
+
+Object subclass: #Stack
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Stack category: #'Stack-Exercise'!
+Object subclass: #Stack
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Stack subclass: #Empty
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Stack subclass: #Empty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Empty category: #'Stack-Exercise'!
+Stack subclass: #Empty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Stack subclass: #NotEmpty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #NotEmpty category: #'Stack-Exercise'!
+Stack subclass: #NotEmpty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Smalltalk removeClassNamed: #Empty!
+
+Smalltalk removeClassNamed: #NotEmpty!
+
+Smalltalk removeClassNamed: #Stack!
+
+Object subclass: #Stack
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Stack category: #'Stack-Exercise'!
+Object subclass: #Stack
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Stack class
+	instanceVariableNames: ''!
+
+!classDefinition: 'Stack class' category: #'Stack-Exercise'!
+Stack class
+	instanceVariableNames: ''!
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:07:54'!
+initialize
+	stack _  OrderedCollection new.! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:07:54'!
+isEmpty
+	^stack = OrderedCollection new! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:07:54'!
+pop
+	self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^stack removeLast ! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:07:54'!
+push: anObject
+	^stack add: anObject! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:07:54'!
+size
+	^stack size! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:07:54'!
+top
+	self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^stack last ! !
+!Stack class methodsFor: 'error descriptions' stamp: 'gc 9/16/2019 20:07:54'!
+stackEmptyErrorDescription
+	
+	^ 'Stack is empty'! !
+
+Stack subclass: #Empty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Empty category: #'Stack-Exercise'!
+Stack subclass: #Empty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Stack subclass: #NotEmpty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #NotEmpty category: #'Stack-Exercise'!
+Stack subclass: #NotEmpty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!Empty methodsFor: 'nil' stamp: 'gc 9/16/2019 20:08:51'!
+initialize
+	stack _  OrderedCollection new.! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:09:17' prior: 50733931!
+initialize
+	^ OrderedCollection new.! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:09:33' prior: 50733881!
+initialize
+	stack _  Empty new.! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:09:51' prior: 50733885!
+isEmpty
+	^self subclassResponsibility ! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:10:05'!
+isEmpty
+	^true! !
+!NotEmpty methodsFor: 'nil' stamp: 'gc 9/16/2019 20:10:17'!
+isEmpty
+	^false! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:10:39' prior: 50733889!
+pop
+	^self subclassResponsibility ! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:10:56'!
+pop
+	^self error: self class stackEmptyErrorDescription! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:11:09'!
+pop
+	^stack removeLast ! !
+!Empty methodsFor: 'nil' stamp: 'gc 9/16/2019 20:28:53'!
+push: anObject
+	 NotEmpty new: (Array with: self with: anObject )! !
+!NotEmpty methodsFor: 'nil' stamp: 'gc 9/16/2019 20:29:25'!
+initializeWith: anObject
+	stack _ anObject ! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:29:37' prior: 50733968!
+push: anObject
+	^ NotEmpty new: (Array with: self with: anObject )! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:30:45'!
+push: anObject
+	stack push: (Array with: self with: anObject)! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:30:59' prior: 50733983!
+push: anObject
+	stack add: (Array with: self with: anObject)! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:32:11' prior: 50733965!
+pop
+	| theTop |
+	theTop  _ stack top.
+	stack _ theTop atFront .! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:32:46' prior: 50733895!
+push: anObject
+	^self subclassResponsibility ! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:33:18'!
+top
+	^self error: self class stackEmptyErrorDescription! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:35:04'!
+top
+	| theTop |
+	theTop  _ stack top.
+	stack _ theTop at: 2 .! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:35:10' prior: 50734007!
+top
+	| theTop |
+	theTop  _ stack top.
+	^theTop at: 2 .! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:35:37' prior: 50734012!
+top
+	| |
+	^ stack top.! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:35:45' prior: 50734017!
+top
+	^ stack top.! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:35:59' prior: 50734021!
+top
+	^ stack last.! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:36:12' prior: 50733771!
+initialize
+	stack _  Stack new.! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:36:37' prior: 50733936!
+initialize
+	^stack _ OrderedCollection new.! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:37:12' prior: 50733993!
+pop
+	| theTop |
+	theTop  _ stack last.
+	stack _ theTop atFront .! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:37:31' prior: 50734025!
+top
+	| theTop |
+	theTop  _ stack last.
+	stack _ theTop at: 2 .! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:37:54' prior: 50733817!
+pop
+	^stack pop ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:38:01' prior: 50733785!
+push: anObject
+	^stack push: anObject! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:38:19' prior: 50733824!
+top
+	^stack top ! !
+!Stack methodsFor: 'nil' stamp: 'gc 9/16/2019 20:38:41' prior: 50733899!
+size
+	^stack size! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:39:11' prior: 50733776!
+isEmpty
+	^stack isEmpty ! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:39:35' prior: 50733945!
+isEmpty
+	self subclassResponsibility ! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:39:57' prior: 50734068!
+isEmpty
+	^self subclassResponsibility ! !
+!Stack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:43:17' prior: 50733941!
+initialize
+	^stack _  Empty new.! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:44:29' prior: 50734033!
+initialize
+	stack _ OrderedCollection new.! !
+!NotEmpty class methodsFor: 'nil' stamp: 'gc 9/16/2019 20:47:53'!
+new: anObject
+	^self initializeWith: anObject ! !
+!NotEmpty class methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:49:36'!
+with: anObject
+	^self initializeWith: anObject ! !
+
+NotEmpty class removeSelector: #new:!
+!NotEmpty class methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:50:34'!
+new: anObject
+	^self initializeWith: anObject ! !
+!NotEmpty class methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 20:51:08' prior: 50734091!
+with: anObject
+	^self new with:anObject ! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:01:11'!
+initialize
+	stack _ OrderedCollection new.! !
+
+NotEmpty removeSelector: #initializeWith:!
+
+NotEmpty class removeSelector: #new:!
+
+NotEmpty class removeSelector: #with:!
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:02:22' prior: 50733978!
+push: anObject
+	| list |
+	list _ NotEmpty new.
+	list add: (Array with: self with: anObject )
+	! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:02:29' prior: 50734115!
+push: anObject
+	| list |
+	list _ NotEmpty new.
+	list add: (Array with: self with: anObject ).
+	^list
+	! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:03:12' prior: 50734121!
+push: anObject
+	| list |
+	list _ NotEmpty new.
+	list push: anObject.
+	^list
+	! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:04:14' prior: 50733988!
+push: anObject
+	^stack add: (Array with: self with: anObject)! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:06:51' prior: 50734052!
+push: anObject
+	^stack _ stack push: anObject! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:07:31' prior: 50734048!
+pop
+	^stack _ stack pop ! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:07:43' prior: 50734038!
+pop
+	| theTop |
+	theTop  _ stack last.
+	^stack _ theTop atFront .! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:08:43' prior: 50734148!
+pop
+	| theTop |
+	theTop  _ stack last.
+	^stack _ theTop at: 1 .! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:09:52' prior: 50734128!
+push: anObject
+	| list |
+	list _ NotEmpty new.
+	list addFirst: anObject with: self.
+	^list
+	! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:10:12'!
+addFirst: anObject with: previous
+	! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:10:27' prior: 50734165!
+addFirst: anObject with: previous
+	^stack add: (Array with: previous with: anObject)	! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:11:05' prior: 50734144!
+pop
+	stack _ stack pop.
+	^stack top.! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:11:32' prior: 50734176!
+pop
+	^stack _ stack pop.! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:11:56' prior: 50734043!
+top
+	| theTop |
+	theTop  _ stack last.
+	^theTop at: 2 .! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:12:18' prior: 50734057!
+top
+	^stack top ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:12:33' prior: 50734181!
+pop
+	stack _ stack pop.
+	stack top! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:12:37' prior: 50734194!
+pop
+	stack _ stack pop.
+	^stack top! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:13:24' prior: 50734199!
+pop
+	stack _ stack pop.! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:13:41' prior: 50734154!
+pop
+	| theTop |
+	theTop  _ stack last.
+	stack _ theTop at: 1 .
+	^theTop at:2! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:13:43' prior: 50734208!
+pop
+	| theTop |
+	theTop  _ stack last.
+	stack _ theTop at: 1 .
+	^theTop at: 2! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:14:39' prior: 50734204!
+pop
+	^stack _ stack pop.! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:15:39' prior: 50734214!
+pop
+	| theTop |
+	theTop  _ stack last.
+	^stack _ theTop at: 1 .! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:20:53' prior: 50734220!
+pop
+	^stack _ stack pop.! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:23:23' prior: 50734229!
+pop
+	stack _ stack pop.
+	^stack top! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:23:57' prior: 50734233!
+pop
+	| theTop |
+	theTop  _ stack top.
+	stack _ stack pop.
+	^theTop ! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:26:03' prior: 50734134!
+push: anObject
+	stack add: (Array with: self with: anObject).
+	^stack ! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:26:55' prior: 50734244!
+push: anObject
+	stack add: (Array with: self with: anObject).
+	^self ! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:31:59' prior: 50734224!
+pop
+	| theTop |
+	theTop  _ stack last.
+	stack _ theTop at: 1 .
+	^stack! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:32:48' prior: 50734256!
+pop
+	| theTop |
+	theTop  _ stack last.
+	stack _ theTop at: 1 .
+	^self! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:33:16' prior: 50734262!
+pop
+	| theTop |
+	theTop  _ stack last.
+	^stack _ theTop at: 1 .! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:35:27' prior: 50734250!
+push: anObject
+	stack add: (Array with: stack with: anObject).
+	^self ! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/16/2019 21:36:48' prior: 50734273!
+push: anObject
+	stack add: (Array with: self with: anObject).
+	^self ! !
+
+----SNAPSHOT----(16 September 2019 21:49:41) clase1.image priorSource: 12860249!
+
+----SNAPSHOT----(16 September 2019 21:51:44) clase1.image priorSource: 12884264!
+
+----QUIT----(16 September 2019 21:51:51) clase1.image priorSource: 12884346!
