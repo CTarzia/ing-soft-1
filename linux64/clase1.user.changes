@@ -7620,3 +7620,41 @@ fibonacci
 fibonacci
 	^ Entero with: 1! !
 >>>>>>> 0966ce8fc113ca70db137ca890ca2fd3ef6e982f
+
+
+----STARTUP---- (17 September 2019 10:55:44) as /home/chiara/Documents/UBA/ing-soft-1/linux64/clase1.image!
+
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 10:56:46' prior: 50734082!
+initialize
+	stack _ OrderedCollection new! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 10:57:10' prior: 50734159!
+push: anObject
+	! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 10:59:02' prior: 50735127!
+push: anObject
+	|list|
+	list _ Array with: self with: anObject! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 10:59:46' prior: 50735131!
+push: anObject
+	|list|
+	list _ Array with: self with: anObject.
+	stack add: list.! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 11:00:13' prior: 50734002!
+top
+	^self error: self class stackEmptyErrorDescription! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 11:00:35' prior: 50734106!
+initialize! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 11:00:58' prior: 50734185!
+top
+	| theTop |
+	theTop  _ stack last.
+	^stack _ theTop at: 1 .! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 11:03:01' prior: 50734268!
+pop
+	| theTop |
+	theTop  _ stack last. "remove last aca?"
+	^stack _ theTop at: 1 .! !
+
+----SNAPSHOT----(17 September 2019 11:03:11) clase1.image priorSource: 12884428!
+
+----QUIT----(17 September 2019 11:03:17) clase1.image priorSource: 12912341!
