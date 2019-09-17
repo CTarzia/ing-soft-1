@@ -7658,3 +7658,1409 @@ pop
 ----SNAPSHOT----(17 September 2019 11:03:11) clase1.image priorSource: 12884428!
 
 ----QUIT----(17 September 2019 11:03:17) clase1.image priorSource: 12912341!
+
+----STARTUP---- (17 September 2019 16:52:12) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/linux64/clase1.image!
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:52:59' prior: 50734064!
+isEmpty
+	^stack size = 0 ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:53:12' prior: 50734029!
+initialize
+	stack _  OrderedCollection new.! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:55:40' prior: 50734238!
+pop
+	| theTop |
+	theTop  _ self top.
+	stack remove: theTop .
+	^theTop 
+	! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:56:22' prior: 50734139!
+push: anObject
+	stack addFirst: anObject ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:56:41' prior: 50734190!
+top
+	self isEmpty ifTrue: [^self error: self class emptyCollectionDescription ].
+	stack last! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:56:54' prior: 50735186!
+push: anObject
+	stack addLast: anObject ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:57:31' prior: 50735197!
+push: anObject
+	^stack addLast: anObject ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:57:42' prior: 50735191!
+top
+	self isEmpty ifTrue: [^self error: self class emptyCollectionDescription ].
+	^stack last! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 16:58:38' prior: 50735207!
+top
+	self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^stack last! !
+
+Smalltalk removeClassNamed: #Empty!
+
+Smalltalk removeClassNamed: #NotEmpty!
+
+Smalltalk removeClassNamed: #Stack!
+
+Object subclass: #Aaa
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Aaa category: #'Stack-Exercise'!
+Object subclass: #Aaa
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Aaa subclass: #Empty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Empty category: #'Stack-Exercise'!
+Aaa subclass: #Empty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Aaa subclass: #NotEmpty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #NotEmpty category: #'Stack-Exercise'!
+Aaa subclass: #NotEmpty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Object subclass: #Aaaa
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Aaaa category: #'Stack-Exercise'!
+Object subclass: #Aaaa
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Aaaa class
+	instanceVariableNames: ''!
+
+!classDefinition: 'Aaaa class' category: #'Stack-Exercise'!
+Aaaa class
+	instanceVariableNames: ''!
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:03:14'!
+initialize
+	stack _  OrderedCollection new.! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:03:14'!
+isEmpty
+	^stack size = 0 ! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:03:14'!
+pop
+	| theTop |
+	theTop  _ self top.
+	stack remove: theTop .
+	^theTop 
+	! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:03:14'!
+push: anObject
+	^stack addLast: anObject ! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:03:14'!
+size
+	^stack size! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:03:14'!
+top
+	self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^stack last! !
+!Aaaa class methodsFor: 'error descriptions' stamp: 'gc 9/17/2019 17:03:14'!
+stackEmptyErrorDescription
+	
+	^ 'Stack is empty'! !
+
+Smalltalk removeClassNamed: #Empty!
+
+Smalltalk removeClassNamed: #NotEmpty!
+
+Smalltalk removeClassNamed: #Aaa!
+
+Object subclass: #Aaaa
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Aaaa category: #'Stack-Exercise'!
+Object subclass: #Aaaa
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Aaaa subclass: #Empty
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Aaaa subclass: #Empty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Empty category: #'Stack-Exercise'!
+Aaaa subclass: #Empty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Aaaa subclass: #NotEmpty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #NotEmpty category: #'Stack-Exercise'!
+Aaaa subclass: #NotEmpty
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:04:17' prior: 50735175!
+initialize
+	stack _  Aaaa new.! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:04:32' prior: 50735171!
+isEmpty
+	^stack isEmpty ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:04:53' prior: 50735180!
+pop
+	^stack pop! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:05:01' prior: 50735202!
+push: anObject
+	^stack push: anObject ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:05:12' prior: 50735213!
+top
+	^stack top! !
+
+Object subclass: #Aaaa
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Aaaa category: #'Stack-Exercise'!
+Object subclass: #Aaaa
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+Object subclass: #Aaaa
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #Aaaa category: #'Stack-Exercise'!
+Object subclass: #Aaaa
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:06:00' prior: 50735266!
+initialize
+	collection _  OrderedCollection new.! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:06:04' prior: 50735270!
+isEmpty
+	^collection size = 0 ! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:06:09' prior: 50735274!
+pop
+	| theTop |
+	theTop  _ self top.
+	collection remove: theTop .
+	^theTop 
+	! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:06:13' prior: 50735279!
+push: anObject
+	^collection addLast: anObject ! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:06:18' prior: 50735283!
+size
+	^collection size! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:06:24' prior: 50735286!
+top
+	self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:07:24' prior: 50735399!
+top
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	! !
+
+----End fileIn of /home/gzeitoune/Documents/UBA/ingSoft1/2019-2c/19-Numeros/Numero-Solution-4.st----!
+
+----End fileIn of /home/gzeitoune/Documents/UBA/ingSoft1/2019-2c/19-Numeros/Numero-Solution-3.6.st----!
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:15:30' prior: 50735405!
+top
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: collection ]) top! !
+!Empty methodsFor: 'nil' stamp: 'gc 9/17/2019 17:16:07'!
+canHandle: aCollection
+	^aCollection isEmpty ! !
+!NotEmpty methodsFor: 'nil' stamp: 'gc 9/17/2019 17:18:12'!
+canHandle: aCollection
+	^aCollection isEmpty = false! !
+!Empty methodsFor: 'nil' stamp: 'gc 9/17/2019 17:18:29'!
+top
+	! !
+!Empty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:18:53' prior: 50738055!
+top
+	^self error: self class stackEmptyErrorDescription ! !
+!NotEmpty methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:19:17'!
+top
+	^collection last! !
+!Empty class methodsFor: 'nil' stamp: 'gc 9/17/2019 17:21:26'!
+canHandle: aCollection
+	^aCollection isEmpty ! !
+!NotEmpty class methodsFor: 'nil' stamp: 'gc 9/17/2019 17:21:41'!
+canHandle: aCollection
+	^aCollection isEmpty = false! !
+
+Empty removeSelector: #canHandle:!
+
+NotEmpty removeSelector: #canHandle:!
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:24:19' prior: 50738039!
+top
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: collection ]) object top! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:24:38' prior: 50738078!
+top
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: collection ]) top! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:26:56' prior: 50738087!
+top
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: collection ]) top! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:33:22' prior: 50738096!
+top
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: collection ]) removeFirstFrom: collection ! !
+!Empty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:33:34'!
+removeFirstFrom: aCollection
+	^aCollection isEmpty ! !
+!Empty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:33:53' prior: 50738114!
+removeFirstFrom: aCollection
+	^self error: self class stackEmptyErrorDescription ! !
+!NotEmpty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:34:28'!
+removeFirstFrom: aCollection
+	^aCollection last! !
+!NotEmpty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:34:36'!
+removeLastFrom: aCollection
+	^aCollection last! !
+
+NotEmpty class removeSelector: #removeFirstFrom:!
+!Empty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:34:47'!
+removeLastFrom: aCollection
+	^self error: self class stackEmptyErrorDescription ! !
+
+Empty class removeSelector: #removeFirstFrom:!
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:35:00' prior: 50738105!
+top
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: collection ]) removeLastFrom: collection ! !
+!Empty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:35:38' prior: 50738136!
+removeLastFrom: aCollection
+	^self error: OOStack class stackEmptyErrorDescription ! !
+!Empty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:35:43' prior: 50738153!
+removeLastFrom: aCollection
+	^self error: OOStack stackEmptyErrorDescription ! !
+
+Empty removeSelector: #top!
+
+NotEmpty removeSelector: #top!
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:37:31'!
+top: aCollection
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: collection ]) removeLastFrom: collection ! !
+!Aaaa methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:37:37' prior: 50738166!
+top: aCollection
+	"self isEmpty ifTrue: [^self error: self class stackEmptyErrorDescription ].
+	^collection last"
+	
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: aCollection ]) removeLastFrom: aCollection ! !
+!Empty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:38:21' prior: 50738067!
+canHandle: aCollection
+	^aCollection size = 0 ! !
+!NotEmpty class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:38:34' prior: 50738071!
+canHandle: aCollection
+	^aCollection size > 0! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:39:01' prior: 50735334!
+initialize
+	stack _  OrderedCollection new.! !
+
+Object subclass: #OOStack
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #OOStack category: #'Stack-Exercise'!
+Object subclass: #OOStack
+	instanceVariableNames: 'collection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:39:27' prior: 50738196!
+initialize
+	collection _  OrderedCollection new.! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:39:36' prior: 50735338!
+isEmpty
+	^collection size = 0 ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:40:29' prior: 50735342!
+pop
+	| theTop |
+	theTop  _ Aaaa top: collection.
+	collection remove: theTop .
+	^theTop 
+	! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:41:27' prior: 50735346!
+push: anObject
+	^collection addLast: anObject ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:41:41' prior: 50733801!
+size
+	^collection size! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:41:57' prior: 50738220!
+pop
+	| theTop |
+	theTop  _ self top.
+	collection remove: theTop .
+	^theTop 
+	! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:42:17' prior: 50735351!
+top
+	^Aaaa top: collection! !
+
+Aaaa class removeSelector: #stackEmptyErrorDescription!
+!Aaaa class methodsFor: 'nil' stamp: 'gc 9/17/2019 17:45:03'!
+handleTop: aCollection
+
+	^(Aaaa allSubclasses detect:[:aClass | aClass canHandle: aCollection ]) removeLastFrom: aCollection ! !
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:45:14' prior: 50738241!
+top
+	^Aaaa handleTop: collection! !
+
+Aaaa removeSelector: #initialize!
+
+Aaaa removeSelector: #isEmpty!
+
+Aaaa removeSelector: #pop!
+
+Aaaa removeSelector: #push:!
+
+Aaaa removeSelector: #size!
+
+Aaaa removeSelector: #top!
+
+Aaaa removeSelector: #top:!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:46:30' prior: 50738253!
+top
+	^TopHandler handleTop: collection! !
+!TopHandler class methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:46:30' prior: 50738246!
+handleTop: aCollection
+
+	^(TopHandler allSubclasses detect:[:aClass | aClass canHandle: aCollection ]) removeLastFrom: aCollection ! !
+
+----SNAPSHOT----(17 September 2019 17:46:51) clase1.image priorSource: 12912423!
+!SentenceFinderByPrefix methodsFor: 'nil' stamp: 'gc 9/17/2019 17:58:24'!
+find
+	! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:58:55'!
+find: prefix
+	! !
+
+SentenceFinderByPrefix removeSelector: #find!
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 17:59:15'!
+find: prefix from: stack
+	! !
+
+SentenceFinderByPrefix removeSelector: #find:!
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:07:26' prior: 50738288!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		
+	]! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:09:41' prior: 50738294!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ OrderedCollection new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size = prefix ) ifTrue: [sentences addLast: sentence].
+		
+	]! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:09:58' prior: 50738302!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ OrderedCollection new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size = prefix ) ifTrue: [sentences addLast: sentence].
+		auxStack push: sentence 
+	]! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:11:02' prior: 50738315!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ OrderedCollection new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size = prefix ) ifTrue: [sentences addLast: sentence].
+		auxStack push: sentence 
+	].
+
+	[auxStack size > 0] whileTrue: [
+		stack push: (auxStack pop).
+	]! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:11:16' prior: 50738329!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ OrderedCollection new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size = prefix ) ifTrue: [sentences addLast: sentence].
+		auxStack push: sentence 
+	].
+
+	[auxStack size > 0] whileTrue: [
+		stack push: (auxStack pop).
+	].
+
+	^sentences.! !
+!SentenceFinderByPrefixTest methodsFor: 'nil' stamp: 'gc 9/17/2019 18:12:15'!
+setUp
+	! !
+
+TestCase subclass: #SentenceFinderByPrefixTest
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #SentenceFinderByPrefixTest category: #'Stack-Exercise'!
+TestCase subclass: #SentenceFinderByPrefixTest
+	instanceVariableNames: 'stack'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'gc 9/17/2019 18:15:58' prior: 50738361!
+setUp
+	stack _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.! !
+!SentenceFinderByPrefixTest methodsFor: 'nil' stamp: 'gc 9/17/2019 18:16:53'!
+test01EmptyStackReturnsEmptyCollection
+	! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:18:00' prior: 50738385!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack |
+	emptyStack _ OOStack new.
+	
+	SentenceFinderByPrefix find: 'prefix' from: emptyStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:18:54' prior: 50738390!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection|
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	SentenceFinderByPrefix find: 'prefix' from: emptyStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:19:27' prior: 50738398!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection|
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (SentenceFinderByPrefix find: 'prefix' from: emptyStack = orderedCollection ).! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:20:02' prior: 50738408!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection|
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (SentenceFinderByPrefix find: 'prefix' from: emptyStack = orderedCollection ).! !
+
+TestCase subclass: #SentenceFinderByPrefixTest
+	instanceVariableNames: 'stack prefixFinder'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!classDefinition: #SentenceFinderByPrefixTest category: #'Stack-Exercise'!
+TestCase subclass: #SentenceFinderByPrefixTest
+	instanceVariableNames: 'stack prefixFinder'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'gc 9/17/2019 18:20:29' prior: 50738377!
+setUp
+	prefixFinder _ SentenceFinderByPrefix new.
+
+	stack _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.! !
+!SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'gc 9/17/2019 18:20:31' prior: 50738443!
+setUp
+
+	prefixFinder _ SentenceFinderByPrefix new.
+
+	stack _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:20:54' prior: 50738419!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection|
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack = orderedCollection ).! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:21:13' prior: 50738463!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection|
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: ((prefixFinder find: 'prefix' from: emptyStack) = orderedCollection ).! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:21:26' prior: 50738474!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection|
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:24:14'!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection originalStack|
+	emptyStack _ OOStack new.
+	originalStack _ emptyStack .
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .
+	self assert: emptyStack = originalStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:24:49' prior: 50738495!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection originalStack|
+	emptyStack _ OOStack new.
+	originalStack _ emptyStack .
+	originalStack push: 'test'.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .
+	self assert: emptyStack = originalStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:29:02' prior: 50738508!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection originalStack|
+	emptyStack _ OOStack new.
+	originalStack _ emptyStack deepCopy .
+	originalStack push: 'test'.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .
+	self assert: emptyStack = originalStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:29:33' prior: 50738522!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection originalStack|
+	emptyStack _ OOStack new.
+	originalStack _ OOStack new .
+	originalStack push: 'test'.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .
+	self assert: emptyStack = originalStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:29:42' prior: 50738537!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection originalStack|
+	emptyStack _ OOStack new.
+	originalStack _ OOStack new .
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .
+	self assert: emptyStack = originalStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:29:58' prior: 50738551!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection originalStack|
+	emptyStack _ OOStack new.
+	originalStack _ OOStack new .
+	
+	orderedCollection _ OrderedCollection new.
+	
+	"self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection ."
+	self assert: emptyStack = originalStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:30:09' prior: 50738565!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection originalStack|
+	emptyStack _ OOStack new.
+	originalStack _ OOStack new .
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .
+	self assert: emptyStack = originalStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:31:48' prior: 50738579!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection originalStack|
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .
+	self assert: emptyStack = originalStack .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:32:00' prior: 50738593!
+test02EmptyStackReturnsEmptyCollection
+	| emptyStack orderedCollection |
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .! !
+
+!classDefinition: #SentenceFinderByPrefixTest category: #'Stack-Exercise'!
+TestCase subclass: #SentenceFinderByPrefixTest
+	instanceVariableNames: 'stack prefixFinder stackCopy'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+!SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'gc 9/17/2019 18:32:44' prior: 50738453!
+setUp
+
+	prefixFinder _ SentenceFinderByPrefix new.
+
+	stack _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.
+
+	stackCopy _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.	
+	! !
+!SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'gc 9/17/2019 18:33:00' prior: 50738625!
+setUp
+
+	prefixFinder _ SentenceFinderByPrefix new.
+
+	stack _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.
+
+	stackCopy _ OOStack new.
+	stackCopy push: 'winter is coming'.
+	stackCopy push: 'winning is everything'.
+	stackCopy push: 'The winds of Winter'.
+	stackCopy push: 'Winter is here'.	
+	! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:33:33'!
+test02StackReturnsEmptyCollection
+	| emptyStack orderedCollection |
+	emptyStack _ OOStack new.
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:33:44' prior: 50738655!
+test02StackReturnsEmptyCollection
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: stack) = orderedCollection .! !
+
+SentenceFinderByPrefixTest removeSelector: #test02EmptyStackReturnsEmptyCollection!
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:35:13' prior: 50738345!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ OrderedCollection new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size) = prefix  ifTrue: [sentences addLast: sentence].
+		auxStack push: sentence 
+	].
+
+	[auxStack size > 0] whileTrue: [
+		stack push: (auxStack pop).
+	].
+
+	^sentences.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:35:46'!
+test03StackReturnsCollectionWithOneElement
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:35:52' prior: 50738694!
+test03StackReturnsCollectionWithOneElement
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:36:08' prior: 50738704!
+test03StackReturnsCollectionWithOneElement
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	orderedCollection addLast: ''.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:36:22' prior: 50738714!
+test03StackReturnsCollectionWithOneElement
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	orderedCollection addLast: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:36:40' prior: 50738725!
+test03StackReturnsCollectionWithOneElement
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	orderedCollection addLast: 'Winter is here'.
+
+orderedCollection addLast: 'Winter is here'.	
+	self assert: (prefixFinder find: 'Wint' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:36:49' prior: 50738736!
+test03StackReturnsCollectionWithOneElement
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	orderedCollection addLast: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'gc 9/17/2019 18:37:12' prior: 50738640!
+setUp
+
+	prefixFinder _ SentenceFinderByPrefix new.
+
+	stack _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.
+	stack push: 'winter is here'.
+	
+	stackCopy _ OOStack new.
+	stackCopy push: 'winter is coming'.
+	stackCopy push: 'winning is everything'.
+	stackCopy push: 'The winds of Winter'.
+	stackCopy push: 'Winter is here'.
+	stack push: 'winter is here'.	
+	! !
+!SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'gc 9/17/2019 18:37:17' prior: 50738759!
+setUp
+
+	prefixFinder _ SentenceFinderByPrefix new.
+
+	stack _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.
+	stack push: 'winter is here'.
+	
+	stackCopy _ OOStack new.
+	stackCopy push: 'winter is coming'.
+	stackCopy push: 'winning is everything'.
+	stackCopy push: 'The winds of Winter'.
+	stackCopy push: 'Winter is here'.
+	stackCopy push: 'winter is here'.	
+	! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:37:51'!
+test04checkForCaseSensitive
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	orderedCollection addLast: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:38:02' prior: 50738795!
+test04checkForCaseSensitive
+	| orderedCollection |
+	
+	orderedCollection _ OrderedCollection new.
+	orderedCollection addLast: 'winter is here'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:38:55' prior: 50738805!
+test04checkForCaseSensitive
+	| orderedCollection |
+	
+	orderedCollection _ Collection new.
+	orderedCollection addLast: 'winter is here'.
+	orderedCollection push: 'winter is coming'.
+	orderedCollection push: 'winning is everything'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = orderedCollection .! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:39:04' prior: 50738678!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ Collection new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size) = prefix  ifTrue: [sentences addLast: sentence].
+		auxStack push: sentence 
+	].
+
+	[auxStack size > 0] whileTrue: [
+		stack push: (auxStack pop).
+	].
+
+	^sentences.! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:39:16' prior: 50738829!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ Collection new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size) = prefix  ifTrue: [sentences add: sentence].
+		auxStack push: sentence 
+	].
+
+	[auxStack size > 0] whileTrue: [
+		stack push: (auxStack pop).
+	].
+
+	^sentences.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:39:43' prior: 50738485!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack collection|
+	emptyStack _ OOStack new.
+	
+	collection _ Collection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = collection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:40:04' prior: 50738666!
+test02StackReturnsEmptyCollection
+	| collection |
+	
+	collection _ Collection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: stack) = collection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:40:22' prior: 50738748!
+test03StackReturnsCollectionWithOneElement
+	| collection |
+	
+	collection _ Collection new.
+	collection addLast: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = collection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:40:43' prior: 50738815!
+test04checkForCaseSensitive
+	| collection |
+	
+	collection _ Collection new.
+	collection add: 'winter is here'.
+	collection add: 'winter is coming'.
+	collection add: 'winning is everything'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = collection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:40:49' prior: 50738879!
+test03StackReturnsCollectionWithOneElement
+	| collection |
+	
+	collection _ Collection new.
+	collection add: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = collection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:41:44' prior: 50738861!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack aCollection|
+	emptyStack _ OOStack new.
+	
+	aCollection _ Collection new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = aCollection .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:43:20' prior: 50738911!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack aCollection|
+	emptyStack _ OOStack new.
+	
+	aCollection _ Bag new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = aCollection .! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:43:27' prior: 50738845!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ Bag new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size) = prefix  ifTrue: [sentences add: sentence].
+		auxStack push: sentence 
+	].
+
+	[auxStack size > 0] whileTrue: [
+		stack push: (auxStack pop).
+	].
+
+	^sentences.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:43:44' prior: 50738921!
+test01EmptyStackReturnsEmptyCollection
+	| emptyStack aBag|
+	emptyStack _ OOStack new.
+	
+	aBag _ Bag new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = aBag .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:43:58' prior: 50738871!
+test02StackReturnsEmptyCollection
+	| aBag |
+	
+	aBag _ Bag new.
+	
+	self assert: (prefixFinder find: 'prefix' from: stack) = aBag .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:44:09' prior: 50738901!
+test03StackReturnsCollectionWithOneElement
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = aBag .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:44:48' prior: 50738889!
+test04checkForCaseSensitive
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'winter is here'.
+	aBag add: 'winter is coming'.
+	aBag add: 'winning is everything'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = aBag .! !
+!SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'gc 9/17/2019 18:46:41' prior: 50738777!
+setUp
+
+	prefixFinder _ SentenceFinderByPrefix new.
+
+	stack _ OOStack new.
+	stack push: 'winter is coming'.
+	stack push: 'winning is everything'.
+	stack push: 'The winds of Winter'.
+	stack push: 'Winter is here'.
+	stack push: 'winter is here'.
+	stack push: 'The winds of Winter'.
+	
+	stackCopy _ OOStack new.
+	stackCopy push: 'winter is coming'.
+	stackCopy push: 'winning is everything'.
+	stackCopy push: 'The winds of Winter'.
+	stackCopy push: 'Winter is here'.
+	stackCopy push: 'winter is here'.
+	stackCopy push: 'The winds of Winter'.	
+	! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:47:26'!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'winter is here'.
+	aBag add: 'winter is coming'.
+	aBag add: 'winning is everything'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = aBag .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:47:52'!
+test04CheckForCaseSensitive
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'winter is here'.
+	aBag add: 'winter is coming'.
+	aBag add: 'winning is everything'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = aBag .! !
+
+SentenceFinderByPrefixTest removeSelector: #test04checkForCaseSensitive!
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:48:39' prior: 50739003!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = aBag .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:49:00' prior: 50739026!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = aBag .
+	self assert: aBag size = 2.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:49:15' prior: 50739036!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = aBag .
+	"self assert: aBag size = 2."! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:49:24' prior: 50739046!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'The' from: stack) = aBag .
+	"self assert: aBag size = 2."! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:49:33' prior: 50739056!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'The' from: stack) = aBag .
+	self assert: aBag size = 2.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:50:25' prior: 50739066!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'The w' from: stack) = aBag .
+	self assert: aBag size = 2.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:53:10' prior: 50738964!
+test03StackReturnsCollectionWithOneElement
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = aBag .
+	
+	self assert: stack size = stackCopy size.
+	[stack size > 0] whileTrue: [
+		self assert stack pop = stackCopy pop.
+	].! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:53:46' prior: 50739086!
+test03StackReturnsCollectionWithOneElement
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = aBag .
+	
+	self assert: (stack size = stackCopy size).
+	[stack size > 0] whileTrue: [
+		self assert: (stack pop = stackCopy pop).
+	].! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:55:15' prior: 50738956!
+test02StackReturnsEmptyCollection
+	| aBag |
+	
+	aBag _ Bag new.
+	
+	self assert: (prefixFinder find: 'prefix' from: stack) = aBag .
+	
+	self assert: (stack size = stackCopy size).
+	[stack size > 0] whileTrue: [
+		self assert: (stack pop = stackCopy pop).
+	].! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:55:21' prior: 50739013!
+test04CheckForCaseSensitive
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'winter is here'.
+	aBag add: 'winter is coming'.
+	aBag add: 'winning is everything'.
+	
+	self assert: (prefixFinder find: 'win' from: stack) = aBag .
+	
+	self assert: (stack size = stackCopy size).
+	[stack size > 0] whileTrue: [
+		self assert: (stack pop = stackCopy pop).
+	].! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:55:25' prior: 50739076!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'The w' from: stack) = aBag .
+	self assert: aBag size = 2.
+	
+	self assert: (stack size = stackCopy size).
+	[stack size > 0] whileTrue: [
+		self assert: (stack pop = stackCopy pop).
+	].! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:58:27'!
+invert: aStack to: returnStack
+	[aStack size > 0] whileTrue: [
+		returnStack push: (aStack pop).
+	].! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:59:29' prior: 50738931!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ Bag new.
+	auxStack _ OOStack new.
+
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size) = prefix  ifTrue: [sentences add: sentence].
+		auxStack push: sentence 
+	].
+	
+	self invert: auxStack to: stack.
+	
+	^sentences.! !
+
+----SNAPSHOT----(17 September 2019 19:00:23) clase1.image priorSource: 13012006!
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:04:01'!
+test06InvertStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+		
+	self assert: (aStack size = 0)! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:04:02' prior: 50739176!
+test06InvertStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+	
+	self assert: (aStack size = 0)! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:04:29'!
+test06InvertEmptyStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+	
+	self assert: (aStack size = 0)! !
+
+SentenceFinderByPrefixTest removeSelector: #test06InvertStackToEmptyStack!
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:06:31'!
+test07InvertStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	aStackToRevert push: 1.
+	aStackToRevert push: 2.
+	aStackToRevert push: 3.	
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+	
+	self assert: (aStack size = 0).
+	self assert: (aStack pop = 3).
+	self assert: (aStack pop = 2).
+	self assert: (aStack pop = 1).! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:06:49' prior: 50739207!
+test07InvertStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	aStackToRevert push: 1.
+	aStackToRevert push: 2.
+	aStackToRevert push: 3.	
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+	
+	self assert: (aStackToRevert size = 0).
+	self assert: (aStack size = 3).
+	self assert: (aStack pop = 3).
+	self assert: (aStack pop = 2).
+	self assert: (aStack pop = 1).! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:07:18' prior: 50739222!
+test07InvertStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	aStackToRevert push: 1.
+	aStackToRevert push: 2.
+	aStackToRevert push: 3.	
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+	
+	self assert: (aStackToRevert size = 0).
+	"self assert: (aStack size = 3).
+	self assert: (aStack pop = 3).
+	self assert: (aStack pop = 2).
+	self assert: (aStack pop = 1)."! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:07:26' prior: 50739239!
+test07InvertStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	aStackToRevert push: 1.
+	aStackToRevert push: 2.
+	aStackToRevert push: 3.	
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+	
+	self assert: (aStackToRevert size = 0).
+	self assert: (aStack size = 3).
+	"self assert: (aStack pop = 3).
+	self assert: (aStack pop = 2).
+	self assert: (aStack pop = 1)."! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:07:36' prior: 50739256!
+test07InvertStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	aStackToRevert push: 1.
+	aStackToRevert push: 2.
+	aStackToRevert push: 3.	
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+	
+	self assert: (aStackToRevert size = 0).
+	self assert: (aStack size = 3).
+	self assert: (aStack pop = 3).
+	"self assert: (aStack pop = 2).
+	self assert: (aStack pop = 1)."! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 19:07:52' prior: 50739273!
+test07InvertStackToEmptyStack
+
+	| aStack aStackToRevert |
+
+	aStack _ OOStack new.
+	aStackToRevert _ OOStack new.
+	
+	aStackToRevert push: 1.
+	aStackToRevert push: 2.
+	aStackToRevert push: 3.	
+	
+	prefixFinder invert: aStackToRevert to: aStack .
+	
+	self assert: (aStackToRevert size = 0).
+	self assert: (aStack size = 3).
+	self assert: (aStack pop = 1).
+	self assert: (aStack pop = 2).
+	self assert: (aStack pop = 3).! !
+
+----SNAPSHOT----(17 September 2019 19:08:03) clase1.image priorSource: 13040704!
+
+----QUIT----(17 September 2019 19:08:13) clase1.image priorSource: 13044961!
