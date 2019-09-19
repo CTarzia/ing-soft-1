@@ -211,7 +211,7 @@ test04CheckForCaseSensitive
 		self assert: (stack pop = stackCopy pop).
 	].! !
 
-!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:55:25'!
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 16:42:46'!
 test05ReturnRepetedSentences
 	| aBag |
 	
@@ -219,7 +219,7 @@ test05ReturnRepetedSentences
 	aBag add: 'The winds of Winter'.
 	aBag add: 'The winds of Winter'.
 	
-	self assert: (prefixFinder find: 'The w' from: stack) = aBag .
+	self assert: (prefixFinder find: 'The' from: stack) = aBag .
 	self assert: aBag size = 2.
 	
 	self assert: (stack size = stackCopy size).
@@ -323,13 +323,13 @@ Object subclass: #SentenceFinderByPrefix
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'cg 9/19/2019 14:57:28'!
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'cg 9/19/2019 16:42:24'!
 find: prefix from: stack
 	| auxStack sentences sentence size|
 	
+	(prefix size = 0) ifTrue: [^self error: self class prefixEmptyErrorDescription ].
 	sentences _ Bag new.
 	auxStack _ OOStack new.
-	(prefix size = 0) ifTrue: [^self error: self class prefixEmptyErrorDescription ].
 	size _ prefix size .
 	[stack size > 0] whileTrue: [
 		sentence _ stack pop.

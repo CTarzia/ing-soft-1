@@ -9254,3 +9254,44 @@ test08EmptyPrefixReturnsError
 
 
 ----QUIT----(19 September 2019 16:08:25) Stack-Exercise.image priorSource: 13051219!
+
+----STARTUP---- (19 September 2019 16:41:38) as /home/chiara/Documents/UBA/ing-soft-1/20-Stack/Stack-Exercise.image!
+
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'cg 9/19/2019 16:42:24' prior: 50739399!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	(prefix size = 0) ifTrue: [^self error: self class prefixEmptyErrorDescription ].
+	sentences _ Bag new.
+	auxStack _ OOStack new.
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size) = prefix  ifTrue: [sentences add: sentence].
+		auxStack push: sentence 
+	].
+	
+	self invert: auxStack to: stack.
+	
+	^sentences.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 16:42:46' prior: 50739138!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'The' from: stack) = aBag .
+	self assert: aBag size = 2.
+	
+	self assert: (stack size = stackCopy size).
+	[stack size > 0] whileTrue: [
+		self assert: (stack pop = stackCopy pop).
+	].! !
+
+----SNAPSHOT----(19 September 2019 16:43:07) Stack-Exercise.image priorSource: 13051424!
+
+----SNAPSHOT----(19 September 2019 16:43:17) Stack-Exercise.image priorSource: 13052635!
+
+----QUIT----(19 September 2019 16:43:31) Stack-Exercise.image priorSource: 13052725!
