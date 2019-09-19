@@ -159,8 +159,8 @@ setUp
 	! !
 
 
-!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:43:44'!
-test01EmptyStackReturnsEmptyCollection
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 14:54:54'!
+test01EmptyStackReturnsEmptyBag
 	| emptyStack aBag|
 	emptyStack _ OOStack new.
 	
@@ -181,8 +181,8 @@ test02StackReturnsEmptyCollection
 		self assert: (stack pop = stackCopy pop).
 	].! !
 
-!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'gc 9/17/2019 18:53:46'!
-test03StackReturnsCollectionWithOneElement
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 14:55:18'!
+test03StackReturnsBagWithOneElement
 	| aBag |
 	
 	aBag _ Bag new.
@@ -259,6 +259,15 @@ test07InvertStackToEmptyStack
 	self assert: (aStack pop = 2).
 	self assert: (aStack pop = 3).! !
 
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 15:01:47'!
+test08EmptyPrefixReturnsError
+
+	self
+		should: [ prefixFinder find: '' from: stack ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix prefixEmptyErrorDescription ]! !
+
 
 !classDefinition: #OOStack category: #'Stack-Exercise'!
 Object subclass: #OOStack
@@ -314,13 +323,13 @@ Object subclass: #SentenceFinderByPrefix
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'gc 9/17/2019 18:59:29'!
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'cg 9/19/2019 14:57:28'!
 find: prefix from: stack
 	| auxStack sentences sentence size|
 	
 	sentences _ Bag new.
 	auxStack _ OOStack new.
-
+	(prefix size = 0) ifTrue: [^self error: self class prefixEmptyErrorDescription ].
 	size _ prefix size .
 	[stack size > 0] whileTrue: [
 		sentence _ stack pop.
@@ -337,6 +346,17 @@ invert: aStack to: returnStack
 	[aStack size > 0] whileTrue: [
 		returnStack push: (aStack pop).
 	].! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'SentenceFinderByPrefix class' category: #'Stack-Exercise'!
+SentenceFinderByPrefix class
+	instanceVariableNames: ''!
+
+!SentenceFinderByPrefix class methodsFor: 'as yet unclassified' stamp: 'cg 9/19/2019 14:56:19'!
+prefixEmptyErrorDescription
+	
+	^ 'Prefix is empty'! !
 
 
 !classDefinition: #TopHandler category: #'Stack-Exercise'!
