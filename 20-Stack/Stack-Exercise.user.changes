@@ -9114,3 +9114,184 @@ Smalltalk removeClassNamed: #NumeroTest!
 
 
 ----QUIT----(17 September 2019 19:13:18) Stack-Exercise.image priorSource: 13046091!
+
+----STARTUP---- (19 September 2019 14:51:07) as /home/chiara/Documents/UBA/ing-soft-1/20-Stack/Stack-Exercise.image!
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 14:54:54'!
+test01EmptyStackReturnsEmptyBag
+	| emptyStack aBag|
+	emptyStack _ OOStack new.
+	
+	aBag _ Bag new.
+	
+	self assert: (prefixFinder find: 'prefix' from: emptyStack) = aBag .! !
+
+SentenceFinderByPrefixTest removeSelector: #test01EmptyStackReturnsEmptyCollection!
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 14:55:05'!
+test02StackReturnsEmptyBag
+	| aBag |
+	
+	aBag _ Bag new.
+	
+	self assert: (prefixFinder find: 'prefix' from: stack) = aBag .
+	
+	self assert: (stack size = stackCopy size).
+	[stack size > 0] whileTrue: [
+		self assert: (stack pop = stackCopy pop).
+	].! !
+
+SentenceFinderByPrefixTest removeSelector: #test02StackReturnsEmptyBag!
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 14:55:18'!
+test03StackReturnsBagWithOneElement
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'Winter is here'.
+	
+	self assert: (prefixFinder find: 'Wint' from: stack) = aBag .
+	
+	self assert: (stack size = stackCopy size).
+	[stack size > 0] whileTrue: [
+		self assert: (stack pop = stackCopy pop).
+	].! !
+
+SentenceFinderByPrefixTest removeSelector: #test03StackReturnsCollectionWithOneElement!
+!SentenceFinderByPrefix class methodsFor: 'nil' stamp: 'cg 9/19/2019 14:56:19'!
+prefixEmptyErrorDescription
+	
+	^ 'Prefix is empty'! !
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'cg 9/19/2019 14:57:28' prior: 50739159!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	sentences _ Bag new.
+	auxStack _ OOStack new.
+	(prefix size = 0) ifTrue: [^self error: self class prefixEmptyErrorDescription ].
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size) = prefix  ifTrue: [sentences add: sentence].
+		auxStack push: sentence 
+	].
+	
+	self invert: auxStack to: stack.
+	
+	^sentences.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 14:58:34'!
+test08EmptyPrefixReturnsError
+	| emptyStack aBag|
+	emptyStack _ OOStack new.
+	
+	aBag _ Bag new.
+	
+	self assert: (prefixFinder find: '' from: emptyStack) = emptyStack class error .! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 14:58:42' prior: 50739416!
+test08EmptyPrefixReturnsError
+	| emptyStack aBag|
+	emptyStack _ OOStack new.
+	
+	aBag _ Bag new.
+	
+	"self assert: (prefixFinder find: '' from: emptyStack) = emptyStack class error ."! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 15:00:51' prior: 50739425!
+test08EmptyPrefixReturnsError
+	| emptyStack aBag|
+	emptyStack _ OOStack new.
+	
+	aBag _ Bag new.
+	
+	self
+		should: [ prefixFinder find: '' from: emptyStack ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix prefixEmptyErrorDescription ]! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 15:01:03' prior: 50739434!
+test08EmptyPrefixReturnsError
+	| emptyStack aBag|
+	emptyStack _ OOStack new.
+	
+	aBag _ Bag new.
+	
+	self
+		should: [ prefixFinder find: 'cds' from: emptyStack ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix prefixEmptyErrorDescription ]! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 15:01:20' prior: 50739448!
+test08EmptyPrefixReturnsError
+	| emptyStack|
+	emptyStack _ OOStack new.
+	
+	self
+		should: [ prefixFinder find: 'cds' from: emptyStack ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix prefixEmptyErrorDescription ]! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 15:01:30' prior: 50739462!
+test08EmptyPrefixReturnsError
+	| emptyStack|
+	emptyStack _ OOStack new.
+	
+	self
+		should: [ prefixFinder find: '' from: emptyStack ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix prefixEmptyErrorDescription ]! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 15:01:47' prior: 50739475!
+test08EmptyPrefixReturnsError
+
+	self
+		should: [ prefixFinder find: '' from: stack ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix prefixEmptyErrorDescription ]! !
+
+----SNAPSHOT----(19 September 2019 15:09:07) Stack-Exercise.image priorSource: 13046308!
+
+----QUIT----(19 September 2019 15:09:20) Stack-Exercise.image priorSource: 13051129!
+
+----STARTUP---- (19 September 2019 16:07:07) as /home/chiara/Documents/UBA/ing-soft-1/20-Stack/Stack-Exercise.image!
+
+
+----QUIT----(19 September 2019 16:08:25) Stack-Exercise.image priorSource: 13051219!
+
+----STARTUP---- (19 September 2019 16:41:38) as /home/chiara/Documents/UBA/ing-soft-1/20-Stack/Stack-Exercise.image!
+
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'cg 9/19/2019 16:42:24' prior: 50739399!
+find: prefix from: stack
+	| auxStack sentences sentence size|
+	
+	(prefix size = 0) ifTrue: [^self error: self class prefixEmptyErrorDescription ].
+	sentences _ Bag new.
+	auxStack _ OOStack new.
+	size _ prefix size .
+	[stack size > 0] whileTrue: [
+		sentence _ stack pop.
+		(sentence copyFrom: 1 to: size) = prefix  ifTrue: [sentences add: sentence].
+		auxStack push: sentence 
+	].
+	
+	self invert: auxStack to: stack.
+	
+	^sentences.! !
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'cg 9/19/2019 16:42:46' prior: 50739138!
+test05ReturnRepetedSentences
+	| aBag |
+	
+	aBag _ Bag new.
+	aBag add: 'The winds of Winter'.
+	aBag add: 'The winds of Winter'.
+	
+	self assert: (prefixFinder find: 'The' from: stack) = aBag .
+	self assert: aBag size = 2.
+	
+	self assert: (stack size = stackCopy size).
+	[stack size > 0] whileTrue: [
+		self assert: (stack pop = stackCopy pop).
+	].! !
+
+----SNAPSHOT----(19 September 2019 16:43:07) Stack-Exercise.image priorSource: 13051424!
+
+----SNAPSHOT----(19 September 2019 16:43:17) Stack-Exercise.image priorSource: 13052635!
+
+----QUIT----(19 September 2019 16:43:31) Stack-Exercise.image priorSource: 13052725!
