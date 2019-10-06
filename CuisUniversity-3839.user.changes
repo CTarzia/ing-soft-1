@@ -3594,3 +3594,938 @@ move: aListOfInstructions
 ----SNAPSHOT----(3 October 2019 21:59:21) CuisUniversity-3839.image priorSource: 12628964!
 
 ----QUIT----(3 October 2019 21:59:24) CuisUniversity-3839.image priorSource: 12648880!
+
+----STARTUP---- (6 October 2019 18:01:24) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/CuisUniversity-3839.image!
+
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:01:44' prior: 50726460!
+test00NoInstructionStaysInPositionAndDirection
+	| rover |
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: 'N'.
+	
+	"Enunciado Mars Rover:
+		f --> forward
+		b --> backward
+		r --> rotate right
+		l --> rotate left
+	"! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:01:51' prior: 50726939!
+test00NoInstructionStaysInPositionAndDirection
+	| rover |
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.
+	
+	"Enunciado Mars Rover:
+		f --> forward
+		b --> backward
+		r --> rotate right
+		l --> rotate left
+	"! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:02:08' prior: 50726429!
+test01fShouldMoveForward
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'f'.
+	self assert: (rover  position) equals: 1@2.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:02:19' prior: 50726438!
+test02bShouldMoveBackward
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'b'.
+	self assert: (rover  position) equals: 1@0.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:02:31' prior: 50726563!
+test03NfsShouldMoveForwardNTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'fff'.
+	self assert: (rover  position) equals: 1@4.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:02:41' prior: 50726758!
+test04NbsShouldMoveBackwardNTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'bbb'.
+	self assert: (rover  position) equals: 1@-2.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:02:51' prior: 50726769!
+test05fbEndsInStartingPoint
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'fb'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:02:58' prior: 50726778!
+test06rShouldRotateRight
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'r'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: 'E'.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:03:04' prior: 50727015!
+test06rShouldRotateRight
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'r'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #East.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:03:17' prior: 50726804!
+test06rrShouldRotateRightTwice
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'rr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #South.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:03:29' prior: 50726862!
+test06rrrShouldRotateRightThreeTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'rrr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #West.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:03:43' prior: 50726894!
+test06rrrrEndsInStartingDirection
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'rrrr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:04:37' prior: 50726903!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ position _ 0@1 + position].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ position _ 0@-1 + position].
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ 
+			direction = #North ifTrue: [
+				direction _ #East
+			] ifFalse: [
+				direction = #East ifTrue: [
+					direction _ #South
+				] ifFalse: [
+					direction = #South ifTrue: [
+						direction _ #West.
+					] ifFalse:[
+						direction = #West ifTrue: [
+							direction _ #North
+						]
+					]
+				].
+			]
+		].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:05:02'!
+test07rrShouldRotateRightTwice
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'rr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #South.! !
+
+MarsRoverTest removeSelector: #test06rrShouldRotateRightTwice!
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:05:29'!
+test08rrrShouldRotateRightThreeTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'rrr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #West.! !
+
+MarsRoverTest removeSelector: #test06rrrShouldRotateRightThreeTimes!
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:05:39'!
+test10rrrrEndsInStartingDirection
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'rrrr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+
+MarsRoverTest removeSelector: #test06rrrrEndsInStartingDirection!
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:07:24'!
+rotateRight 
+	direction = #North ifTrue: [
+		direction _ #East
+	] ifFalse: [
+		direction = #East ifTrue: [
+			direction _ #South
+		] ifFalse: [
+			direction = #South ifTrue: [
+				direction _ #West.
+			] ifFalse:[
+				direction = #West ifTrue: [
+					direction _ #North
+				]
+			]
+		].
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:07:50' prior: 50727064!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ position _ 0@1 + position].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ position _ 0@-1 + position].
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:09:15' prior: 50727124!
+rotateRight 
+	direction = #North ifTrue: [
+		^direction _ #East
+	].
+	direction = #East ifTrue: [
+		^direction _ #South
+	].
+	direction = #South ifTrue: [
+		^direction _ #West.
+	].
+	direction = #West ifTrue: [
+		^direction _ #North
+	]
+! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:13:40'!
+test06lShouldRotateLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'l'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #West.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:13:56'!
+test10lShouldRotateLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'l'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #West.! !
+
+MarsRoverTest removeSelector: #test06lShouldRotateLeft!
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:14:07'!
+test09rrrrEndsInStartingDirection
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'rrrr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+
+MarsRoverTest removeSelector: #test10rrrrEndsInStartingDirection!
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:15:06' prior: 50727136!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ position _ 0@1 + position].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ position _ 0@-1 + position].
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:15:31'!
+rotateLeft
+	self shouldBeImplemented.! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:16:19' prior: 50727214!
+rotateLeft
+	[direction = #North] ifTrue: [^direction _ #West].  ! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:17:34' prior: 50727218!
+rotateLeft
+	direction = #North ifTrue: [^direction _ #West].  ! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:18:11'!
+test11llShouldRotateLeftTwice
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'll'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #South.! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:19:51' prior: 50727223!
+rotateLeft
+	direction = #North ifTrue: [^direction _ #West].  
+	direction = #West ifTrue: [^direction _ #South].
+	direction = #South ifTrue: [^direction _ #East].
+	direction = #East ifTrue: [^direction _ #North].! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:20:22'!
+test12lllShouldRotateLeftThreeTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'lll'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #East.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:20:39'!
+test13llllEndsInStartingDirection
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'llll'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:23:45'!
+test14InvalidDirectionShouldThrowError
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #Invalid.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:28:27' prior: 50727265!
+test14InvalidDirectionShouldThrowError
+	|rover|
+	self should: [rover _  MarsRover at: 1@1 lookingAt: #Invalid.] 
+	raise: Error 
+	withMessageText: 'El rover debe empezar en una direccion valida'! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:28:35' prior: 50727275!
+test14InvalidDirectionShouldThrowError
+	||
+	self should: [ MarsRover at: 1@1 lookingAt: #Invalid.] 
+	raise: Error 
+	withMessageText: 'El rover debe empezar en una direccion valida'! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:28:40' prior: 50727285!
+test14InvalidDirectionShouldThrowError
+	self should: [ MarsRover at: 1@1 lookingAt: #Invalid.] 
+	raise: Error 
+	withMessageText: 'El rover debe empezar en una direccion valida'! !
+!MarsRover methodsFor: 'initialization' stamp: 'gc 10/6/2019 18:31:56' prior: 50726514!
+initilializeAt: aPoint lookingAt: aDirection 
+	(#(#North #East #West #South) includes: direction) ifFalse: [self error: 'aa'].
+	position := aPoint.
+	direction := aDirection.! !
+!MarsRover methodsFor: 'initialization' stamp: 'gc 10/6/2019 18:32:16' prior: 50727303!
+initilializeAt: aPoint lookingAt: aDirection 
+	(#(#North #East #West #South) includes: direction) ifFalse: [self error: 'El rover debe empezar en una direccion valida'].
+	position := aPoint.
+	direction := aDirection.! !
+!MarsRover methodsFor: 'initialization' stamp: 'gc 10/6/2019 18:32:21' prior: 50727312!
+initilializeAt: aPoint lookingAt: aDirection 
+	(#(#North #East #West #South) includes: direction) 
+	ifFalse: [self error: 'El rover debe empezar en una direccion valida'].
+	position := aPoint.
+	direction := aDirection.! !
+!MarsRover methodsFor: 'initialization' stamp: 'gc 10/6/2019 18:35:59' prior: 50727322!
+initilializeAt: aPoint lookingAt: aDirection 
+	|validDirctions|
+	validDirctions _ Set withAll: #(#North #East #West #South).
+	(validDirctions includes: direction) 
+	ifFalse: [self error: 'El rover debe empezar en una direccion valida'].
+	position := aPoint.
+	direction := aDirection.! !
+!MarsRover methodsFor: 'initialization' stamp: 'gc 10/6/2019 18:37:23' prior: 50727332!
+initilializeAt: aPoint lookingAt: aDirection 
+	|validDirections|
+	validDirections _ Set withAll: #(#North #East #West #South).
+	(validDirections includes: direction) 
+	ifFalse: [self error: 'El rover debe empezar en una direccion valida'].
+	position := aPoint.
+	direction := aDirection.! !
+!MarsRover methodsFor: 'initialization' stamp: 'gc 10/6/2019 18:37:28' prior: 50727344!
+initilializeAt: aPoint lookingAt: aDirection 
+	|validDirections|
+	validDirections _ Set withAll: #(#North #East #West #South).
+	(validDirections includes: aDirection) 
+	ifFalse: [self error: 'El rover debe empezar en una direccion valida'].
+	position := aPoint.
+	direction := aDirection.! !
+!MarsRover methodsFor: 'initialization' stamp: 'gc 10/6/2019 18:37:52' prior: 50727356!
+initilializeAt: aPoint lookingAt: aDirection 
+	|validDirections|
+	validDirections _ Set withAll: #(#North #East #West #South).
+	(validDirections includes: aDirection) 
+	ifFalse: [^self error: 'El rover debe empezar en una direccion valida'].
+	position := aPoint.
+	direction := aDirection.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:40:05'!
+test15fLookingEastShouldMoveRight
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover move: 'f'.
+	self assert: (rover  position) equals: 1@2.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:40:24' prior: 50727380!
+test15fLookingEastShouldMoveRight
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #East.
+	rover move: 'f'.
+	self assert: (rover  position) equals: 2@1.
+	self assert: (rover  direction) equals: #East.! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:42:05' prior: 50727195!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ 
+			direction = #North ifTrue: [position _ 0@1 + position].
+			direction = #East ifTrue: [position _ 1@0 + position ].
+		].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ position _ 0@-1 + position].
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:42:39'!
+test15fLookingWestShouldMoveLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #West.
+	rover move: 'f'.
+	self assert: (rover  position) equals: 0@1.
+	self assert: (rover  direction) equals: #West.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:42:57'!
+test16fLookingWestShouldMoveLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #West.
+	rover move: 'f'.
+	self assert: (rover  position) equals: 0@1.
+	self assert: (rover  direction) equals: #West.! !
+
+MarsRoverTest removeSelector: #test15fLookingWestShouldMoveLeft!
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:43:53' prior: 50727399!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ 
+			direction = #North ifTrue: [position _ 0@1 + position].
+			direction = #East ifTrue: [position _ 1@0 + position ].
+			direction = #West ifTrue: [position _ -1@0 + position ].
+			direction = #South ifTrue: [position _ 0@-1 + position ].
+		].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ position _ 0@-1 + position].
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:44:36'!
+test16fLookingSouthShouldMoveBackwards
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #South.
+	rover move: 'f'.
+	self assert: (rover  position) equals: 1@0.
+	self assert: (rover  direction) equals: #South.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:44:47'!
+test17fLookingSouthShouldMoveBackwards
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #South.
+	rover move: 'f'.
+	self assert: (rover  position) equals: 1@0.
+	self assert: (rover  direction) equals: #South.! !
+
+MarsRoverTest removeSelector: #test16fLookingSouthShouldMoveBackwards!
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:46:08'!
+test15bLookingEastShouldMoveLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #East.
+	rover move: 'b'.
+	self assert: (rover  position) equals: 0@1.
+	self assert: (rover  direction) equals: #East.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:46:17'!
+test18bLookingEastShouldMoveLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #East.
+	rover move: 'b'.
+	self assert: (rover  position) equals: 0@1.
+	self assert: (rover  direction) equals: #East.! !
+
+MarsRoverTest removeSelector: #test15bLookingEastShouldMoveLeft!
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:47:24' prior: 50727442!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ 
+			direction = #North ifTrue: [position _ 0@1 + position].
+			direction = #East ifTrue: [position _ 1@0 + position ].
+			direction = #West ifTrue: [position _ -1@0 + position ].
+			direction = #South ifTrue: [position _ 0@-1 + position ].
+		].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ 
+			direction = #North ifTrue: [position _ 0@-1 + position].
+			direction = #East ifTrue: [position _ -1@0 + position ].
+			direction = #West ifTrue: [position _ 1@0 + position ].
+			direction = #South ifTrue: [position _ 0@1 + position ].
+		].
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:48:10'!
+test19bLookingWestShouldMoveRight
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #West.
+	rover move: 'b'.
+	self assert: (rover  position) equals: 2@1.
+	self assert: (rover  direction) equals: #West.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 18:48:41'!
+test20bLookingSouthShouldMoveForward
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #South.
+	rover move: 'b'.
+	self assert: (rover  position) equals: 1@2.
+	self assert: (rover  direction) equals: #South.! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:49:55' prior: 50727510!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ 
+			direction = #North ifTrue: [position _ 0@1 + position].
+			direction = #East ifTrue: [position _ 1@0 + position ].
+			direction = #West ifTrue: [position _ -1@0 + position ].
+			direction = #South ifTrue: [position _ 0@-1 + position ].
+		].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ 
+			direction = #North ifTrue: [position _ 0@-1 + position].
+			direction = #East ifTrue: [position _ -1@0 + position ].
+			direction = #West ifTrue: [position _ 1@0 + position ].
+			direction = #South ifTrue: [position _ 0@1 + position ].
+		].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:52:09' prior: 50727561!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ 
+			self moveInDirection: (aListOfInstructions at: instructionNumber) 
+		].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ 
+			direction = #North ifTrue: [position _ 0@-1 + position].
+			direction = #East ifTrue: [position _ -1@0 + position ].
+			direction = #West ifTrue: [position _ 1@0 + position ].
+			direction = #South ifTrue: [position _ 0@1 + position ].
+		].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:53:05'!
+moveInDirection: aDirection
+	aDirection = $f ifTrue: [
+		direction = #North ifTrue: [position _ 0@1 + position].
+		direction = #East ifTrue: [position _ 1@0 + position ].
+		direction = #West ifTrue: [position _ -1@0 + position ].
+		direction = #South ifTrue: [position _ 0@-1 + position ].
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:53:48' prior: 50727594!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		((aListOfInstructions at: instructionNumber ) = $f or: (aListOfInstructions at: instructionNumber ) = $b) ifTrue: [ 
+			self moveInDirection: (aListOfInstructions at: instructionNumber) 
+		].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 18:54:20' prior: 50727621!
+moveInDirection: aDirection
+	aDirection = $f ifTrue: [
+		direction = #North ifTrue: [position _ 0@1 + position].
+		direction = #East ifTrue: [position _ 1@0 + position ].
+		direction = #West ifTrue: [position _ -1@0 + position ].
+		direction = #South ifTrue: [position _ 0@-1 + position ].
+	].
+	
+	aDirection = $b ifTrue: [
+		direction = #North ifTrue: [position _ 0@-1 + position].
+		direction = #East ifTrue: [position _ -1@0 + position ].
+		direction = #West ifTrue: [position _ 1@0 + position ].
+		direction = #South ifTrue: [position _ 0@1 + position ].	
+	] 
+	! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:05:14' prior: 50727653!
+moveInDirection: aDirection
+	| moveDirection |
+	aDirection = $f ifTrue: [
+		moveDirection _ 1
+	].
+	aDirection = $b ifTrue: [
+		moveDirection _ -1	
+	] .
+
+	direction = #North ifTrue: [position _ 0@moveDirection + position].
+	direction = #East ifTrue: [position _ moveDirection@0 + position ].
+	direction = #West ifTrue: [position _ (-1*moveDirection)@0 + position ].
+	direction = #South ifTrue: [position _ 0@(-1*moveDirection) + position ].! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:05:51' prior: 50727674!
+moveInDirection: aMoveDirection
+	direction = #North ifTrue: [position _ 0@aMoveDirection + position].
+	direction = #East ifTrue: [position _ aMoveDirection@0 + position ].
+	direction = #West ifTrue: [position _ (-1*aMoveDirection)@0 + position ].
+	direction = #South ifTrue: [position _ 0@(-1*aMoveDirection) + position ].! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:06:41' prior: 50727633!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [
+			self moveInDirection: 1
+		].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ 
+			self moveInDirection: -1
+		].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:06:58' prior: 50727704!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveInDirection: 1 ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveInDirection: -1 ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:07:32' prior: 50727724!
+move: aListOfInstructions 
+	| instructionNumber |
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:07:51'!
+moveLeft
+	self moveInDirection: 1! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:07:57'!
+moveRight
+	self moveInDirection: -1! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:08:35' prior: 50727153!
+rotateRight 
+	direction = #North ifTrue: [ ^direction _ #East ].
+	direction = #East ifTrue: [ ^direction _ #South ].
+	direction = #South ifTrue: [ ^direction _ #West ].
+	direction = #West ifTrue: [ ^direction _ #North ]
+! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:10:38'!
+test21InvalidMoveShouldThrowError
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	self should: [ rover move: 'a'] 
+	raise: Error 
+	withMessageText: 'Movimientos Invalidos'! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:14:10' prior: 50727743!
+move: aListOfInstructions 
+	| instructionNumber |
+	(aListOfInstructions detect: [:c| c isValidMove not ]) ifNotNil: [^self error: 'Movimientos Invalidos']. 
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'nil' stamp: 'gc 10/6/2019 19:15:29'!
+isValidMove: aMove
+	^True! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:15:49' prior: 50727788!
+move: aListOfInstructions 
+	| instructionNumber |
+	(aListOfInstructions detect: [:c| self isValidMove: c not ]) ifNotNil: [^self error: 'Movimientos Invalidos']. 
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:17:04' prior: 50727810!
+isValidMove: aMove
+	|validMoves|
+	validMoves _ Set withAll: #($f $b $r $l).
+	^(validMoves includes: aMove ) ! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:18:00' prior: 50727814!
+move: aListOfInstructions 
+	| instructionNumber |
+	(aListOfInstructions detect: [:c| (self isValidMove: c) not ]) ifNotNil: [^self error: 'Movimientos Invalidos']. 
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:19:55' prior: 50727837!
+isValidMove: aMove
+	|validMoves|
+	^true.
+	"validMoves _ Set withAll: #($f $b $r $l).
+	^(validMoves includes: aMove ) "! !
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:20:09' prior: 50727866!
+isValidMove: aMove
+	|validMoves|
+	^True.
+	"validMoves _ Set withAll: #($f $b $r $l).
+	^(validMoves includes: aMove ) "! !
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:21:02' prior: 50727873!
+isValidMove: aMove
+	|validMoves|
+	^False.
+	"validMoves _ Set withAll: #($f $b $r $l).
+	^(validMoves includes: aMove ) "! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:21:10' prior: 50727843!
+move: aListOfInstructions 
+	| instructionNumber |
+	(aListOfInstructions detect: [:c| (self isValidMove: c) ]) ifNotNil: [^self error: 'Movimientos Invalidos']. 
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:22:09' prior: 50727880!
+isValidMove: aMove
+	|validMoves|
+	validMoves _ Set withAll: #($f $b $r $l).
+	^(validMoves includes: aMove )! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:24:40' prior: 50727887!
+move: aListOfInstructions 
+	| instructionNumber |
+	(aListOfInstructions detect: [:c| (self isValidMove: c) ] ifNone: []) ifNotNil: [^self error: 'Movimientos Invalidos']. 
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:25:07' prior: 50727916!
+move: aListOfInstructions 
+	| instructionNumber |
+	(aListOfInstructions detect: [:c| (self isValidMove: c) not ] ifNone: []) ifNotNil: [^self error: 'Movimientos Invalidos']. 
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+
+----SNAPSHOT----(6 October 2019 19:26:51) CuisUniversity-3839.image priorSource: 12648972!
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:27:38'!
+do: aListOfInstructions 
+	| instructionNumber |
+	(aListOfInstructions detect: [:c| (self isValidMove: c) not ] ifNone: []) ifNotNil: [^self error: 'Movimientos Invalidos']. 
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+
+MarsRover removeSelector: #move:!
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:27:52' prior: 50726965!
+test01fShouldMoveForward
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'f'.
+	self assert: (rover  position) equals: 1@2.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:27:57' prior: 50726975!
+test02bShouldMoveBackward
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'b'.
+	self assert: (rover  position) equals: 1@0.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:01' prior: 50726985!
+test03NfsShouldMoveForwardNTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'fff'.
+	self assert: (rover  position) equals: 1@4.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:05' prior: 50726995!
+test04NbsShouldMoveBackwardNTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'bbb'.
+	self assert: (rover  position) equals: 1@-2.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:09' prior: 50727005!
+test05fbEndsInStartingPoint
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'fb'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:14' prior: 50727025!
+test06rShouldRotateRight
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'r'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #East.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:19' prior: 50727090!
+test07rrShouldRotateRightTwice
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'rr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #South.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:24' prior: 50727101!
+test08rrrShouldRotateRightThreeTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'rrr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #West.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:31' prior: 50727183!
+test09rrrrEndsInStartingDirection
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'rrrr'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:36' prior: 50727172!
+test10lShouldRotateLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'l'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #West.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:41' prior: 50727228!
+test11llShouldRotateLeftTwice
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'll'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #South.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:46' prior: 50727247!
+test12lllShouldRotateLeftThreeTimes
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'lll'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #East.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:50' prior: 50727256!
+test13llllEndsInStartingDirection
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'llll'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:28:58' prior: 50727390!
+test15fLookingEastShouldMoveRight
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #East.
+	rover do: 'f'.
+	self assert: (rover  position) equals: 2@1.
+	self assert: (rover  direction) equals: #East.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:29:03' prior: 50727431!
+test16fLookingWestShouldMoveLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #West.
+	rover do: 'f'.
+	self assert: (rover  position) equals: 0@1.
+	self assert: (rover  direction) equals: #West.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:29:09' prior: 50727478!
+test17fLookingSouthShouldMoveBackwards
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #South.
+	rover do: 'f'.
+	self assert: (rover  position) equals: 1@0.
+	self assert: (rover  direction) equals: #South.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:29:13' prior: 50727499!
+test18bLookingEastShouldMoveLeft
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #East.
+	rover do: 'b'.
+	self assert: (rover  position) equals: 0@1.
+	self assert: (rover  direction) equals: #East.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:29:17' prior: 50727543!
+test19bLookingWestShouldMoveRight
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #West.
+	rover do: 'b'.
+	self assert: (rover  position) equals: 2@1.
+	self assert: (rover  direction) equals: #West.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:29:24' prior: 50727552!
+test20bLookingSouthShouldMoveForward
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #South.
+	rover do: 'b'.
+	self assert: (rover  position) equals: 1@2.
+	self assert: (rover  direction) equals: #South.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:29:37' prior: 50727779!
+test21InvalidMoveShouldThrowError
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	self should: [ rover do: 'a'] 
+	raise: Error 
+	withMessageText: 'Movimientos Invalidos'! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:29:58'!
+move: aListOfInstructions 
+	| instructionNumber | 
+	instructionNumber _ 1.
+	[instructionNumber <= aListOfInstructions size] whileTrue: [
+		(aListOfInstructions at: instructionNumber ) = $r ifTrue: [ self rotateRight ].
+		(aListOfInstructions at: instructionNumber ) = $l ifTrue: [ self rotateLeft ].
+		(aListOfInstructions at: instructionNumber ) = $f ifTrue: [ self moveLeft ].
+		(aListOfInstructions at: instructionNumber ) = $b ifTrue: [ self moveRight ].
+		instructionNumber _ instructionNumber + 1
+	]! !
+!MarsRover methodsFor: 'action' stamp: 'gc 10/6/2019 19:30:19' prior: 50727964!
+do: aListOfInstructions 
+	(aListOfInstructions detect: [:c| (self isValidMove: c) not ] ifNone: []) ifNotNil: [^self error: 'Movimientos Invalidos']. 
+	self move: aListOfInstructions ! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:30:57'!
+test22ValidMovesWithInvalidMoveShouldThrowError
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	self should: [ rover do: 'a'] 
+	raise: Error 
+	withMessageText: 'Movimientos Invalidos'! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:31:07' prior: 50728213!
+test22ValidMovesWithInvalidMoveShouldThrowError
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	self should: [ rover do: 'ffbarf'] 
+	raise: Error 
+	withMessageText: 'Movimientos Invalidos'! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:31:36' prior: 50728223!
+test22ValidMovesWithInvalidMoveShouldThrowError
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	self should: [ rover do: 'ffbarf'] 
+	raise: Error 
+	withMessageText: 'Movimientos Invalidos'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:31:47'!
+test22ValidMovesWithInvalidMoveShouldThrowErrorAndStayInSamePosition
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	self should: [ rover do: 'ffbarf'] 
+	raise: Error 
+	withMessageText: 'Movimientos Invalidos'.
+	self assert: (rover  position) equals: 1@1.
+	self assert: (rover  direction) equals: #North.! !
+
+MarsRoverTest removeSelector: #test22ValidMovesWithInvalidMoveShouldThrowError!
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'gc 10/6/2019 19:34:09'!
+test23frfShouldMoveDiagonally
+	|rover|
+	rover _ MarsRover at: 1@1 lookingAt: #North.
+	rover do: 'frf'.
+	self assert: (rover  position) equals: 2@2.
+	self assert: (rover  direction) equals: #East.! !
+
+----SNAPSHOT----(6 October 2019 19:34:25) CuisUniversity-3839.image priorSource: 12681945!
+
+----QUIT----(6 October 2019 19:36:20) CuisUniversity-3839.image priorSource: 12691782!
