@@ -252,9 +252,12 @@ moveForwardFrom: aPosition
 Direction class
 	instanceVariableNames: ''!
 
-!Direction class methodsFor: 'validation' stamp: 'gc 10/10/2019 16:33:12'!
-isValidDirection: aDirection
-	^Direction allSubclasses detect: [:aSubclass| aSubclass = aDirection] ifNone: [self error: 'El rover debe empezar en una direccion valida'].! !
+
+!Direction class methodsFor: 'instance creation' stamp: 'gc 10/10/2019 16:42:27'!
+with: aDirection
+	|direction|
+	direction _ Direction allSubclasses detect: [:aSubclass| aSubclass = aDirection] ifNone: [self error: 'El rover debe empezar en una direccion valida'].
+	^direction new! !
 
 
 !classDefinition: #East category: #MarsRover!
@@ -364,11 +367,10 @@ Object subclass: #MarsRover
 	poolDictionaries: ''
 	category: 'MarsRover'!
 
-!MarsRover methodsFor: 'initialization' stamp: 'gc 10/10/2019 16:34:14'!
+!MarsRover methodsFor: 'initialization' stamp: 'gc 10/10/2019 16:41:25'!
 initilializeAt: aPosition lookingAt: aDirection 
-	Direction isValidDirection: aDirection.
 	position _ aPosition.
-	direction _ aDirection new.! !
+	direction _ Direction with: aDirection.! !
 
 
 !MarsRover methodsFor: 'observer' stamp: 'gc 10/3/2019 21:10:19'!
