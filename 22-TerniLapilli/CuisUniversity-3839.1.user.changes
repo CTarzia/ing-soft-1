@@ -1,0 +1,564 @@
+
+
+----STARTUP---- (10 October 2019 17:12:43) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/CuisUniversity-3839.image!
+
+
+TestCase subclass: #TerniLapillitTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni Lapilli'!
+
+!classDefinition: #TerniLapillitTest category: #'Terni Lapilli'!
+TestCase subclass: #TerniLapillitTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni Lapilli'!
+!TerniLapilliTest methodsFor: 'nil' stamp: 'gc 10/10/2019 17:20:26'!
+test01firstPlayerPlacesFirstChip
+	! !
+
+!classDefinition: #TerniLapilli category: #'Terni Lapilli'!
+Object subclass: #TerniLapilli
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni Lapilli'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:26:46' prior: 50331665!
+test01firstPlayerPlacesFirstChip
+	| game |
+	game _ TerniLapilli new.
+	game placeChipAt: 1 By: #Player1.
+	
+	self assert: (#Player1 isEqualTo: game at: 1) .! !
+
+----End fileIn of /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/21-MarsRover/MarsRover.st----!
+
+----End fileIn of /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/21-MarsRover/MarsRover.st----!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:30:10'!
+test02secondPlayerCantPlayFirst
+	| game |
+	game _ TerniLapilli new.
+	
+	self should: [ game placeChipAt: 1 By: #Player2.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:32:00'!
+test03Player1CantPlayTwiceInARow
+	| game |
+	game _ TerniLapilli new.
+	game placeChipAt: 1 By: #Player1.
+	self should: [ game placeChipAt: 1 By: #Player1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:32:06' prior: 50332654!
+test03Player1CantPlayTwiceInARow
+	| game |
+	game _ TerniLapilli new.
+	game placeChipAt: 1 By: #Player1.
+	
+	self should: [ game placeChipAt: 1 By: #Player1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 17:33:08'!
+placeChipAt: aSmallInteger By: aSymbol 
+	self shouldBeImplemented.! !
+
+!classDefinition: #TerniLapilli category: #'Terni Lapilli'!
+Object subclass: #TerniLapilli
+	instanceVariableNames: 'board'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni Lapilli'!
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 17:42:26' prior: 50332675!
+placeChipAt: aPosition By: aPlayer
+	board at: aPosition put: aPlayer! !
+!TerniLapilli class methodsFor: 'no messages' stamp: 'gc 10/10/2019 17:43:20'!
+new
+	 ^self new! !
+!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:43:41' prior: 50332691!
+new
+	 ^self new initialize! !
+!TerniLapilli methodsFor: 'nil' stamp: 'gc 10/10/2019 17:45:17'!
+initialize
+	board _ Array withAll: #(#Empty #Empty #Empty #Empty #Empty #Empty #Empty #Empty #Empty )! !
+!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:45:39' prior: 50332695!
+new
+	 ^self initialize! !
+!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:47:28' prior: 50332705!
+new
+	 ^self new initialize! !
+!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:47:49'!
+newGame
+	 ^self new initialize! !
+
+TerniLapilli class removeSelector: #new!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:48:15' prior: 50331676!
+test01firstPlayerPlacesFirstChip
+	| game |
+	game _ TerniLapilli newGame.
+	game placeChipAt: 1 By: #Player1.
+	
+	self assert: (#Player1 isEqualTo: game at: 1) .! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:49:08' prior: 50332720!
+test01firstPlayerPlacesFirstChip
+	| game |
+	game _ TerniLapilli newGame.
+	game placeChipAt: 1 By: #Player1.
+	
+	self assert: (#Player1 isEqualTo: (game at: 1)) .! !
+!TerniLapilli methodsFor: 'nil' stamp: 'gc 10/10/2019 17:49:53'!
+at: aPosition
+	
+! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 17:50:04' prior: 50332737!
+at: aPosition
+	^board at: aPosition
+! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:20:24' prior: 50332729!
+test01firstPlayerPlacesFirstChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	
+	self assert: (game isXAt: 1) .! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:21:00' prior: 50332645!
+test02secondPlayerCantPlayFirst
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [ game OplaceChipAt: 1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:21:26' prior: 50332665!
+test03Player1CantPlayTwiceInARow
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	
+	self should: [ game XplaceChipAt: 1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:23:51'!
+XplaceChipAt: aSmallInteger 
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:24:27' prior: 50332772!
+XplaceChipAt: aPosition 
+	board at: aPosition  put: #X! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:24:48'!
+isXAt: aSmallInteger 
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:25:40' prior: 50332781!
+isXAt: aPosition 
+	^(board at: aPosition = #X)! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:25:47' prior: 50332786!
+isXAt: aPosition 
+	^(board at: aPosition) = #X! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:26:00' prior: 50332791!
+isXAt: aPosition 
+	^board at: aPosition = #X! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:26:17' prior: 50332796!
+isXAt: aPosition 
+	^(board at: aPosition) = #X! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:27:18'!
+test01PlayerXPlacesFirstChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	
+	self assert: (game isXAt: 1) .! !
+
+TerniLapilliTest removeSelector: #test01firstPlayerPlacesFirstChip!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:27:31'!
+test02PlayerOCantPlayFirst
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [ game OplaceChipAt: 1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	! !
+
+TerniLapilliTest removeSelector: #test02secondPlayerCantPlayFirst!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:27:43'!
+test03PlayerXCantPlayTwiceInARow
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	
+	self should: [ game XplaceChipAt: 1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	! !
+
+TerniLapilliTest removeSelector: #test03Player1CantPlayTwiceInARow!
+
+----STARTUP---- (10 October 2019 18:30:21) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/CuisUniversity-3839.image!
+
+
+----End fileIn of /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/Terni Lapilli.st----!
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:31:26'!
+OplaceChipAt: aSmallInteger 
+	self shouldBeImplemented.! !
+
+!classDefinition: #TerniLapilli category: #'Terni Lapilli'!
+Object subclass: #TerniLapilli
+	instanceVariableNames: 'board turn'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni Lapilli'!
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:33:22' prior: 50331739!
+OplaceChipAt: aPosition 
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador']! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:34:01' prior: 50331715!
+initialize
+	board _ Array withAll: #(#Empty #Empty #Empty #Empty #Empty #Empty #Empty #Empty #Empty ).
+	turn _ #X! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:35:53' prior: 50331702!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	board at: aPosition  put: #X! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:36:27' prior: 50331763!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	board at: aPosition  put: #X.
+	turn _ #O.! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:37:29' prior: 50331666!
+test01PlayerXPlacesFirstChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	
+	self assert: (game isXAt: 1) .
+	self assert: (game isPlayingO)! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:37:50' prior: 50331673!
+test02PlayerOCantPlayFirst
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [ game OplaceChipAt: 1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingX)
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:38:02' prior: 50331682!
+test03PlayerXCantPlayTwiceInARow
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	
+	self should: [ game XplaceChipAt: 1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingO)! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:38:34'!
+isPlayingO
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:38:45' prior: 50331807!
+isPlayingO
+	^turn = #O! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:38:57'!
+isPlayingX
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:39:05' prior: 50331814!
+isPlayingX
+	^turn = #X! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:41:12'!
+test04PlayerOPlaysAfterPlayerX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	game OplaceChipAt: 2.
+	
+	self assert: (game isOAt: 2) .
+	self assert: (game isPlayingX)! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:41:25'!
+isOAt: aSmallInteger 
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:41:47' prior: 50331830!
+isOAt: aPosition 
+	^board at: aPosition ! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:41:58' prior: 50331835!
+isOAt: aPosition 
+	^board at: aPosition = #O! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/10/2019 18:42:04' prior: 50331840!
+isOAt: aPosition 
+	^(board at: aPosition) = #O! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:42:55' prior: 50331750!
+OplaceChipAt: aPosition 
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	board at: aPosition put: #O! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:43:05' prior: 50331850!
+OplaceChipAt: aPosition 
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	board at: aPosition put: #O.
+	turn _ #X! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:44:31'!
+test05PlayerXCantPlayInOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	game OplaceChipAt: 2.
+	game XplaceChipAt: 1.
+	
+	self assert: (game isOAt: 2) .
+	self assert: (game isPlayingX)! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:45:18' prior: 50331864!
+test05PlayerXCantPlayInOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	game OplaceChipAt: 2.
+	
+	self should: [ game XplaceChipAt: 1.] 
+	raise: Error 
+	withMessageText: 'Ya hay una ficha en esa posicion'.
+	! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:49:53' prior: 50331770!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(board at: aPosition) = #Empty ifFalse: [^self error: 'Esta posicion esta ocupada'].
+	board at: aPosition  put: #X.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:50:16' prior: 50331885!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(board at: aPosition) = #Empty ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	board at: aPosition  put: #X.
+	turn _ #O.! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:50:36'!
+test06PlayerOCantPlayInOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	
+	self should: [ game OplaceChipAt: 1.] 
+	raise: Error 
+	withMessageText: 'Ya hay una ficha en esa posicion'.
+	! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 18:51:04' prior: 50331857!
+OplaceChipAt: aPosition 
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(board at: aPosition) = #Empty ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	board at: aPosition put: #O.
+	turn _ #X! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 18:53:47'!
+test07PlayerXCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	game OplaceChipAt: 2.
+	game XplaceChipAt: 3.
+	game OplaceChipAt: 4.
+	game XplaceChipAt: 5.
+	game OplaceChipAt: 6.
+	
+	self should: [ game OplaceChipAt: 7.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+
+TerniLapilli removeSelector: #placeChipAt:By:!
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 19:04:28' prior: 50331895!
+XplaceChipAt: aPosition 
+"'Los jugadores no pueden tener mas de 3 fichas cada uno'"
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(board at: aPosition) = #Empty ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	
+	board at: aPosition  put: #X.
+	turn _ #O.! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:22:34' prior: 50331778!
+test01PlayerXPlacesFirstChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	
+	self assert: (game isXAt: 1@1) .
+	self assert: (game isPlayingO)! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:25:33' prior: 50331787!
+test02PlayerOCantPlayFirst
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [ game OplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingX)
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:25:38' prior: 50331797!
+test03PlayerXCantPlayTwiceInARow
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1.
+	
+	self should: [ game XplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingO)! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:25:51' prior: 50331973!
+test03PlayerXCantPlayTwiceInARow
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	
+	self should: [ game XplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingO)! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:26:02' prior: 50331822!
+test04PlayerOPlaysAfterPlayerX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	
+	self assert: (game isOAt: 2@1) .
+	self assert: (game isPlayingX)! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:26:15' prior: 50331874!
+test05PlayerXCantPlayInOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	
+	self should: [ game XplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'Ya hay una ficha en esa posicion'.
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:26:23' prior: 50331905!
+test06PlayerOCantPlayInOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	
+	self should: [ game OplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'Ya hay una ficha en esa posicion'.
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:26:56' prior: 50331925!
+test07PlayerXCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game OplaceChipAt: 3@1.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:27:38' prior: 50331756!
+initialize
+	board _ Dictionary newFrom: {1@1 -> #Empty}.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:29:03' prior: 50332042!
+initialize
+	board _ Dictionary newFrom: {
+			1@1 -> #Empty. 
+			1@2 -> #Empty. 
+			1@3 -> #Empty. 
+			2@1 -> #Empty. 
+			2@2 -> #Empty. 
+			2@3 -> #Empty. 
+			3@1 -> #Empty. 
+			3@2 -> #Empty. 
+			3@3 -> #Empty.
+	}.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 20:33:28' prior: 50331941!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(board at: aPosition) = #Empty ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	((board values) select: [:aChip | aChip = #X ]) size > 3 ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	board at: aPosition  put: #X.
+	turn _ #O.! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:33:55' prior: 50332027!
+test07PlayerXCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XplaceChipAt: 3@1.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 20:34:16' prior: 50332058!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(board at: aPosition) = #Empty ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(((board values) select: [:aChip | aChip = #X ]) size > 3) ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	board at: aPosition  put: #X.
+	turn _ #O.! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:38:05' prior: 50332073!
+test07PlayerXCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	 game XplaceChipAt: 3@1.
+	
+	self should: [ game XplaceChipAt: 3@1.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 20:40:51' prior: 50332087!
+XplaceChipAt: aPosition 
+|a b c|
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(board at: aPosition) = #Empty ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	a _ board values.
+	b _ a select: [:aChip | aChip = #X ]. .
+	c _ b size.
+	"(((board values) select: [:aChip | aChip = #X ]) size > 3)"
+	c > 3 ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	board at: aPosition  put: #X.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/10/2019 20:42:37' prior: 50332117!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(board at: aPosition) = #Empty ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(((board values) select: [:aChip | aChip = #X ]) size > 2)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	board at: aPosition  put: #X.
+	turn _ #O.! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/10/2019 20:42:48' prior: 50332102!
+test07PlayerXCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XplaceChipAt: 3@1.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+
+----SNAPSHOT----(10 October 2019 20:42:59) CuisUniversity-3839.image priorSource: 12628964!
+
+----QUIT----(10 October 2019 20:59:09) CuisUniversity-3839.image priorSource: 16429!

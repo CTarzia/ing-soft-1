@@ -1,0 +1,2645 @@
+
+
+----STARTUP---- (12 October 2019 17:33:23) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/CuisUniversity-3839.image!
+
+
+----End fileIn of /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/22-TerniLapilli/Terni Lapilli.st----!
+
+Object subclass: #TerniLapilli
+	instanceVariableNames: 'xs os turn'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni Lapilli'!
+
+!classDefinition: #TerniLapilli category: #'Terni Lapilli'!
+Object subclass: #TerniLapilli
+	instanceVariableNames: 'xs os turn'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni Lapilli'!
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/12/2019 17:38:21' prior: 50331750!
+OplaceChipAt: aPosition 
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/12/2019 17:39:06' prior: 50331760!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size > 2)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'play' stamp: 'gc 10/12/2019 17:39:50' prior: 50331840!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:40:59' prior: 50331775!
+at: aPosition
+	(xs includes: aPosition) ifTrue: [^#X].
+	(os includes: aPosition) ifTrue: [^#O].
+	^#Empty! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:41:09' prior: 50331779!
+initialize
+	turn _ #X! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:42:05' prior: 50331875!
+initialize
+	xs _ Array new.
+	os _ Array new.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 17:42:19' prior: 50331789!
+isOAt: aPosition 
+	^os includes: aPosition ! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 17:42:33' prior: 50331799!
+isXAt: aPosition 
+	^xs includes: aPosition ! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:44:46' prior: 50331879!
+initialize
+	xs _ Bag new.
+	os _ Bag new.
+	turn _ #X! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:47:46'!
+test07PlayerXMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2! !
+!TerniLapilli methodsFor: 'Move' stamp: 'gc 10/12/2019 17:48:17'!
+XmoveChipAt: aPoint to: aPoint2 
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'Move' stamp: 'gc 10/12/2019 17:49:26' prior: 50331910!
+XmoveChipAt: startingPoint to: endingPoint
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:51:12' prior: 50331899!
+test07PlayerXMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self assert: (game isXAt: 3@2).
+	self deny: (game isXAt: 2@2).! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:51:31'!
+test08PlayerXMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self assert: (game isXAt: 3@2).
+	self deny: (game isXAt: 2@2).! !
+
+TerniLapilliTest removeSelector: #test07PlayerXMovesOneChipOnce!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:52:44'!
+test09PlayerXCantMoveAgainAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 17:53:55' prior: 50331950!
+test09PlayerXCantMoveAgainAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingO)
+	
+	! !
+!TerniLapilli methodsFor: 'move' stamp: 'gc 10/12/2019 17:57:53' prior: 50331915!
+XmoveChipAt: startingPoint to: endingPoint
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:00:15'!
+test10PlayerOCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self should: [ game OplaceChipAt: 3@1.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:00:53' prior: 50331829!
+OplaceChipAt: aPosition 
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:00:55' prior: 50332003!
+OplaceChipAt: aPosition 
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:04:56'!
+test11XCantMoveFromPositionThatIsntX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+	self assert: (game isPlayingO)
+	
+	! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:06:14' prior: 50332017!
+OplaceChipAt: aPosition 
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:07:23' prior: 50331978!
+XmoveChipAt: startingPoint to: endingPoint
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs includes: startingPoint ) ifFalse: ['En esa posicion no hay una ficha tuya'].
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:07:54' prior: 50332060!
+XmoveChipAt: startingPoint to: endingPoint
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:08:13' prior: 50332031!
+test11XCantMoveFromPositionThatIsntX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:10:09'!
+test12XCantMoveIfItDoesntHave3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'Te faltan jugar fichas antes de mover'.
+
+	
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:10:44' prior: 50332071!
+XmoveChipAt: startingPoint to: endingPoint
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:11:20' prior: 50332110!
+XmoveChipAt: startingPoint to: endingPoint
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:12:06'!
+test11XCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:12:22' prior: 50332136!
+test11XCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:12:32'!
+test13XCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test11XCantMoveToOccupiedPosition!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:12:57' prior: 50332165!
+test13XCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:13:43' prior: 50332182!
+test13XCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'No podes mover a una posicion ocupada'.
+
+	
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:14:23' prior: 50332122!
+XmoveChipAt: startingPoint to: endingPoint
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:15:33' prior: 50332211!
+XmoveChipAt: startingPoint to: endingPoint
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	((self at: endingPoint) = #Empty) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:16:08'!
+test14XCantMoveToPositionNotAdjacent
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'No podes mover a una posicion ocupada'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:18:46' prior: 50332242!
+test14XCantMoveToPositionNotAdjacent
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 3@1.] 
+	raise: Error 
+	withMessageText: 'No podes mover a una posicion ocupada'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:19:13' prior: 50332257!
+test14XCantMoveToPositionNotAdjacent
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 3@1.] 
+	raise: Error 
+	withMessageText: 'Solo podes mover fichas a posiciones adyacentes'.
+
+	
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:22:24' prior: 50332225!
+XmoveChipAt: startingPoint to: endingPoint
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	((self at: endingPoint) = #Empty) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:24:36'!
+test15XCantPlayInInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [game XplaceChipAt: 5@5.] 
+	raise: Error 
+	withMessageText: 'Solo podes mover fichas a posiciones adyacentes'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:25:25' prior: 50332308!
+test15XCantPlayInInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [game XplaceChipAt: 5@5.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+
+	
+	! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:25:52' prior: 50331854!
+XplaceChipAt: aPosition 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:26:56' prior: 50332328!
+XplaceChipAt: aPosition 
+	((2@2 eightNeighbors ) includes: aPosition) ifFalse: [^self error: 'No se puede colocar o mover fichas en posiciones invalidas']. 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:27:29' prior: 50332342!
+XplaceChipAt: aPosition 
+	(((2@2 eightNeighbors) union: 2@2 ) includes: aPosition) ifFalse: [^self error: 'No se puede colocar o mover fichas en posiciones invalidas']. 
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:29:27' prior: 50332360!
+XplaceChipAt: aPosition 
+	self isValidPosition: aPosition .
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:29:55' prior: 50332378!
+XplaceChipAt: aPosition 
+	self checkValidPosition: aPosition .
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'nil' stamp: 'gc 10/12/2019 18:31:52'!
+checkValidPosition: aPosition
+	| validPositions |
+	validPositions _ Array withAll: #( 1@1 1@2 1@3 2@1 2@2 2@3 3@1 3@2 3@3).! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:32:31' prior: 50332407!
+checkValidPosition: aPosition
+	| validPositions |
+	validPositions _ Array withAll: #( 1@1 1@2 1@3 2@1 2@2 2@3 3@1 3@2 3@3).
+	(validPositions  includes: aPosition ) ifFalse: [^self error: 'No se puede colocar o mover fichas en posiciones invalidas'].! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:34:02' prior: 50332414!
+checkValidPosition: aPosition
+	| validPositions |
+	validPositions _ Array withAll: #( (1@1) (1@2) (1@3) (2@1) (2@2) (2@3) (3@1) (3@2) (3@3)).
+	(validPositions  includes: aPosition ) ifFalse: [^self error: 'No se puede colocar o mover fichas en posiciones invalidas'].! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:35:34' prior: 50332425!
+checkValidPosition: aPosition
+	(((aPosition x) between: 1 and: 3) and: ((aPosition y) between: 1 and: 3) ) ifFalse: [^self error: 'No se puede colocar o mover fichas en posiciones invalidas'].! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:36:10'!
+test16OCantPlayInInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [game XplaceChipAt: 5@5.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:36:27' prior: 50332446!
+test16OCantPlayInInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	self should: [game OplaceChipAt: 5@5.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+
+	
+	! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 18:37:03' prior: 50332046!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:38:15'!
+test17XCantMoveToInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 1@4.] 
+	raise: Error 
+	withMessageText: 'Solo podes mover fichas a posiciones adyacentes'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:38:36' prior: 50332482!
+test17XCantMoveToInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 1@4.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+
+	
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:39:10' prior: 50332287!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	((self at: endingPoint) = #Empty) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:44:11'!
+test17XCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 1@4.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:44:21'!
+test18XCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 1@4.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test17XCantMoveAfterPlacingAChip!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:44:58' prior: 50332549!
+test18XCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 3@2.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:47:59'!
+test10PlayerXMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self assert: (game isXAt: 3@2).
+	self deny: (game isXAt: 2@2).! !
+
+TerniLapilliTest removeSelector: #test08PlayerXMovesOneChipOnce!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:48:17'!
+test08PlayerXMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self assert: (game isXAt: 3@2).
+	self deny: (game isXAt: 2@2).! !
+
+TerniLapilliTest removeSelector: #test10PlayerXMovesOneChipOnce!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:48:58'!
+test16XCantMoveToPositionNotAdjacent
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 3@1.] 
+	raise: Error 
+	withMessageText: 'Solo podes mover fichas a posiciones adyacentes'.
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test14XCantMoveToPositionNotAdjacent!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:49:05'!
+test15XCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'No podes mover a una posicion ocupada'.
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test13XCantMoveToOccupiedPosition!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:49:13'!
+test14XCantMoveIfItDoesntHave3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'Te faltan jugar fichas antes de mover'.
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test12XCantMoveIfItDoesntHave3Chips!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:49:19'!
+test13XCantMoveFromPositionThatIsntX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test11XCantMoveFromPositionThatIsntX!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:49:25'!
+test12PlayerOCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self should: [ game OplaceChipAt: 3@1.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+
+TerniLapilliTest removeSelector: #test10PlayerOCantHaveMoreThan3Chips!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:49:31'!
+test11PlayerXCantMoveAgainAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingO)
+	
+	! !
+
+TerniLapilliTest removeSelector: #test09PlayerXCantMoveAgainAfterMoving!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:49:40'!
+test010PlayerXMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self assert: (game isXAt: 3@2).
+	self deny: (game isXAt: 2@2).! !
+
+TerniLapilliTest removeSelector: #test08PlayerXMovesOneChipOnce!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:49:51'!
+test10PlayerXMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self assert: (game isXAt: 3@2).
+	self deny: (game isXAt: 2@2).! !
+
+TerniLapilliTest removeSelector: #test010PlayerXMovesOneChipOnce!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:50:10'!
+test08XCantPlayInInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [game XplaceChipAt: 5@5.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test15XCantPlayInInvalidPosition!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:50:18'!
+test09OCantPlayInInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	self should: [game OplaceChipAt: 5@5.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test16OCantPlayInInvalidPosition!
+
+----SNAPSHOT----(12 October 2019 18:50:32) CuisUniversity-3839.image priorSource: 12628964!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:52:01'!
+test19PlayerOMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	game OmoveChipAt: 2@1 to: 3@1.
+	
+	self assert: (game isOAt: 3@1).
+	self deny: (game isOAt: 2@1).! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:52:21'!
+OmoveChipAt: aPoint to: aPoint2 
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 18:53:27' prior: 50332783!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(os size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(os includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	((self at: endingPoint) = #Empty) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:54:03' prior: 50332726!
+test10PlayerXMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self assert: (game isXAt: 3@2).
+	self deny: (game isXAt: 2@2).
+	self assert: game isPlayingO ! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:55:19' prior: 50332657!
+test13XCantMoveFromPositionThatIsntX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+	self assert: game isPlayingX
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:55:31' prior: 50332642!
+test14XCantMoveIfItDoesntHave3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'Te faltan jugar fichas antes de mover'.
+	self assert: game isPlayingX
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:55:44' prior: 50332626!
+test15XCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'No podes mover a una posicion ocupada'.
+	self assert: game isPlayingX
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:56:29' prior: 50332826!
+test13XCantMoveFromPositionThatIsntX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+	self assert: game isPlayingX.
+	self  assert: (game isXAt: 3@2)
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:56:47' prior: 50332872!
+test13XCantMoveFromPositionThatIsntX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+	self assert: game isPlayingX.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:57:00' prior: 50332842!
+test14XCantMoveIfItDoesntHave3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'Te faltan jugar fichas antes de mover'.
+	self assert: game isPlayingX
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:57:26' prior: 50332856!
+test15XCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 2@3.] 
+	raise: Error 
+	withMessageText: 'No podes mover a una posicion ocupada'.
+	self assert: game isPlayingX.
+	self assert: (game isXAt: 2@2)
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:57:48' prior: 50332609!
+test16XCantMoveToPositionNotAdjacent
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 3@1.] 
+	raise: Error 
+	withMessageText: 'Solo podes mover fichas a posiciones adyacentes'.
+	self assert: game isPlayingX.
+	self assert: (game isXAt: 1@3)
+
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:57:59' prior: 50332497!
+test17XCantMoveToInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 1@3 to: 1@4.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+	self assert: game isPlayingX.
+	self assert: (game isXAt: 1@3)
+
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:58:08' prior: 50332566!
+test18XCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 3@2.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: game isPlayingX.
+
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:58:24' prior: 50332769!
+test19PlayerOMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	game OmoveChipAt: 2@1 to: 3@1.
+	
+	self assert: (game isOAt: 3@1).
+	self deny: (game isOAt: 2@1).
+	self assert: game isPlayingX.
+! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:58:51' prior: 50332970!
+test18XCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 3@2.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: game isPlayingO.
+
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:59:10'!
+test01XPlacesFirstChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	
+	self assert: (game isXAt: 1@1) .
+	self assert: (game isPlayingO)! !
+
+TerniLapilliTest removeSelector: #test01PlayerXPlacesFirstChip!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:59:31'!
+test02OCantPlayFirst
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [ game OplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingX)
+	! !
+
+TerniLapilliTest removeSelector: #test02PlayerOCantPlayFirst!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:59:37'!
+test03XCantPlayTwiceInARow
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	
+	self should: [ game XplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingO)! !
+
+TerniLapilliTest removeSelector: #test03PlayerXCantPlayTwiceInARow!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:59:45'!
+test04OPlaysAfterPlayerX
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	
+	self assert: (game isOAt: 2@1) .
+	self assert: (game isPlayingX)! !
+
+TerniLapilliTest removeSelector: #test04PlayerOPlaysAfterPlayerX!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 18:59:52'!
+test05XCantPlayInOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	
+	self should: [ game XplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'Ya hay una ficha en esa posicion'.
+	! !
+
+TerniLapilliTest removeSelector: #test05PlayerXCantPlayInOccupiedPosition!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:00:01'!
+test06OCantPlayInOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	
+	self should: [ game OplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'Ya hay una ficha en esa posicion'.
+	! !
+
+TerniLapilliTest removeSelector: #test06PlayerOCantPlayInOccupiedPosition!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:00:08'!
+test07XCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XplaceChipAt: 3@1.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+
+TerniLapilliTest removeSelector: #test07PlayerXCantHaveMoreThan3Chips!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:00:59'!
+test10XMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self assert: (game isXAt: 3@2).
+	self deny: (game isXAt: 2@2).
+	self assert: game isPlayingO ! !
+
+TerniLapilliTest removeSelector: #test10PlayerXMovesOneChipOnce!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:01:06'!
+test11XCantMoveAgainAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self should: [ game XmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingO)
+	
+	! !
+
+TerniLapilliTest removeSelector: #test11PlayerXCantMoveAgainAfterMoving!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:01:12'!
+test12OCantHaveMoreThan3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self should: [ game OplaceChipAt: 3@1.] 
+	raise: Error 
+	withMessageText: 'Los jugadores no pueden tener mas de 3 fichas cada uno'.
+	! !
+
+TerniLapilliTest removeSelector: #test12PlayerOCantHaveMoreThan3Chips!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:01:29'!
+test19OMovesOneChipOnce
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	game OmoveChipAt: 2@1 to: 3@1.
+	
+	self assert: (game isOAt: 3@1).
+	self deny: (game isOAt: 2@1).
+	self assert: game isPlayingX.
+! !
+
+TerniLapilliTest removeSelector: #test19PlayerOMovesOneChipOnce!
+
+----SNAPSHOT----(12 October 2019 19:01:38) CuisUniversity-3839.image priorSource: 35670!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:02:57'!
+test20OCantMoveAgainAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	game OmoveChipAt: 1@2 to: 2@2.
+	
+	self should: [ game OmoveChipAt: 2@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingX)
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:05:48'!
+test21OCantMoveFromPositionThatIsntO
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	game XmoveChipAt: 2@2 to: 3@2.
+	
+	self should: [ game OmoveChipAt: 3@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'En esa posicion no hay una ficha tuya'.
+	self assert: game isPlayingO.
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:07:05'!
+test14OCantMoveIfItDoesntHave3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@3.
+	
+	self should: [ game OmoveChipAt: 1@2 to: 2@2.] 
+	raise: Error 
+	withMessageText: 'Te faltan jugar fichas antes de mover'.
+	self assert: game isPlayingX
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:07:16'!
+test22OCantMoveIfItDoesntHave3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@3.
+	
+	self should: [ game OmoveChipAt: 1@2 to: 2@2.] 
+	raise: Error 
+	withMessageText: 'Te faltan jugar fichas antes de mover'.
+	self assert: game isPlayingX
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test14OCantMoveIfItDoesntHave3Chips!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:07:32' prior: 50333223!
+test22OCantMoveIfItDoesntHave3Chips
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@3.
+	
+	self should: [ game OmoveChipAt: 1@2 to: 2@2.] 
+	raise: Error 
+	withMessageText: 'Te faltan jugar fichas antes de mover'.
+	self assert: game isPlayingO
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:08:48'!
+test23OCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	game XmoveChipAt: 2@2 to: 3@3.
+	
+	self should: [ game OmoveChipAt: 2@1 to: 1@1.] 
+	raise: Error 
+	withMessageText: 'No podes mover a una posicion ocupada'.
+	self assert: game isPlayingO.
+	self assert: (game isXAt: 2@2)
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:08:59' prior: 50333255!
+test23OCantMoveToOccupiedPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	game XmoveChipAt: 2@2 to: 3@3.
+	
+	self should: [ game OmoveChipAt: 2@1 to: 1@1.] 
+	raise: Error 
+	withMessageText: 'No podes mover a una posicion ocupada'.
+	self assert: game isPlayingO.
+	self assert: (game isOAt: 2@1)
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:10:22'!
+test24OCantMoveToPositionNotAdjacent
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	game XmoveChipAt: 2@2 to: 3@1.
+	self should: [ game OmoveChipAt: 1@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'Solo podes mover fichas a posiciones adyacentes'.
+	self assert: game isPlayingO.
+	self assert: (game isOAt: 1@2)
+
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:10:28' prior: 50333290!
+test24OCantMoveToPositionNotAdjacent
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	game XmoveChipAt: 2@2 to: 3@1.
+	
+	self should: [ game OmoveChipAt: 1@2 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'Solo podes mover fichas a posiciones adyacentes'.
+	self assert: game isPlayingO.
+	self assert: (game isOAt: 1@2)
+
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:11:39'!
+test25OCantMoveToInvalidPosition
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	game XmoveChipAt: 2@2 to: 3@1.
+	
+	self should: [ game OmoveChipAt: 2@1 to: 2@0.] 
+	raise: Error 
+	withMessageText: 'No se puede colocar o mover fichas en posiciones invalidas'.
+	self assert: game isPlayingO.
+	self assert: (game isOAt: 2@1)
+
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:12:20'!
+test26XCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 3@2.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: game isPlayingO.
+
+
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:13:16'!
+test26OCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 3@2.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: game isPlayingO.
+
+
+	
+	! !
+
+TerniLapilliTest removeSelector: #test26XCantMoveAfterPlacingAChip!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:14:08'!
+test26XCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game OmoveChipAt: 2@3 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: game isPlayingX.
+	self assert: (game isOAt: 2@3).
+	
+	! !
+
+TerniLapilliTest removeSelector: #test26OCantMoveAfterPlacingAChip!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:14:31'!
+test26OCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game OmoveChipAt: 2@3 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: game isPlayingX.
+	self assert: (game isOAt: 2@3).
+	
+	! !
+
+TerniLapilliTest removeSelector: #test26XCantMoveAfterPlacingAChip!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:14:46' prior: 50333001!
+test18XCantMoveAfterPlacingAChip
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	
+	self should: [ game XmoveChipAt: 2@2 to: 3@2.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: game isPlayingO.
+	self assert: (game isXAt: 2@2).
+
+
+	
+	! !
+
+----SNAPSHOT----(12 October 2019 19:15:02) CuisUniversity-3839.image priorSource: 48670!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:22:24'!
+test27GameIsTiedIfNobodyWon
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game OmoveChipAt: 2@3 to: 3@3.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: game isPlayingX.
+	self assert: (game isOAt: 2@3).
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:23:12' prior: 50333429!
+test27GameIsTiedIfNobodyWon
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self assert: game isTied.
+	
+	! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:23:28'!
+isTied
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:23:38' prior: 50333456!
+isTied
+	^true! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:24:23'!
+test28GameIsntOverIfNobodyWon
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self deny: game isOver.
+	
+	! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:24:33'!
+isOver
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:24:38' prior: 50333475!
+isOver
+	^true! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:24:59' prior: 50333479!
+isOver
+	^false! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:25:38'!
+test29XWinsGameWithoutMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self deny: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:26:49' prior: 50333487!
+test29XWinsGameWithoutMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	
+	self assert: game hasPlayerXWon.
+	
+	self assert: game isOver.
+	
+	! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:27:03'!
+hasPlayerXWon
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:29:12' prior: 50333510!
+hasPlayerXWon
+	self hasWon: xs! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:29:22'!
+hasWon: aBag 
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:33:33' prior: 50333519!
+hasWon: aPlayersChips
+	| winningPossibilities aWayToWin |
+	
+	aWayToWin _ Bag with: (1@1) with: (1@2) with: (1@3) .
+	winningPossibilities _ Bag withAll: #(aWayToWin).! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:35:05' prior: 50333524!
+hasWon: aPlayersChips
+	| winningPossibilities aWayToWin |
+	
+	winningPossibilities _ Bag new.
+	
+	winningPossibilities add: (Bag with: (1@1) with: (1@2) with: (1@3)).! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:38:12' prior: 50333532!
+hasWon: aPlayersChips
+	| winningPossibilities aWayToWin |
+	
+	winningPossibilities _ Bag new.
+	
+	winningPossibilities add: (Bag with: (1@1) with: (1@2) with: (1@3)).
+	winningPossibilities add: (Bag with: (2@1) with: (2@2) with: (2@3)).
+	winningPossibilities add: (Bag with: (3@1) with: (3@2) with: (3@3)).
+	
+	winningPossibilities add: (Bag with: (1@1) with: (2@1) with: (3@1)).
+	winningPossibilities add: (Bag with: (1@2) with: (2@2) with: (3@2)).
+	winningPossibilities add: (Bag with: (1@3) with: (2@3) with: (3@3)).
+	
+	winningPossibilities add: (Bag with: (1@1) with: (2@2) with: (3@3)).
+	winningPossibilities add: (Bag with: (1@3) with: (2@2) with: (3@1)).
+	
+	! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:39:01' prior: 50333540!
+hasWon: aPlayersChips
+	| winningPossibilities |
+	
+	winningPossibilities _ Bag new.
+	
+	winningPossibilities add: (Bag with: (1@1) with: (1@2) with: (1@3)).
+	winningPossibilities add: (Bag with: (2@1) with: (2@2) with: (2@3)).
+	winningPossibilities add: (Bag with: (3@1) with: (3@2) with: (3@3)).
+	
+	winningPossibilities add: (Bag with: (1@1) with: (2@1) with: (3@1)).
+	winningPossibilities add: (Bag with: (1@2) with: (2@2) with: (3@2)).
+	winningPossibilities add: (Bag with: (1@3) with: (2@3) with: (3@3)).
+	
+	winningPossibilities add: (Bag with: (1@1) with: (2@2) with: (3@3)).
+	winningPossibilities add: (Bag with: (1@3) with: (2@2) with: (3@1)).
+	
+	^ winningPossibilities includes: aPlayersChips .
+	
+	! !
+
+(Bag with: 1 with: 2) = (Bag with: 2 with: 1)!
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:41:19' prior: 50333515!
+hasPlayerXWon
+	^self hasWon: xs! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:42:02' prior: 50333483!
+isOver
+	^self hasPlayerXWon ! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:44:02'!
+test30XWinsGameAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@2.
+	game OplaceChipAt: 3@3.
+	
+	game XmoveChipAt: 3@2 to: 3@1.
+	
+	self assert: game hasPlayerXWon.
+	self assert: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:44:29'!
+test31OWinsGameWithoutMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	
+	self assert: game hasPlayerXWon.
+	
+	self assert: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:44:58' prior: 50333612!
+test31OWinsGameWithoutMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@3.
+	game OplaceChipAt: 2@3.
+	
+	self assert: game hasPlayerOWon.
+	
+	self assert: game isOver.
+	
+	! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:45:11'!
+hasPlayerOWon
+	self shouldBeImplemented.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:45:44' prior: 50333636!
+hasPlayerOWon
+	^self hasWon: os.! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 19:45:57' prior: 50333595!
+isOver
+	^self hasPlayerXWon or: self hasPlayerOWon ! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:46:44' prior: 50333624!
+test31OWinsGameWithoutMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@3.
+	game OplaceChipAt: 2@3.
+	
+	self assert: game hasPlayerOWon.
+	self deny: game hasPlayerXWon .
+	self assert: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:46:58' prior: 50333499!
+test29XWinsGameWithoutMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	
+	self assert: game hasPlayerXWon.
+	self deny: game hasPlayerOWon .
+	self assert: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:47:09' prior: 50333599!
+test30XWinsGameAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@2.
+	game OplaceChipAt: 3@3.
+	
+	game XmoveChipAt: 3@2 to: 3@1.
+	
+	self assert: game hasPlayerXWon.
+	self deny: game hasPlayerOWon .
+	self assert: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:48:02'!
+test32OWinsGameAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 3@1.
+	
+	game XmoveChipAt: 3@1 to: 3@2.
+	
+	self assert: game hasPlayerOWon.
+	self deny: game hasPlayerXWon .
+	self assert: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:48:55' prior: 50333691!
+test32OWinsGameAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 3@1.
+	
+	game XmoveChipAt: 1@3 to: 2@3.
+	game OmoveChipAt: 3@1 to: 3@2.
+	
+	self assert: game hasPlayerOWon.
+	self deny: game hasPlayerXWon .
+	self assert: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:50:23' prior: 50333464!
+test28GameIsntOverIfNobodyWon
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 2@3.
+	
+	self deny: game isOver.
+	self deny: game hasPlayerOWon.
+	self deny: game hasPlayerXWon .
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:52:02'!
+test33OCantPlaceAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 3@1.
+	
+	game XmoveChipAt: 1@3 to: 2@3.
+	game OmoveChipAt: 3@1 to: 3@2.
+	
+	self assert: game hasPlayerOWon.
+	self deny: game hasPlayerXWon .
+	self assert: game isOver.
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:52:43' prior: 50333735!
+test33OCantPlaceAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	
+	
+	
+	
+	self assert: game hasPlayerXWon.
+	
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:53:42' prior: 50333751!
+test33OCantPlaceAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	
+	self should: [ game OplaceChipAt: 3@3.] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerXWon.
+	
+	
+	! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 19:54:44' prior: 50332467!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:55:11'!
+test34XCantMoveAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	
+	self should: [ game OplaceChipAt: 3@3.] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerXWon.
+	
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:55:55' prior: 50333794!
+test34XCantMoveAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@3.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@3 to: 3@2 .] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerXWon.
+	
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:56:03' prior: 50333808!
+test34XCantMoveAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@3.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@3 to: 3@2 .] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerOWon.
+	
+	
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 19:56:49' prior: 50332512!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	((self at: endingPoint) = #Empty) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 19:57:06' prior: 50333777!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	((os includes: aPosition) or: (xs includes: aPosition )) ifTrue: [^self error: 'Ya hay una ficha en esa posicion'].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 19:57:15' prior: 50333838!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	((self at: endingPoint) = #Empty) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:58:00'!
+test35OCantMoveAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@3.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@3 to: 3@2 .] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerOWon.
+	
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 19:58:49' prior: 50333903!
+test35OCantMoveAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@2.
+	game OplaceChipAt: 3@3.
+	game XmoveChipAt: 3@2 to: 3@1.
+	
+	
+	self should: [ game OmoveChipAt: 3@3 to: 3@2 .] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerXWon.
+	
+	
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 19:59:19' prior: 50332788!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(os size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(os includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	((self at: endingPoint) = #Empty) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 20:05:06'!
+isEmptyAt: aPosition
+	^((xs includes: aPosition) and: (os includes: aPosition) ) not.! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:05:43' prior: 50333934!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(os size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(os includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 20:06:44' prior: 50333958!
+isEmptyAt: aPosition
+	^((xs includes: aPosition) or: (os includes: aPosition) ) not.! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:07:36' prior: 50333861!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	turn = #X ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(self isEmptyAt: aPosition ) ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:08:05' prior: 50332393!
+XplaceChipAt: aPosition 
+	self checkValidPosition: aPosition .
+	turn = #O ifTrue: [^self error: 'No es el turno de ese jugador'].
+	(self isEmptyAt: aPosition ) ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:08:45' prior: 50333878!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self error: 'No es el turno de ese jugador'].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint ) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+
+TerniLapilli removeSelector: #at:!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:09:59' prior: 50333664!
+test29XWinsGameWithoutMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	
+	self assert: game hasPlayerXWon.
+	self deny: game hasPlayerOWon .
+	self assert: game isOver.
+	self deny: game isTied .	
+	! !
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 20:10:36' prior: 50333460!
+isTied
+	^self isOver not! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:10:54' prior: 50333677!
+test30XWinsGameAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@2.
+	game OplaceChipAt: 3@3.
+	
+	game XmoveChipAt: 3@2 to: 3@1.
+	
+	self assert: game hasPlayerXWon.
+	self deny: game hasPlayerOWon .
+	self assert: game isOver.
+	self deny: game isTied .
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:10:59' prior: 50333650!
+test31OWinsGameWithoutMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@3.
+	game OplaceChipAt: 2@3.
+	
+	self assert: game hasPlayerOWon.
+	self deny: game hasPlayerXWon .
+	self assert: game isOver.
+	self deny: game isTied .
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:11:06' prior: 50333706!
+test32OWinsGameAfterMoving
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	game OplaceChipAt: 3@1.
+	
+	game XmoveChipAt: 1@3 to: 2@3.
+	game OmoveChipAt: 3@1 to: 3@2.
+	
+	self assert: game hasPlayerOWon.
+	self deny: game hasPlayerXWon .
+	self assert: game isOver.
+	self deny: game isTied .
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:11:16' prior: 50333763!
+test33OCantPlaceAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 1@3.
+	
+	self should: [ game OplaceChipAt: 3@3.] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerXWon.
+	self deny: game isTied .
+	
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:11:21' prior: 50333823!
+test34XCantMoveAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 1@2.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@3.
+	game OplaceChipAt: 2@3.
+	
+	self should: [ game XmoveChipAt: 3@3 to: 3@2 .] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerOWon.
+	self deny: game isTied .
+	
+	
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:11:26' prior: 50333918!
+test35OCantMoveAChipAfterGameIsOver
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@1.
+	game OplaceChipAt: 2@2.
+	game XplaceChipAt: 3@2.
+	game OplaceChipAt: 3@3.
+	game XmoveChipAt: 3@2 to: 3@1.
+	
+	
+	self should: [ game OmoveChipAt: 3@3 to: 3@2 .] 
+	raise: Error 
+	withMessageText: 'El juego ya termino'.
+	self assert: game hasPlayerXWon.
+	self deny: game isTied .
+	
+	
+	! !
+
+TerniLapilli class removeSelector: #newGame!
+!TerniLapilliTest class methodsFor: 'nil' stamp: 'gc 10/12/2019 20:12:52'!
+newGame
+	 ^self new initialize! !
+!TerniLapilli class methodsFor: 'nil' stamp: 'gc 10/12/2019 20:14:49'!
+turnoIncorrecto
+	^'No es el turno de ese jugador'! !
+!TerniLapilli class methodsFor: 'nil' stamp: 'gc 10/12/2019 20:15:26'!
+newGame
+	 ^self new initialize! !
+
+TerniLapilliTest class removeSelector: #newGame!
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:16:40' prior: 50333964!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self class turnoIncorrecto ].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(os size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(os includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:16:47' prior: 50334170!
+turnoIncorrecto
+	^self error: 'No es el turno de ese jugador'! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:17:16' prior: 50333995!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	turn = #X ifTrue: [^self class turnoIncorrecto].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(self isEmptyAt: aPosition ) ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:17:30' prior: 50334025!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self class turnoIncorrecto].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint ) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:18:17' prior: 50334011!
+XplaceChipAt: aPosition 
+	self checkValidPosition: aPosition .
+	turn = #O ifTrue: [^self class turnoIncorrecto].
+	(self isEmptyAt: aPosition ) ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:19:30' prior: 50333025!
+test02OCantPlayFirst
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [ game OplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: TerniLapilli turnoIncorrecto.
+	self assert: (game isPlayingX)
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:20:22' prior: 50334263!
+test02OCantPlayFirst
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [ game OplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de este jugador'.
+	self assert: (game isPlayingX)
+	! !
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:20:33' prior: 50334273!
+test02OCantPlayFirst
+	| game |
+	game _ TerniLapilli newGame.
+	
+	self should: [ game OplaceChipAt: 1@1.] 
+	raise: Error 
+	withMessageText: 'No es el turno de ese jugador'.
+	self assert: (game isPlayingX)
+	! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:25:21'!
+wrongTurn
+	^self error: 'No es el turno de ese jugador'! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:25:21' prior: 50334180!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self class wrongTurn ].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(os size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(os includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:25:21' prior: 50334209!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	turn = #X ifTrue: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(self isEmptyAt: aPosition ) ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:25:21' prior: 50334225!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self error: 'El juego ya termino'].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint ) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:25:21' prior: 50334249!
+XplaceChipAt: aPosition 
+	self checkValidPosition: aPosition .
+	turn = #O ifTrue: [^self class wrongTurn].
+	(self isEmptyAt: aPosition ) ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+
+TerniLapilli class removeSelector: #turnoIncorrecto!
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:26:24'!
+gameOver
+	^self error: 'El juego ya termino'! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:27:17' prior: 50334297!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self class wrongTurn ].
+	(self isOver ) ifTrue: [^self class gameOver ].
+	(os size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(os includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:27:29' prior: 50334337!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self  class gameOver ].
+	(xs size < 3) ifTrue: [^self error: 'Te faltan jugar fichas antes de mover'].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint ) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:27:45' prior: 50334321!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	turn = #X ifTrue: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self  class gameOver ].
+	(self isEmptyAt: aPosition ) ifFalse: [^self error: 'Ya hay una ficha en esa posicion'].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:28:41'!
+placeBeforeMoving
+	^self error: 'Te faltan jugar fichas antes de mover'! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:29:20' prior: 50334381!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self class wrongTurn ].
+	(self isOver ) ifTrue: [^self class gameOver ].
+	(os size < 3) ifTrue: [^self class placeBeforeMoving ].
+	(os includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:29:31' prior: 50334404!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self  class gameOver ].
+	(xs size < 3) ifTrue: [^self class placeBeforeMoving ].
+	(xs includes: startingPoint ) ifFalse: [^self error: 'En esa posicion no hay una ficha tuya'].
+	(self isEmptyAt: endingPoint ) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:30:09'!
+noChipToMove
+	^self error: 'En esa posicion no hay una ficha tuya'! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:30:34' prior: 50334449!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self class wrongTurn ].
+	(self isOver ) ifTrue: [^self class gameOver ].
+	(os size < 3) ifTrue: [^self class placeBeforeMoving ].
+	(os includes: startingPoint ) ifFalse: [^self class noChipToMove ].
+	(self isEmptyAt: endingPoint) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:30:49' prior: 50334472!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self  class gameOver ].
+	(xs size < 3) ifTrue: [^self class placeBeforeMoving ].
+	(xs includes: startingPoint ) ifFalse: [^self class noChipToMove ].
+	(self isEmptyAt: endingPoint ) ifFalse: [^self error: 'No podes mover a una posicion ocupada'].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:31:41'!
+endPositionTaken
+	^self error: 'No podes mover a una posicion ocupada'! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:32:02' prior: 50334499!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self class wrongTurn ].
+	(self isOver ) ifTrue: [^self class gameOver ].
+	(os size < 3) ifTrue: [^self class placeBeforeMoving ].
+	(os includes: startingPoint ) ifFalse: [^self class noChipToMove ].
+	(self isEmptyAt: endingPoint) ifFalse: [^self class endPositionTaken ].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:32:18' prior: 50334521!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self  class gameOver ].
+	(xs size < 3) ifTrue: [^self class placeBeforeMoving ].
+	(xs includes: startingPoint ) ifFalse: [^self class noChipToMove ].
+	(self isEmptyAt: endingPoint ) ifFalse: [^self class endPositionTaken ].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: 'Solo podes mover fichas a posiciones adyacentes']. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:33:19'!
+movedTooFar
+	^self error: 'Solo podes mover fichas a posiciones adyacentes'! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:33:37' prior: 50334569!
+XmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #X) ifFalse: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self  class gameOver ].
+	(xs size < 3) ifTrue: [^self class placeBeforeMoving ].
+	(xs includes: startingPoint ) ifFalse: [^self class noChipToMove ].
+	(self isEmptyAt: endingPoint ) ifFalse: [^self class endPositionTaken ].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self class movedTooFar ]. 
+	xs remove: startingPoint.
+	xs add: endingPoint .
+	turn _ #O
+	! !
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/12/2019 20:33:51' prior: 50334548!
+OmoveChipAt: startingPoint to: endingPoint
+	self checkValidPosition: endingPoint .
+	(turn = #O) ifFalse: [^self class wrongTurn ].
+	(self isOver ) ifTrue: [^self class gameOver ].
+	(os size < 3) ifTrue: [^self class placeBeforeMoving ].
+	(os includes: startingPoint ) ifFalse: [^self class noChipToMove ].
+	(self isEmptyAt: endingPoint) ifFalse: [^self class endPositionTaken ].
+	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self movedTooFar ]. 
+	os remove: startingPoint.
+	os add: endingPoint .
+	turn _ #X
+	! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:34:30'!
+positionTaken
+	^self error: 'Ya hay una ficha en esa posicion'! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:34:52' prior: 50334428!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	turn = #X ifTrue: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self  class gameOver ].
+	(self isEmptyAt: aPosition ) ifFalse: [^self class positionTaken ].
+	(os size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:35:04' prior: 50334361!
+XplaceChipAt: aPosition 
+	self checkValidPosition: aPosition .
+	turn = #O ifTrue: [^self class wrongTurn].
+	(self isEmptyAt: aPosition ) ifFalse: [^self class positionTaken ].
+	(xs size = 3)  ifTrue: [^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:35:40'!
+tooManyChips
+	^self error: 'Los jugadores no pueden tener mas de 3 fichas cada uno'! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:35:59' prior: 50334654!
+XplaceChipAt: aPosition 
+	self checkValidPosition: aPosition .
+	turn = #O ifTrue: [^self class wrongTurn].
+	(self isEmptyAt: aPosition ) ifFalse: [^self class positionTaken ].
+	(xs size = 3)  ifTrue: [^self class tooManyChips ].
+	
+	xs add: aPosition.
+	turn _ #O.! !
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/12/2019 20:36:09' prior: 50334640!
+OplaceChipAt: aPosition 
+	self checkValidPosition: aPosition.
+	turn = #X ifTrue: [^self class wrongTurn].
+	(self isOver ) ifTrue: [^self  class gameOver ].
+	(self isEmptyAt: aPosition ) ifFalse: [^self class positionTaken ].
+	(os size = 3)  ifTrue: [^self class tooManyChips ].
+	
+	os add: aPosition.
+	turn _ #X! !
+!TerniLapilli class methodsFor: 'error' stamp: 'gc 10/12/2019 20:37:45'!
+invalidPosition
+	^self error: 'No se puede colocar o mover fichas en posiciones invalidas'! !
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gc 10/12/2019 20:38:03' prior: 50332437!
+checkValidPosition: aPosition
+	(((aPosition x) between: 1 and: 3) and: ((aPosition y) between: 1 and: 3) ) ifFalse: [^self class invalidPosition ].! !
+
+----SNAPSHOT----(12 October 2019 20:39:11) CuisUniversity-3839.image priorSource: 56803!
+
+----QUIT----(12 October 2019 20:39:45) CuisUniversity-3839.image priorSource: 97910!
