@@ -1007,7 +1007,6 @@ XmoveChipAt: startingPoint to: endingPoint
 checkValidPosition: aPosition
 	(((aPosition x) between: 1 and: 3) and: ((aPosition y) between: 1 and: 3) ) ifFalse: [^self class invalidPosition ].! !
 
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'TerniLapilli class' category: #'Terni Lapilli'!
