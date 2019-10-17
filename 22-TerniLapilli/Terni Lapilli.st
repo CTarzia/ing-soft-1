@@ -473,6 +473,45 @@ test25OCantMoveToInvalidPosition
 	
 	! !
 
+!TerniLapilliTest methodsFor: 'move requirement' stamp: 'gc 10/17/2019 15:50:12'!
+test38XcantMoveInvalidDiagonal
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 2@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 1@3.
+	
+	self should: [ game XmoveChipAt: 2@3 to: 3@2.] 
+	raise: Error 
+	withMessageText: TerniLapilli movedTooFar .
+	self assert: game isPlayingX.
+	self assert: (game isXAt: 2@3)
+
+	! !
+
+!TerniLapilliTest methodsFor: 'move requirement' stamp: 'gc 10/17/2019 15:58:51'!
+test39OcantMoveInvalidDiagonal
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 3@2.
+	game OplaceChipAt: 1@2.
+	game XplaceChipAt: 3@3.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 2@2.
+	game OplaceChipAt: 1@3.
+	game XmoveChipAt: 2@2 to: 1@1. 
+	
+	self should: [ game OmoveChipAt: 1@2 to: 2@3.] 
+	raise: Error 
+	withMessageText: TerniLapilli movedTooFar .
+	self assert: game isPlayingO.
+	self assert: (game isOAt: 1@2)
+
+	! !
+
 
 !TerniLapilliTest methodsFor: 'game didn''t end' stamp: 'gc 10/12/2019 19:23:12'!
 test27GameIsTiedIfNobodyWon
@@ -647,25 +686,54 @@ test35OCantMoveAChipAfterGameIsOver
 
 !classDefinition: #TerniLapilli category: #'Terni Lapilli'!
 Object subclass: #TerniLapilli
-	instanceVariableNames: 'xs os status'
+	instanceVariableNames: 'xs os status turn'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilli methodsFor: 'initialization' stamp: 'gc 10/15/2019 19:47:53'!
+!TerniLapilli methodsFor: 'initialization' stamp: 'gc 10/17/2019 16:10:44'!
 initialize
 	xs _ Bag new.
 	os _ Bag new.
-	status _ TerniLapilliStatus with: os and: xs onTurn: #X.! !
+	turn _ #X.
+	status _ TerniLapilliStatus with: self.! !
 
 
-!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/14/2019 16:41:47'!
+!TerniLapilli methodsFor: 'getter' stamp: 'gc 10/17/2019 16:06:23'!
+os
+	^os! !
+
+!TerniLapilli methodsFor: 'getter' stamp: 'gc 10/17/2019 16:06:28'!
+xs
+	^xs! !
+
+
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/17/2019 16:13:40'!
 hasPlayerOWon
-	^status OisWinner! !
+	^self hasWon: os! !
 
-!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/14/2019 16:44:49'!
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/17/2019 16:13:47'!
 hasPlayerXWon
-	^status XisWinner ! !
+	^self hasWon: xs! !
+
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/17/2019 16:04:47'!
+hasWon: aPlayersChips
+	| winningPossibilities |
+	
+	winningPossibilities _ Bag new.
+	
+	winningPossibilities add: (Bag with: (1@1) with: (1@2) with: (1@3)).
+	winningPossibilities add: (Bag with: (2@1) with: (2@2) with: (2@3)).
+	winningPossibilities add: (Bag with: (3@1) with: (3@2) with: (3@3)).
+	
+	winningPossibilities add: (Bag with: (1@1) with: (2@1) with: (3@1)).
+	winningPossibilities add: (Bag with: (1@2) with: (2@2) with: (3@2)).
+	winningPossibilities add: (Bag with: (1@3) with: (2@3) with: (3@3)).
+	
+	winningPossibilities add: (Bag with: (1@1) with: (2@2) with: (3@3)).
+	winningPossibilities add: (Bag with: (1@3) with: (2@2) with: (3@1)).
+	
+	^ winningPossibilities includes: aPlayersChips .! !
 
 !TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 20:06:44'!
 isEmptyAt: aPosition
@@ -675,41 +743,43 @@ isEmptyAt: aPosition
 isOAt: aPosition 
 	^os includes: aPosition ! !
 
-!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/14/2019 16:45:34'!
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/17/2019 16:16:31'!
 isOver
-	^status gameEnded ! !
+	^self hasPlayerOWon or: self hasPlayerXWon ! !
 
-!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/15/2019 19:48:53'!
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/17/2019 16:09:18'!
 isPlayingO
-	^status isPlayingO ! !
+	^turn = #O ! !
 
-!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/15/2019 19:49:06'!
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/17/2019 16:09:27'!
 isPlayingX
-	^status isPlayingX ! !
+	^turn = #X ! !
 
-!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/14/2019 16:46:05'!
+!TerniLapilli methodsFor: 'observer' stamp: 'gc 10/17/2019 16:16:57'!
 isTied
-	^status isTied! !
+	^self isOver not! !
 
 !TerniLapilli methodsFor: 'observer' stamp: 'gc 10/12/2019 17:42:33'!
 isXAt: aPosition 
 	^xs includes: aPosition ! !
 
 
-!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/15/2019 19:47:15'!
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/17/2019 16:07:42'!
 OaddChipAt: aPosition
 	os add: aPosition.
-	status _ TerniLapilliStatus with: os and: xs onTurn: #X.! !
+	turn _ #X.
+	status _ TerniLapilliStatus with: self.! !
 
 !TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/15/2019 20:01:07'!
 OplaceChipAt: aPosition 
 	self checkValidPlacementOn: aPosition .
 	status OplaceChiptAt: aPosition on: self! !
 
-!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/15/2019 19:44:33'!
+!TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/17/2019 16:08:04'!
 XaddChipAt: aPosition
 	xs add: aPosition.
-	status _ TerniLapilliStatus with: os and: xs onTurn: #O.! !
+	turn _ #O.
+	status _ TerniLapilliStatus with: self.! !
 
 !TerniLapilli methodsFor: 'placeChip' stamp: 'gc 10/15/2019 20:00:25'!
 XplaceChipAt: aPosition 
@@ -717,39 +787,43 @@ XplaceChipAt: aPosition
 	status XplaceChiptAt: aPosition on: self! !
 
 
-!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/15/2019 20:30:38'!
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/17/2019 16:08:20'!
 OmoveChipAt: startingPoint to: endingPoint
 	self checkValidMovement: os from: startingPoint to: endingPoint .
 	status OmoveChipAt: startingPoint to: endingPoint  on: self.! !
 
-!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/15/2019 19:47:41'!
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/17/2019 16:08:41'!
 OmovesChipFrom: startingPoint to: endingPoint 
 	os remove: startingPoint.
 	os add: endingPoint .
-	status _ TerniLapilliStatus with: os and: xs onTurn: #X.! !
+	turn _ #X.
+	status _ TerniLapilliStatus with: self.! !
 
 !TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/15/2019 19:59:48'!
 XmoveChipAt: startingPoint to: endingPoint
 	self checkValidMovement: xs from: startingPoint to: endingPoint .
 	status XmoveChipAt: startingPoint to: endingPoint on: self .! !
 
-!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/15/2019 19:44:49'!
+!TerniLapilli methodsFor: 'moveChip' stamp: 'gc 10/17/2019 16:08:58'!
 XmovesChipFrom: startingPoint to: endingPoint 
 	xs remove: startingPoint.
 	xs add: endingPoint .
-	status _ TerniLapilliStatus with: os and: xs onTurn: #O.! !
+	turn _ #O.
+	status _ TerniLapilliStatus with: self.! !
 
 
 !TerniLapilli methodsFor: 'validation' stamp: 'gc 10/15/2019 20:19:36'!
 checkAvailabilityOf: aPosition
 	(self isEmptyAt: aPosition ) ifFalse: [^self error: self class positionTaken ].! !
 
-!TerniLapilli methodsFor: 'validation' stamp: 'gc 10/15/2019 20:19:57'!
+!TerniLapilli methodsFor: 'validation' stamp: 'gc 10/17/2019 16:15:50'!
 checkValidMovement: aPlayerChips from: startingPoint to: endingPoint
 	self checkValidPosition: endingPoint .
 	(aPlayerChips includes: startingPoint ) ifFalse: [^self error: self class noChipToMove ].
 	(self isEmptyAt: endingPoint) ifFalse: [^self error: self class endPositionTaken ].
-	((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: self class movedTooFar ]. ! !
+	(startingPoint = (2@2)) 
+		ifTrue: [((startingPoint eightNeighbors) includes: endingPoint) ifFalse: [^ self error: self class movedTooFar ].] 
+		ifFalse: [(((startingPoint fourNeighbors) includes: endingPoint) or: ((2@2) = endingPoint) ) ifFalse: [^ self error: self class movedTooFar ]. ]! !
 
 !TerniLapilli methodsFor: 'validation' stamp: 'gc 10/15/2019 20:00:47'!
 checkValidPlacementOn: aPosition
@@ -832,63 +906,19 @@ OplaceChiptAt: aPosition on: aTerniLapilli
 XplaceChiptAt: aPosition on: aTerniLapilli
 	^self subclassResponsibility ! !
 
-
-!TerniLapilliStatus methodsFor: 'observer' stamp: 'gc 10/15/2019 20:05:10'!
-OisWinner
-	^false! !
-
-!TerniLapilliStatus methodsFor: 'observer' stamp: 'gc 10/15/2019 20:05:17'!
-XisWinner
-	^false! !
-
-!TerniLapilliStatus methodsFor: 'observer' stamp: 'gc 10/15/2019 18:44:44'!
-gameEnded
-	^false! !
-
-!TerniLapilliStatus methodsFor: 'observer' stamp: 'gc 10/15/2019 20:08:42'!
-isPlayingO
-	^self subclassResponsibility ! !
-
-!TerniLapilliStatus methodsFor: 'observer' stamp: 'gc 10/15/2019 20:08:45'!
-isPlayingX
-	^self subclassResponsibility ! !
-
-!TerniLapilliStatus methodsFor: 'observer' stamp: 'gc 10/15/2019 18:44:35'!
-isTied
-	^true! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'TerniLapilliStatus class' category: #'Terni Lapilli'!
 TerniLapilliStatus class
 	instanceVariableNames: ''!
 
-!TerniLapilliStatus class methodsFor: 'instance creation' stamp: 'gc 10/15/2019 19:30:09'!
-canHandle: Ochips and: Xchips onTurn: aPlayerTurn
+!TerniLapilliStatus class methodsFor: 'instance creation' stamp: 'gc 10/17/2019 16:11:15'!
+canHandle: aTerniLapilli
 	^self subclassResponsibility ! !
 
-!TerniLapilliStatus class methodsFor: 'instance creation' stamp: 'gc 10/14/2019 16:36:30'!
-hasWon: aPlayersChips
-	| winningPossibilities |
-	
-	winningPossibilities _ Bag new.
-	
-	winningPossibilities add: (Bag with: (1@1) with: (1@2) with: (1@3)).
-	winningPossibilities add: (Bag with: (2@1) with: (2@2) with: (2@3)).
-	winningPossibilities add: (Bag with: (3@1) with: (3@2) with: (3@3)).
-	
-	winningPossibilities add: (Bag with: (1@1) with: (2@1) with: (3@1)).
-	winningPossibilities add: (Bag with: (1@2) with: (2@2) with: (3@2)).
-	winningPossibilities add: (Bag with: (1@3) with: (2@3) with: (3@3)).
-	
-	winningPossibilities add: (Bag with: (1@1) with: (2@2) with: (3@3)).
-	winningPossibilities add: (Bag with: (1@3) with: (2@2) with: (3@1)).
-	
-	^ winningPossibilities includes: aPlayersChips .! !
-
-!TerniLapilliStatus class methodsFor: 'instance creation' stamp: 'gc 10/15/2019 19:27:12'!
-with: Ochips and: Xchips onTurn: aPlayerTurn
-	^(self subclasses detect: [:aSubclass | aSubclass canHandle: Ochips and: Xchips onTurn: aPlayerTurn]) new! !
+!TerniLapilliStatus class methodsFor: 'instance creation' stamp: 'gc 10/17/2019 16:00:07'!
+with: aTerniLapilli
+	^(self subclasses detect: [:aSubclass | aSubclass canHandle: aTerniLapilli ]) new! !
 
 
 !classDefinition: #OMovingChips category: #'Terni Lapilli'!
@@ -917,26 +947,17 @@ OplaceChiptAt: aPosition on: aTerniLapilli
 XplaceChiptAt: aPosition on: aTerniLapilli
 	^self error: TerniLapilli wrongTurn ! !
 
-
-!OMovingChips methodsFor: 'observer' stamp: 'gc 10/15/2019 19:49:38'!
-isPlayingO
-	^true! !
-
-!OMovingChips methodsFor: 'observer' stamp: 'gc 10/15/2019 19:49:46'!
-isPlayingX
-	^false! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'OMovingChips class' category: #'Terni Lapilli'!
 OMovingChips class
 	instanceVariableNames: ''!
 
-!OMovingChips class methodsFor: 'instance creation' stamp: 'gc 10/15/2019 19:46:11'!
-canHandle: Ochips and: Xchips onTurn: aPlayerTurn
+!OMovingChips class methodsFor: 'instance creation' stamp: 'gc 10/17/2019 16:14:27'!
+canHandle: aTerniLapilli
 	|gameTied|
-	gameTied _ ((TerniLapilliStatus hasWon: Ochips) or: (TerniLapilliStatus hasWon: Xchips)) not.
-	^Ochips size = 3 and: (Xchips size = 3) and: gameTied and: aPlayerTurn = #O! !
+	gameTied _ ((aTerniLapilli hasPlayerOWon ) or: (aTerniLapilli hasPlayerXWon )) not.
+	^(aTerniLapilli os) size = 3 and: ((aTerniLapilli xs) size = 3) and: gameTied and: aTerniLapilli isPlayingO ! !
 
 
 !classDefinition: #OPlacingChips category: #'Terni Lapilli'!
@@ -963,26 +984,17 @@ OplaceChiptAt: aPosition on: aTerniLapilli
 XplaceChiptAt: aPosition on: aTerniLapilli
 	^self error: TerniLapilli wrongTurn ! !
 
-
-!OPlacingChips methodsFor: 'observer' stamp: 'gc 10/15/2019 19:49:58'!
-isPlayingO
-	^true! !
-
-!OPlacingChips methodsFor: 'observer' stamp: 'gc 10/15/2019 19:50:04'!
-isPlayingX
-	^false! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'OPlacingChips class' category: #'Terni Lapilli'!
 OPlacingChips class
 	instanceVariableNames: ''!
 
-!OPlacingChips class methodsFor: 'instance creation' stamp: 'gc 10/15/2019 19:46:17'!
-canHandle: Ochips and: Xchips onTurn: aPlayerTurn
+!OPlacingChips class methodsFor: 'instance creation' stamp: 'gc 10/17/2019 16:14:36'!
+canHandle: aTerniLapilli
 	|gameTied|
-	gameTied _ ((TerniLapilliStatus hasWon: Ochips) or: (TerniLapilliStatus hasWon: Xchips)) not.
-	^Ochips size < 3 and: (Xchips size <= 3) and: gameTied and: aPlayerTurn = #O! !
+	gameTied _ ((aTerniLapilli hasPlayerOWon ) or: (aTerniLapilli hasPlayerXWon )) not.
+	^(aTerniLapilli os) size < 3 and: ((aTerniLapilli xs) size <= 3) and: gameTied and: aTerniLapilli isPlayingO! !
 
 
 !classDefinition: #Owon category: #'Terni Lapilli'!
@@ -991,27 +1003,6 @@ TerniLapilliStatus subclass: #Owon
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
-
-!Owon methodsFor: 'observer' stamp: 'gc 10/14/2019 16:42:15'!
-OisWinner
-	^true! !
-
-!Owon methodsFor: 'observer' stamp: 'gc 10/14/2019 16:42:39'!
-gameEnded
-	^true! !
-
-!Owon methodsFor: 'observer' stamp: 'gc 10/15/2019 20:09:01'!
-isPlayingO
-	^false! !
-
-!Owon methodsFor: 'observer' stamp: 'gc 10/15/2019 20:09:03'!
-isPlayingX
-	^false! !
-
-!Owon methodsFor: 'observer' stamp: 'gc 10/14/2019 16:46:18'!
-isTied
-	^false! !
-
 
 !Owon methodsFor: 'moveChip' stamp: 'gc 10/15/2019 20:18:12'!
 OmoveChipAt: startingPoint to: endingPoint on: aTerniLapilli
@@ -1036,9 +1027,9 @@ XplaceChiptAt: aPosition on: aTerniLapilli
 Owon class
 	instanceVariableNames: ''!
 
-!Owon class methodsFor: 'instance creation' stamp: 'gc 10/15/2019 19:27:36'!
-canHandle: Ochips and: Xchips onTurn: aPlayerTurn
-	^TerniLapilliStatus hasWon: Ochips! !
+!Owon class methodsFor: 'instance creation' stamp: 'gc 10/17/2019 16:14:44'!
+canHandle: aTerniLapilli
+	^aTerniLapilli hasPlayerOWon ! !
 
 
 !classDefinition: #XMovingChips category: #'Terni Lapilli'!
@@ -1067,26 +1058,17 @@ OplaceChiptAt: aPosition on: aTerniLapilli
 XplaceChiptAt: aPosition on: aTerniLapilli
 	^self error: TerniLapilli tooManyChips ! !
 
-
-!XMovingChips methodsFor: 'observer' stamp: 'gc 10/15/2019 19:50:23'!
-isPlayingO
-	^false! !
-
-!XMovingChips methodsFor: 'observer' stamp: 'gc 10/15/2019 19:50:13'!
-isPlayingX
-	^true! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'XMovingChips class' category: #'Terni Lapilli'!
 XMovingChips class
 	instanceVariableNames: ''!
 
-!XMovingChips class methodsFor: 'instance creation' stamp: 'gc 10/15/2019 19:46:44'!
-canHandle: Ochips and: Xchips onTurn: aPlayerTurn
+!XMovingChips class methodsFor: 'instance creation' stamp: 'gc 10/17/2019 16:14:53'!
+canHandle: aTerniLapilli
 	|gameTied|
-	gameTied _ ((TerniLapilliStatus hasWon: Ochips) or: (TerniLapilliStatus hasWon: Xchips)) not.
-	^Ochips size = 3 and: (Xchips size = 3) and: gameTied and: aPlayerTurn = #X! !
+	gameTied _ ((aTerniLapilli hasPlayerOWon ) or: (aTerniLapilli hasPlayerXWon )) not.
+	^(aTerniLapilli os) size = 3 and: ((aTerniLapilli xs) size = 3) and: gameTied and: aTerniLapilli isPlayingX ! !
 
 
 !classDefinition: #XPlacingChips category: #'Terni Lapilli'!
@@ -1113,26 +1095,17 @@ OplaceChiptAt: aPosition on: aTerniLapilli
 XplaceChiptAt: aPosition on: aTerniLapilli
 	^aTerniLapilli XaddChipAt: aPosition .! !
 
-
-!XPlacingChips methodsFor: 'observer' stamp: 'gc 10/15/2019 19:50:33'!
-isPlayingO
-	^false! !
-
-!XPlacingChips methodsFor: 'observer' stamp: 'gc 10/15/2019 19:50:39'!
-isPlayingX
-	^true! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'XPlacingChips class' category: #'Terni Lapilli'!
 XPlacingChips class
 	instanceVariableNames: ''!
 
-!XPlacingChips class methodsFor: 'instance creation' stamp: 'gc 10/15/2019 19:46:50'!
-canHandle: Ochips and: Xchips onTurn: aPlayerTurn
+!XPlacingChips class methodsFor: 'instance creation' stamp: 'gc 10/17/2019 16:15:01'!
+canHandle: aTerniLapilli
 	|gameTied|
-	gameTied _ ((TerniLapilliStatus hasWon: Ochips) or: (TerniLapilliStatus hasWon: Xchips)) not.
-	^Ochips size < 3 and: (Xchips size < 3) and: gameTied and: aPlayerTurn = #X! !
+	gameTied _ ((aTerniLapilli hasPlayerOWon ) or: (aTerniLapilli hasPlayerXWon )) not.
+	^(aTerniLapilli os) size < 3 and: ((aTerniLapilli xs) size < 3) and: gameTied and: aTerniLapilli isPlayingX ! !
 
 
 !classDefinition: #Xwon category: #'Terni Lapilli'!
@@ -1159,33 +1132,12 @@ OplaceChiptAt: aPosition on: aTerniLapilli
 XplaceChiptAt: aPosition on: aTerniLapilli
 	^self error: TerniLapilli gameOver ! !
 
-
-!Xwon methodsFor: 'observer' stamp: 'gc 10/14/2019 16:44:07'!
-XisWinner
-	^true! !
-
-!Xwon methodsFor: 'observer' stamp: 'gc 10/14/2019 16:43:55'!
-gameEnded
-	^true! !
-
-!Xwon methodsFor: 'observer' stamp: 'gc 10/15/2019 20:09:12'!
-isPlayingO
-	^false! !
-
-!Xwon methodsFor: 'observer' stamp: 'gc 10/15/2019 20:09:14'!
-isPlayingX
-	^false! !
-
-!Xwon methodsFor: 'observer' stamp: 'gc 10/14/2019 16:46:25'!
-isTied
-	^false! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Xwon class' category: #'Terni Lapilli'!
 Xwon class
 	instanceVariableNames: ''!
 
-!Xwon class methodsFor: 'instance creation' stamp: 'gc 10/15/2019 19:27:49'!
-canHandle: Ochips and: Xchips onTurn: aPlayerTurn
-	^TerniLapilliStatus hasWon: Xchips! !
+!Xwon class methodsFor: 'instance creation' stamp: 'gc 10/17/2019 16:15:10'!
+canHandle: aTerniLapilli
+	^aTerniLapilli hasPlayerXWon ! !
