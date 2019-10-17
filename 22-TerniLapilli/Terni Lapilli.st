@@ -127,8 +127,8 @@ test26OCantMoveAfterPlacingAChip
 	! !
 
 
-!TerniLapilliTest methodsFor: 'chip placement requirement' stamp: 'gc 10/15/2019 20:24:58'!
-test05XCantPlayInOccupiedPosition
+!TerniLapilliTest methodsFor: 'chip placement requirement' stamp: 'gc 10/17/2019 14:20:14'!
+test05XCantPlayInOccupiedPositionByX
 	| game |
 	game _ TerniLapilli newGame.
 	game XplaceChipAt: 1@1.
@@ -139,8 +139,8 @@ test05XCantPlayInOccupiedPosition
 	withMessageText: TerniLapilli positionTaken .
 	! !
 
-!TerniLapilliTest methodsFor: 'chip placement requirement' stamp: 'gc 10/15/2019 20:25:09'!
-test06OCantPlayInOccupiedPosition
+!TerniLapilliTest methodsFor: 'chip placement requirement' stamp: 'gc 10/17/2019 14:20:26'!
+test06OCantPlayInOccupiedPositionByX
 	| game |
 	game _ TerniLapilli newGame.
 	game XplaceChipAt: 1@1.
@@ -172,6 +172,31 @@ test09OCantPlayInInvalidPosition
 	withMessageText: TerniLapilli invalidPosition 
 
 	
+	! !
+
+!TerniLapilliTest methodsFor: 'chip placement requirement' stamp: 'gc 10/17/2019 14:20:36'!
+test36XCantPlayInOccupiedPositionByO
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	
+	self should: [ game XplaceChipAt: 2@1.] 
+	raise: Error 
+	withMessageText: TerniLapilli positionTaken .
+	! !
+
+!TerniLapilliTest methodsFor: 'chip placement requirement' stamp: 'gc 10/17/2019 14:21:28'!
+test37OCantPlayInOccupiedPositionByO
+	| game |
+	game _ TerniLapilli newGame.
+	game XplaceChipAt: 1@1.
+	game OplaceChipAt: 2@1.
+	game XplaceChipAt: 3@1.
+	
+	self should: [ game OplaceChipAt: 2@1.] 
+	raise: Error 
+	withMessageText: TerniLapilli positionTaken 
 	! !
 
 
