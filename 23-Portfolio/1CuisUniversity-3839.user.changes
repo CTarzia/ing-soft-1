@@ -3114,583 +3114,923 @@ Smalltalk removeClassNamed: #LiveTypingClassToBeRemoved!
 ----STARTUP---- (1 October 2019 12:37:13) as /home/gzeitoune/Documents/UBA/ingSoft1/examen/imagen nueva/CuisUniversity-3839.image!
 
 
-----STARTUP---- (19 October 2019 20:58:27) as /home/chiara/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
+----STARTUP---- (18 October 2019 10:17:59) as /Users/ctarzia/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
 
 
-----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/23-Portfolio/Portfolio-Ejercicio.st----!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:00:28'!
-test34PortfolioAddedToPortfolioShouldBeContainedInIt
-	| portfolio1 portfolio2 |
+----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/23-Portfolio/Portfolio-Ejercicio.st----!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 14:53:35'!
+test27CantAddAccountWhenItIsAlsoUpperInTheTree
+	| portfolio1 portfolio2 account |
 	
 	portfolio1 _ Portfolio create.
 	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
 	
-	portfolio1 addPortfolio: portfolio2.
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	
+	
+	
+	self assert: (portfolio1 transactions) .! !
 
-	self assert: (portfolio1 contains: portfolio2 ).! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:06:19'!
-contains3: anAccountOrPortfolio 
-	^anAccountOrPortfolio isIncludedIn: accountsAndPortfolios ! !
+----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/22-TerniLapilli/Terni Lapilli.st----!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 14:55:25' prior: 50726986!
+test27CantAddAccountWhenItIsAlsoUpperInTheTree
+	| portfolio1 portfolio2 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
 
-Portfolio removeSelector: #contains:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:06:27'!
-contains: anAccountOrPortfolio 
-	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: anAccountOrPortfolio ]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:11:47'!
-isContainedIn: aPortfolio 
-	^((aPortfolio accountsAndPortfolios) includes: self) or: [(aPortfolio accountsAndPortfolios) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:12:04'!
-accountsAndPortfolios
-	^accountsAndPortfolios ! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:14:34' prior: 50727197!
-contains: anAccountOrPortfolio 
-	^anAccountOrPortfolio isContainedIn: self ! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:16:10'!
-isContainedIn: aPortfolio 
-	^((aPortfolio accountsAndPortfolios) includes: self) or: [(aPortfolio accountsAndPortfolios) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio includes: self ]]]! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:18:06' prior: 50727226!
-isContainedIn: aPortfolio 
-	^((aPortfolio accountsAndPortfolios) includes: self) or: [(aPortfolio accountsAndPortfolios) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:21:56'!
-isInPortfolio: anAccountOrPortfolio 
-	^accountsAndPortfolios inject: false into: [:isIncluded :accountOrPortfolio | isIncluded or: [accountOrPortfolio includes: accountOrPortfolio ]]! !
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	
+	
+	self should: [account ] 
+	raise: Error 
+	withMessageText: 'a' 
 
-Portfolio removeSelector: #isIncludedIn:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:22:50' prior: 50727066!
-hasCommonElementsWith: aPortfolioOrAccount 
-	^aPortfolioOrAccount isContainedIn: accountsAndPortfolios.! !
+	! !
 
-Portfolio removeSelector: #contains3:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:23:17' prior: 50727257!
-hasCommonElementsWith: aPortfolioOrAccount 
-	^aPortfolioOrAccount isContainedIn: self.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:27:06' prior: 50727205!
-isContainedIn: aPortfolio 
-	^((aPortfolio accountsAndPortfolios) includes: self) or: [(aPortfolio accountsAndPortfolios) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]] or: [(aPortfolio parents) inject: false into: [:isContained :aParent | isContained or: [aParent contains: self ]]]! !
+Smalltalk removeClassNamed: #Xwon!
 
-!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
-Account subclass: #Portfolio
-	instanceVariableNames: 'accountsAndPortfolios parents accounts'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Ejercicio'!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:39:19'!
-accounts
-	^accounts! !
+Smalltalk removeClassNamed: #XPlacingChips!
 
-Account subclass: #Portfolio
-	instanceVariableNames: 'parents accounts'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Ejercicio'!
+Smalltalk removeClassNamed: #XMovingChips!
 
-!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
-Account subclass: #Portfolio
-	instanceVariableNames: 'parents accounts'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Ejercicio'!
+Smalltalk removeClassNamed: #Owon!
 
-Portfolio removeSelector: #accountsAndPortfolios!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:39:55' prior: 50727003!
+Smalltalk removeClassNamed: #OPlacingChips!
+
+Smalltalk removeClassNamed: #OMovingChips!
+
+Smalltalk removeClassNamed: #TerniLapilliStatus!
+
+Smalltalk removeClassNamed: #TerniLapilli!
+
+Smalltalk removeClassNamed: #TerniLapilliTest!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:05:20' prior: 50728124!
+test27CantAddAccountWhenItIsAlsoUpperInTheTree
+	| portfolio1 portfolio2 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	
+	
+	self should: [portfolio2 addAccount: account ] 
+	raise: Error 
+	withMessageText: 'Esta cuenta ya esta mas arriba en el arbol' 
+
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:07:04'!
+test28CantAddAccountWhenItIsAlsoUpperInTheTree
+	| portfolio1 portfolio2 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	
+	
+	self should: [portfolio2 addAccount: account ] 
+	raise: Error 
+	withMessageText: 'Esta cuenta ya esta mas arriba en el arbol' 
+
+	! !
+
+ReceptiveAccountTest removeSelector: #test27CantAddAccountWhenItIsAlsoUpperInTheTree!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:10:51'!
+test27CanAddAccountWhenItIsInAParallelPortfolio
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account _ ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	portfolio3 addAccount: account.
+	
+	self assert: portfolio1 
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:12:41' prior: 50728183!
+test27CanAddAccountWhenItIsInAParallelPortfolio
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account _ ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	portfolio3 addAccount: account.
+	
+	self assert: (portfolio1 contains: account ).
+	self assert: (portfolio3 contains: account ).
+	
+	! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:13:25' prior: 50726888!
 addAccount: aReceptiveAccount 
-	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accounts addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:40:03' prior: 50727023!
-addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Portfolio portfolioWithAccountAlreadyInTree ].
-	accounts addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:08' prior: 50727046!
-balance
-	
-	^accounts inject: 0 into: [:totalBalance :account | totalBalance + (account balance)]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:14' prior: 50727052!
-contains2: anAccountOrPortfolio 
-	^accounts inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: anAccountOrPortfolio ]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:20' prior: 50727072!
-hasRegistered: aTransaction 
-	^accounts inject: false into: [:hasRegistered :accountOrPortfolio | hasRegistered or: [accountOrPortfolio hasRegistered: aTransaction]]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:40:25' prior: 50727036!
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:14:05' prior: 50726899!
 initialize
-	accounts _ OrderedCollection new.
+	accountsAndPortfolios _ OrderedCollection new.
 	parents _ OrderedCollection new.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:33' prior: 50727271!
-isContainedIn: aPortfolio 
-	^((aPortfolio accounts ) includes: self) or: [(aPortfolio accounts ) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]] or: [(aPortfolio parents) inject: false into: [:isContained :aParent | isContained or: [aParent contains: self ]]]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:40:39' prior: 50727042!
-isEmpty
-	^accounts isEmpty ! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:44' prior: 50727247!
-isInPortfolio: anAccountOrPortfolio 
-	^accounts inject: false into: [:isIncluded :accountOrPortfolio | isIncluded or: [accountOrPortfolio includes: accountOrPortfolio ]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:49' prior: 50727092!
-transactions
-	| transactions |
-	transactions _ OrderedCollection  new.
-	
-	^accounts inject: transactions into: [:total :account | total addAll: (account transactions). total].! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:41:01' prior: 50727237!
-isContainedIn: aPortfolio 
-	^((aPortfolio accounts ) includes: self) or: [(aPortfolio accounts ) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:43:38' prior: 50727309!
-addAccount: aReceptiveAccount 
-	self assertCanBeAdded: aReceptiveAccount .
-	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accounts addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:44:00' prior: 50727410!
-addAccount: aReceptiveAccount 
-	self assertCanBeAdded: aReceptiveAccount .
-	"
-	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	"
-	accounts addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:45:29'!
-assertCanBeAdded: aReceptiveAccount 
-	! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:46:10' prior: 50727113!
-accountAlreadyInTree
-	^'Esa cuenta no se puede agregar'.! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:47:06'!
-accountCantBeAdded
-	^'Esa cuenta no se puede agregar'.! !
-!ReceptiveAccountTest methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:47:06' prior: 50726751!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:47:06' prior: 50726796!
-test32CantAddAccountToPortfolioIfChildContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio2 addPortfolio: portfolio1.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountCantBeAdded .! !
-
-Portfolio class removeSelector: #accountAlreadyInTree!
-
-Portfolio class removeSelector: #accountAlreadyInPortfolio!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:47:36' prior: 50726784!
-test31CantAddAccountToSamePortfolioTwice
-	| portfolio account |
-	
-	portfolio _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio addAccount: account .
-	
-	self should: [portfolio addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountCantBeAdded .
-	
-	
-	! !
-
-Portfolio class removeSelector: #portfolioWithAccountAlreadyInTree!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:47:50' prior: 50727324!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:14:33' prior: 50726894!
 addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Portfolio accountCantBeAdded ].
-	accounts addLast: aPortfolio.
+	accountsAndPortfolios addLast: aPortfolio.
 	aPortfolio addParent: self.! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:47:57' prior: 50726766!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio2 addPortfolio: portfolio3 .
-	
-	portfolio1 addAccount: account .
-	portfolio2 addAccount: account .
-	
-	self should: [portfolio3 addPortfolio: portfolio1 .] 
-	raise: Error 
-	withMessageText: Portfolio accountCantBeAdded .
-	
-	
-	! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:48:21' prior: 50727452!
-accountCantBeAdded
-	^'Esa cuenta esta repetida y no se puede agregar'.! !
-
-Portfolio removeSelector: #contains2:!
-
-----SNAPSHOT----(19 October 2019 21:48:42) CuisUniversity-3839.image priorSource: 12628964!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:52:06' prior: 50727442!
-assertCanBeAdded: anAccount 
-	(self accountAlreadyInTree: anAccount ) ifTrue: [^Account ]! !
-!Account class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:52:39' prior: 50726987!
-create
-	^self subclassResponsibility ! !
-!Account class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:52:44'!
-accountCantBeAdded
-	^'Esa cuenta esta repetida y no se puede agregar'.! !
-
-Portfolio class removeSelector: #accountCantBeAdded!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:53:02' prior: 50727508!
-addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Account accountCantBeAdded ].
-	accounts addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:53:13' prior: 50727458!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:53:24' prior: 50727520!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio2 addPortfolio: portfolio3 .
-	
-	portfolio1 addAccount: account .
-	portfolio2 addAccount: account .
-	
-	self should: [portfolio3 addPortfolio: portfolio1 .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .
-	
-	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:53:38' prior: 50727493!
-test31CantAddAccountToSamePortfolioTwice
-	| portfolio account |
-	
-	portfolio _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio addAccount: account .
-	
-	self should: [portfolio addAccount: account .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .
-	
-	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:53:45' prior: 50727474!
-test32CantAddAccountToPortfolioIfChildContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio2 addPortfolio: portfolio1.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:54:15' prior: 50727549!
-assertCanBeAdded: anAccount 
-	(self accountAlreadyInTree: anAccount ) ifTrue: [^Account accountCantBeAdded ]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:54:25' prior: 50727638!
-assertCanBeAdded: anAccount 
-	(self accountAlreadyInTree: anAccount ) ifTrue: [^self error: Account accountCantBeAdded ]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:02:37'!
-accountAlreadyInTree: anAccount 
-	| accountsInHierarchy |
-	
-	accountsInHierarchy _ self accountsInHierarchy.
-	
-	^accountsInHierarchy anySatisfy: [:anAccountInHierarchy | anAccountInHierarchy contains: anAccount ]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:03:37' prior: 50727652!
-accountAlreadyInTree: anAccount 
-	| accountsInTree |
-	
-	accountsInTree _ self accountsInTree.
-	
-	^accountsInTree anySatisfy: [:anAccountInHierarchy | anAccountInHierarchy contains: anAccount ]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:04:57' prior: 50727566!
-addPortfolio: aPortfolio 
-	"
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Account accountCantBeAdded ].
-	accounts addLast: aPortfolio.
-	"
-	self assertCanBeAdded: aPortfolio .
-	aPortfolio addParent: self.! !
-
-----SNAPSHOT----(19 October 2019 22:09:26) CuisUniversity-3839.image priorSource: 12668625!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 22:09:27' prior: 50727220!
-contains: anAccount
-	^(anAccount = self) or: [accounts anySatisfy: [:anAccountInSelf | (anAccount contains: anAccountInSelf ) or: [anAccountInSelf contains: anAccount ]]]
-! !
-
-----SNAPSHOT----(19 October 2019 22:09:31) CuisUniversity-3839.image priorSource: 12673092!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:10:10' prior: 50727672!
-addPortfolio: aPortfolio 
-	"
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Account accountCantBeAdded ].
-	"
-	self assertCanBeAdded: aPortfolio .
-	accounts addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 22:10:24' prior: 50727336!
-balance
-	^accounts inject: 0 into: [:totalBalance :account | totalBalance + (account balance)]! !
-
-Portfolio removeSelector: #hasCommonElementsWith:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 22:11:24' prior: 50727350!
-hasRegistered: aTransaction 
-	^accounts anySatisfy: [:accountOrPortfolio | accountOrPortfolio hasRegistered: aTransaction]! !
-
-Portfolio removeSelector: #isContainedIn:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 22:12:25' prior: 50727383!
-isInPortfolio: anAccountOrPortfolio 
-	^accounts anySatisfy: [:accountOrPortfolio | accountOrPortfolio includes: accountOrPortfolio ]! !
-
-Portfolio removeSelector: #isInPortfolio:!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:13:13'!
-accountsInTree
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:13:34' prior: 50727738!
-accountsInTree
-	| accountsInTree |
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:17:04' prior: 50727742!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | accountsInTree add: aParent ]
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:17:41' prior: 50727747!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree add: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		]
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:18:25' prior: 50727754!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree addAll: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		]
-	! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:18:59' prior: 50727166!
-contains: anAccount
-	^self = anAccount.! !
-
-ReceptiveAccount removeSelector: #isContainedIn:!
-
-ReceptiveAccount removeSelector: #isIncludedIn:!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:27:34' prior: 50727763!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree addAll: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		].
-	^accountsInTree ! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:28:29'!
-test35PortfolioNotInPortfolioIsntContainedInPortfolio
-	| portfolio1 portfolio2 portfolio3 |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	
-	portfolio1 addPortfolio: portfolio2.
-
-	self deny: (portfolio1 contains: portfolio3 ).! !
-
-ReceptiveAccountTest removeSelector: #test34PortfolioNotInPortfolioIsntContainedInPortfolio!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:33:19' prior: 50727780!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree addAll: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		].
-	accountsInTree add: self
-	^accountsInTree ! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:33:37' prior: 50727804!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree addAll: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		].
-	accountsInTree add: self.
-	^accountsInTree ! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:37:09'!
-test36CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2 portfolio3 |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	
-	portfolio1 addPortfolio: portfolio2.
-
-	self deny: (portfolio1 contains: portfolio3 ).! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:49:39' prior: 50727824!
-test36CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio2 addPortfolio: portfolio1.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio2 addAccount: account .
-
-	self should: [portfolio1 addAccount: account .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:52:01'!
-test37CantAddPortfolioToSelf
-	| portfolio  account |
-	
-	portfolio _ Portfolio create.
-
-	portfolio addPortfolio: portfolio.
-	
-	account := ReceptiveAccount new.
-
-	self should: [portfolio addPortfolio: portfolio.] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:52:22' prior: 50727851!
-test37CantAddPortfolioToSelf
-	| portfolio  account |
-	
-	portfolio _ Portfolio create.
-	
-	account := ReceptiveAccount new.
-
-	self should: [portfolio addPortfolio: portfolio.] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:52:37' prior: 50727863!
-test37CantAddPortfolioToSelf
-	| portfolio |
-	
-	portfolio _ Portfolio create.
-
-	self should: [portfolio addPortfolio: portfolio.] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!Account class methodsFor: 'error message' stamp: 'gc 10/19/2019 22:55:29' prior: 50727559!
-accountCantBeAdded
-	^'Esa cuenta esta repetida en la jerarquia y no se puede agregar'.! !
-
-----SNAPSHOT----(19 October 2019 23:09:26) CuisUniversity-3839.image priorSource: 12673454!
-!Account methodsFor: 'add' stamp: 'gc 10/19/2019 23:12:36'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:15:04'!
 addParent: aPortfolio 
-	^self subclassResponsibility ! !
-!Account methodsFor: 'verification' stamp: 'gc 10/19/2019 23:13:11'!
-accountAlreadyInTree: anAccount 
-	^self subclassResponsibility ! !
-!Account methodsFor: 'add' stamp: 'gc 10/19/2019 23:13:29' prior: 50726946!
-addAccount: anAccount  
-	^self subclassResponsibility ! !
-!Account methodsFor: 'add' stamp: 'gc 10/19/2019 23:13:53' prior: 50727900!
-addAccount: aReceptiveAccount  
-	^self subclassResponsibility ! !
-!Account methodsFor: 'verification' stamp: 'gc 10/19/2019 23:14:14'!
-accountsInTree
-	^self subclassResponsibility ! !
-!Account methodsFor: 'verification' stamp: 'gc 10/19/2019 23:14:29'!
-assertCanBeAdded: anAccount 
-	^self subclassResponsibility ! !
-!Account methodsFor: 'verification' stamp: 'gc 10/19/2019 23:14:37' prior: 50726968!
-contains: anAccount  
-	^self subclassResponsibility ! !
-!Account methodsFor: 'get' stamp: 'gc 10/19/2019 23:15:12'!
-accounts
-	^self subclassResponsibility ! !
-!Account methodsFor: 'get' stamp: 'gc 10/19/2019 23:15:16'!
-parents
-	^self subclassResponsibility ! !
-!Account methodsFor: 'transactions' stamp: 'gc 10/19/2019 23:15:56'!
-register: aTransaction
-	^self subclassResponsibility ! !
-!AccountTransaction methodsFor: 'value' stamp: 'gc 10/19/2019 23:17:18'!
-initializeFor: aValue
-
-	^self subclassResponsibility ! !
-!AccountTransaction methodsFor: 'value' stamp: 'gc 10/19/2019 23:17:23' prior: 50726845!
-value 
-
-	^self subclassResponsibility ! !
-!AccountTransaction methodsFor: 'value' stamp: 'gc 10/19/2019 23:17:27' prior: 50726849!
-worth 
-
-	^self subclassResponsibility ! !
-!AccountTest methodsFor: 'basic portfolio' stamp: 'gc 10/19/2019 23:29:03'!
-test20AddPortfolioToPortfolioShouldntBeEmpty
-	| portfolio1 portfolio2|
+	parents addLast: aPortfolio.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:17:12'!
+test28AddingPortfolioToPortfolioUpdatesParents
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account _ ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	portfolio3 addAccount: account.
+	
+	self assert: (portfolio1 contains: account ).
+	self assert: (portfolio3 contains: account ).
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:25:13' prior: 50728240!
+test28AddingPortfolioToPortfolioUpdatesParents
+	| portfolio1 portfolio2 |
 	
 	portfolio1 _ Portfolio create.
 	portfolio2 _ Portfolio create.
 	
 	portfolio1 addPortfolio: portfolio2 .
 	
-	self deny: (portfolio1 isEmpty ).
-	self assert: (portfolio2 isEmpty ).! !
+	self assert: ((portfolio2 parents) size = 1 ).
+	self assert: ((portfolio2 parents) includes: portfolio1 ).
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:25:23'!
+test29CantAddAccountWhenItIsAlsoUpperInTheTree
+	| portfolio1 portfolio2 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
 
-AccountTest removeSelector: #test20AddEmptyPortfolioToEmptyPortfolioShouldntBeEmpty!
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	
+	
+	self should: [portfolio2 addAccount: account ] 
+	raise: Error 
+	withMessageText: 'Esta cuenta ya esta mas arriba en el arbol' 
 
-----SNAPSHOT----(19 October 2019 23:35:24) CuisUniversity-3839.image priorSource: 12679609!
+	! !
 
-----QUIT----(19 October 2019 23:35:40) CuisUniversity-3839.image priorSource: 12682004!
+ReceptiveAccountTest removeSelector: #test28CantAddAccountWhenItIsAlsoUpperInTheTree!
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 15:29:50'!
+parents
+	self shouldBeImplemented.
+	^parents! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 15:29:57' prior: 50728288!
+parents
+	^parents! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:30:57' prior: 50728270!
+test29CantAddAccountWhenItIsAlsoUpperInTheTree
+	| portfolio1 portfolio2 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	
+	self should: [portfolio2 addAccount: account ] 
+	raise: Error 
+	withMessageText: 'Esta cuenta ya esta mas arriba en el arbol' 
+
+	! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:32:26' prior: 50728217!
+addAccount: aReceptiveAccount 
+	
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:32:52' prior: 50728313!
+addAccount: aReceptiveAccount 
+	
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:37:58' prior: 50728319!
+addAccount: aReceptiveAccount 
+	(parents inject: false into: [:includesAccount :accountOrPortfolio | includesAccount or: [accountOrPortfolio includes: aReceptiveAccount ]]) ifTrue: [^self class ].
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+
+----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/Terni Lapilli.st----!
+
+Smalltalk removeClassNamed: #TerniLapilli!
+
+Smalltalk removeClassNamed: #TerniLapilliTest!
+
+----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/22-TerniLapilli/Terni Lapilli.st----!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:40:46' prior: 50728297!
+test29CantAddAccountWhenItIsAlsoUpperInTheTree
+	| portfolio1 portfolio2 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account.
+	
+	self should: [portfolio2 addAccount: account ] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree.
+
+	! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:41:18'!
+accountAlreadyInTree
+	^'Esa cuenta ya esta en el arbol'! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:43:16' prior: 50728325!
+addAccount: aReceptiveAccount 
+	(parents inject: false into: [:includesAccount :accountOrPortfolio | includesAccount or: [accountOrPortfolio includes: aReceptiveAccount ]. includesAccount ]) ifTrue: [^self class ].
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:43:58' prior: 50729647!
+addAccount: aReceptiveAccount 
+	(parents inject: false into: [:includesAccount :accountOrPortfolio | includesAccount or: [accountOrPortfolio includes: aReceptiveAccount ]. includesAccount ]) ifTrue: [^self class ].
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+
+----STARTUP---- (18 October 2019 15:52:33) as /Users/ctarzia/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
+
+
+----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/23-Portfolio/Portfolio-Ejercicio.st----!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:13:22'!
+test27CanAddAccountToTwoPortfoliosWithoutCommonParent
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:13:57' prior: 50730348!
+test27CanAddAccountToTwoPortfoliosWithoutCommonParent
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio3 addAccount: account .
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:14:26' prior: 50730361!
+test27CanAddAccountToTwoPortfoliosWithoutCommonParent
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio3 addAccount: account .
+	
+	self assert: (portfolio1 includes: account ).
+	self assert: (portfolio3 includes: account ).
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:14:46' prior: 50730376!
+test27CanAddAccountToTwoPortfoliosWithoutCommonParent
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio3 addAccount: account .
+	
+	self assert: (portfolio1 contains: account ).
+	self assert: (portfolio3 contains: account ).
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:15:58'!
+test28AddingPortfolioToPortfolioUpdatesParents
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio3 addAccount: account .
+	
+	self assert: (portfolio1 contains: account ).
+	self assert: (portfolio3 contains: account ).
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:17:32' prior: 50730412!
+test28AddingPortfolioToPortfolioUpdatesParents
+	| portfolio1 portfolio2 |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	
+	self assert: (portfolio1 contains: portfolio2 ).
+	self assert: (portfolio2 parents size = 1 ).
+	self assert: (portfolio2 parents includes: portfolio1 ).
+
+	
+	! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 16:17:45'!
+parents
+	self shouldBeImplemented.
+	^parents! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 16:17:52' prior: 50730443!
+parents
+	^parents! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:18:10' prior: 50730430!
+test28AddingPortfolioToPortfolioUpdatesParents
+	| portfolio1 portfolio2 |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	
+	self assert: (portfolio1 contains: portfolio2 ).
+	self assert: (portfolio2 parents size = 1 ).
+	self assert: (portfolio2 parents includes: portfolio1 ).
+
+	
+	! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:18:28' prior: 50730261!
+initialize
+	accountsAndPortfolios _ OrderedCollection new.
+	parents _ OrderedCollection new.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:18:44' prior: 50730256!
+addPortfolio: aPortfolio 
+	accountsAndPortfolios addLast: aPortfolio.
+	aPortfolio addParent: self.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:19:01'!
+addParent: aPortfolio 
+	parents addLast: aPortfolio.! !
+
+----SNAPSHOT----(18 October 2019 16:19:09) CuisUniversity-3839.image priorSource: 12628964!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:20:56'!
+test29CantAddAccountToPortfolioIfParentContainsIt
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio3 addAccount: account .
+	! !
+
+----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/22-TerniLapilli/Terni Lapilli.st----!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:22:42' prior: 50730485!
+test29CantAddAccountToPortfolioIfParentContainsIt
+	| portfolio1 portfolio2  account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	
+	self should: [portfolio2 addAccount: account .] 
+	raise: Error 
+	withMessageText: TerniLapilli wrongTurn .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:23:58' prior: 50731625!
+test29CantAddAccountToPortfolioIfParentContainsIt
+	| portfolio1 portfolio2  account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	
+	self should: [portfolio2 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree .! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:25:11'!
+accountAlreadyInTree
+	^'Esa cuenta ya la contiene un portfolio de distinta jerarquia'.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:25:38' prior: 50730250!
+addAccount: aReceptiveAccount 
+	
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:29:11' prior: 50731661!
+addAccount: aReceptiveAccount 
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aReceptiveAccount )])
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:29:22' prior: 50731667!
+addAccount: aReceptiveAccount 
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aReceptiveAccount ). isContained .])
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:31:17' prior: 50731677!
+addAccount: aReceptiveAccount 
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aReceptiveAccount ). isContained .]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!ReceptiveAccount methodsFor: 'nil' stamp: 'gc 10/18/2019 16:35:32'!
+contains: aReceptiveAccount 
+	^self = aReceptiveAccount .! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:35:39' prior: 50731700!
+contains: aReceptiveAccount 
+	^self == aReceptiveAccount .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:36:06' prior: 50731640!
+test29CantAddAccountToPortfolioIfParentContainsIt
+	| portfolio1 portfolio2  account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio2 addAccount: account .
+	self should: [portfolio2 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree .! !
+
+----SNAPSHOT----(18 October 2019 16:36:30) CuisUniversity-3839.image priorSource: 12762615!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:37:12' prior: 50731711!
+test29CantAddAccountToPortfolioIfParentContainsIt
+	| portfolio1 portfolio2  account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio2 addAccount: account .
+	"self should: [portfolio2 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree ."! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:37:49' prior: 50731688!
+addAccount: aReceptiveAccount 
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:38:15' prior: 50731730!
+test29CantAddAccountToPortfolioIfParentContainsIt
+	| portfolio1 portfolio2  account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+
+	self should: [portfolio2 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:44:44'!
+test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio2 addPortfolio: portfolio3 .
+	
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:45:30' prior: 50731773!
+test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio3 addPortfolio: portfolio2 .
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+	portfolio2 addPortfolio: portfolio3 .
+	
+	self should: [portfolio3 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	
+	
+	! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:46:03'!
+portfolioWithAccountAlreadyInTree
+	^'Ese portfolio tiene una cuenta que ya la contiene un portfolio de distinta jerarquia'.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:48:16' prior: 50730472!
+addPortfolio: aPortfolio 
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aPortfolio ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
+	accountsAndPortfolios addLast: aPortfolio.
+	aPortfolio addParent: self.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:48:48' prior: 50731816!
+addPortfolio: aPortfolio 
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aPortfolio ).]) ifTrue: [^self error: Portfolio portfolioWithAccountAlreadyInTree ].
+	accountsAndPortfolios addLast: aPortfolio.
+	aPortfolio addParent: self.! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 16:58:38' prior: 50730276!
+contains: aPortfolioOrAccount 
+	^aPortfolioOrAccount isIncludedIn: accountsAndPortfolios.! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:00:15'!
+isIncludedIn: aListOfAccountsAndPortfolios 
+	^aListOfAccountsAndPortfolios includes: self .! !
+!ReceptiveAccount methodsFor: 'nil' stamp: 'gc 10/18/2019 17:00:39'!
+isIncludedIn: aListOfAccountsAndPortfolios 
+	^aListOfAccountsAndPortfolios includes: self .! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:02:38' prior: 50731845!
+isIncludedIn: aListOfAccountsAndPortfolios 
+	^accountsAndPortfolios inject: false into: [:isIncluded :accountOrPortfolio | isIncluded or: [aListOfAccountsAndPortfolios includes: accountOrPortfolio ]]! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:07:32' prior: 50731789!
+test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	account _ ReceptiveAccount new.
+	
+
+	portfolio2 addPortfolio: portfolio3 .
+	
+	
+	portfolio1 addAccount: account .
+	portfolio2 addPortfolio: portfolio3 .
+	
+	self should: [portfolio3 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:07:34' prior: 50731867!
+test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	account _ ReceptiveAccount new.
+
+	portfolio2 addPortfolio: portfolio3 .
+	
+	
+	portfolio1 addAccount: account .
+	portfolio2 addPortfolio: portfolio3 .
+	
+	self should: [portfolio3 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:07:36' prior: 50731886!
+test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	account _ ReceptiveAccount new.
+
+	portfolio2 addPortfolio: portfolio3 .
+	
+	portfolio1 addAccount: account .
+	portfolio2 addPortfolio: portfolio3 .
+	
+	self should: [portfolio3 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:08:38' prior: 50731905!
+test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	account _ ReceptiveAccount new.
+
+	portfolio2 addPortfolio: portfolio3 .
+	
+	portfolio1 addAccount: account .
+	portfolio2 addAccount: account .
+	
+	self should: [portfolio3 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:08:57' prior: 50731924!
+test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
+	| portfolio1 portfolio2 portfolio3 account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	account _ ReceptiveAccount new.
+
+	portfolio2 addPortfolio: portfolio3 .
+	
+	portfolio1 addAccount: account .
+	portfolio2 addAccount: account .
+	
+	self should: [portfolio3 addPortfolio: portfolio1 .] 
+	raise: Error 
+	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	
+	
+	! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:11:44'!
+hasCommonElementsWith: aPortfolioOrAccount 
+	^aPortfolioOrAccount isIncludedIn: accountsAndPortfolios.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:11:44' prior: 50731828!
+addPortfolio: aPortfolio 
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Portfolio portfolioWithAccountAlreadyInTree ].
+	accountsAndPortfolios addLast: aPortfolio.
+	aPortfolio addParent: self.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:11:44' prior: 50731746!
+addAccount: aReceptiveAccount 
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+
+Portfolio removeSelector: #contains:!
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:15:59'!
+contains: anAccountOrPortfolio 
+	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountsAndPortfolios includes: accountOrPortfolio ]]! !
+
+----SNAPSHOT----(18 October 2019 17:16:16) CuisUniversity-3839.image priorSource: 12802431!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:18:05'!
+test31CantAddAccountToSamePortfolioTwice
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
+
+	portfolio addAccount: account .
+	
+	self should: [portfolio addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:18:14' prior: 50732006!
+test31CantAddAccountToSamePortfolioTwice
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
+
+	portfolio addAccount: account .
+	
+	self should: [portfolio addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree .
+	
+	
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:18:46' prior: 50732019!
+test31CantAddAccountToSamePortfolioTwice
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
+
+	portfolio addAccount: account .
+	
+	self should: [portfolio addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInPortfolio .
+	
+	
+	! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:20:11'!
+accountAlreadyInPortfolio
+	^'Ese portfolio ya tiene esa cuenta'.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:20:59' prior: 50731981!
+addAccount: aReceptiveAccount 
+	(self contains: aReceptiveAccount ).
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:22:31' prior: 50732049!
+addAccount: aReceptiveAccount 
+	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
+	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:24:05' prior: 50731994!
+contains: anAccountOrPortfolio 
+	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountsAndPortfolios contains: accountOrPortfolio ]]! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:25:00' prior: 50732078!
+contains: anAccountOrPortfolio 
+	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: anAccountOrPortfolio ]]! !
+
+----SNAPSHOT----(18 October 2019 17:25:21) CuisUniversity-3839.image priorSource: 12811257!
+
+----STARTUP---- (19 October 2019 20:39:37) as /home/chiara/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
+
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 20:41:48'!
+test29CantAddAccountToPortfolioIfChildContainsIt
+	| portfolio1 portfolio2  account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio2 addPortfolio: portfolio1.
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+
+	self should: [portfolio2 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 20:42:01'!
+test31CantAddAccountToPortfolioIfChildContainsIt
+	| portfolio1 portfolio2  account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio2 addPortfolio: portfolio1.
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+
+	self should: [portfolio2 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree .! !
+
+ReceptiveAccountTest removeSelector: #test29CantAddAccountToPortfolioIfChildContainsIt!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 20:42:06'!
+test32CantAddAccountToPortfolioIfChildContainsIt
+	| portfolio1 portfolio2  account |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio2 addPortfolio: portfolio1.
+	
+	account := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account .
+
+	self should: [portfolio2 addAccount: account .] 
+	raise: Error 
+	withMessageText: Portfolio accountAlreadyInTree .! !
+
+ReceptiveAccountTest removeSelector: #test31CantAddAccountToPortfolioIfChildContainsIt!
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 20:49:56'!
+contains2: anAccountOrPortfolio 
+	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: anAccountOrPortfolio ]]! !
+
+Portfolio removeSelector: #contains:!
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 20:50:48'!
+contains: anAccountOrPortfolio 
+	^anAccountOrPortfolio isIncludedIn: accountsAndPortfolios ! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 20:53:59'!
+test33AccountNotInPortfolioIsntIncludedInPortfolio
+	| portfolio account1 account2 |
+	
+	portfolio _ Portfolio create.
+	
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	
+	portfolio addAccount: account1.
+
+	self deny: (portfolio includes: account2).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 20:54:28'!
+test33AccountNotInPortfolioIsntContainedInPortfolio
+	| portfolio account1 account2 |
+	
+	portfolio _ Portfolio create.
+	
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	
+	portfolio addAccount: account1.
+
+	self deny: (portfolio includes: account2).! !
+
+ReceptiveAccountTest removeSelector: #test33AccountNotInPortfolioIsntIncludedInPortfolio!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 20:54:35' prior: 50732179!
+test33AccountNotInPortfolioIsntContainedInPortfolio
+	| portfolio account1 account2 |
+	
+	portfolio _ Portfolio create.
+	
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	
+	portfolio addAccount: account1.
+
+	self deny: (portfolio contains: account2).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 20:55:57'!
+test34PortfolioNotInPortfolioIsntContainedInPortfolio
+	| portfolio1 portfolio2 portfolio3 |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	portfolio3 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2.
+
+	self deny: (portfolio1 contains: portfolio3 ).! !
+
+----SNAPSHOT----(19 October 2019 20:57:06) CuisUniversity-3839.image priorSource: 12814232!

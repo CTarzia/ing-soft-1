@@ -3114,571 +3114,958 @@ Smalltalk removeClassNamed: #LiveTypingClassToBeRemoved!
 ----STARTUP---- (1 October 2019 12:37:13) as /home/gzeitoune/Documents/UBA/ingSoft1/examen/imagen nueva/CuisUniversity-3839.image!
 
 
-----STARTUP---- (19 October 2019 20:58:27) as /home/chiara/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
+----STARTUP---- (17 October 2019 16:22:44) as /home/chiara/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
+
+
+----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/imagen nueva0/Terni Lapilli.st----!
+
+----STARTUP---- (17 October 2019 18:35:12) as /home/chiara/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
 
 
 ----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/23-Portfolio/Portfolio-Ejercicio.st----!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:00:28'!
-test34PortfolioAddedToPortfolioShouldBeContainedInIt
-	| portfolio1 portfolio2 |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	
-	portfolio1 addPortfolio: portfolio2.
+!Withdraw methodsFor: 'value' stamp: 'gc 10/17/2019 18:43:03' prior: 50726474!
+value
 
-	self assert: (portfolio1 contains: portfolio2 ).! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:06:19'!
-contains3: anAccountOrPortfolio 
-	^anAccountOrPortfolio isIncludedIn: accountsAndPortfolios ! !
+	^ -1 * value! !
+!Withdraw methodsFor: 'value' stamp: 'gc 10/17/2019 18:43:28' prior: 50726528!
+value
 
-Portfolio removeSelector: #contains:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:06:27'!
-contains: anAccountOrPortfolio 
-	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: anAccountOrPortfolio ]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:11:47'!
-isContainedIn: aPortfolio 
-	^((aPortfolio accountsAndPortfolios) includes: self) or: [(aPortfolio accountsAndPortfolios) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:12:04'!
-accountsAndPortfolios
-	^accountsAndPortfolios ! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:14:34' prior: 50727197!
-contains: anAccountOrPortfolio 
-	^anAccountOrPortfolio isContainedIn: self ! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:16:10'!
-isContainedIn: aPortfolio 
-	^((aPortfolio accountsAndPortfolios) includes: self) or: [(aPortfolio accountsAndPortfolios) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio includes: self ]]]! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:18:06' prior: 50727226!
-isContainedIn: aPortfolio 
-	^((aPortfolio accountsAndPortfolios) includes: self) or: [(aPortfolio accountsAndPortfolios) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:21:56'!
-isInPortfolio: anAccountOrPortfolio 
-	^accountsAndPortfolios inject: false into: [:isIncluded :accountOrPortfolio | isIncluded or: [accountOrPortfolio includes: accountOrPortfolio ]]! !
-
-Portfolio removeSelector: #isIncludedIn:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:22:50' prior: 50727066!
-hasCommonElementsWith: aPortfolioOrAccount 
-	^aPortfolioOrAccount isContainedIn: accountsAndPortfolios.! !
-
-Portfolio removeSelector: #contains3:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:23:17' prior: 50727257!
-hasCommonElementsWith: aPortfolioOrAccount 
-	^aPortfolioOrAccount isContainedIn: self.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:27:06' prior: 50727205!
-isContainedIn: aPortfolio 
-	^((aPortfolio accountsAndPortfolios) includes: self) or: [(aPortfolio accountsAndPortfolios) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]] or: [(aPortfolio parents) inject: false into: [:isContained :aParent | isContained or: [aParent contains: self ]]]! !
-
-!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
-Account subclass: #Portfolio
-	instanceVariableNames: 'accountsAndPortfolios parents accounts'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Ejercicio'!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:39:19'!
-accounts
-	^accounts! !
-
-Account subclass: #Portfolio
-	instanceVariableNames: 'parents accounts'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Ejercicio'!
-
-!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
-Account subclass: #Portfolio
-	instanceVariableNames: 'parents accounts'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Ejercicio'!
-
-Portfolio removeSelector: #accountsAndPortfolios!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:39:55' prior: 50727003!
-addAccount: aReceptiveAccount 
-	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accounts addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:40:03' prior: 50727023!
-addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Portfolio portfolioWithAccountAlreadyInTree ].
-	accounts addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:08' prior: 50727046!
+	^ value! !
+!ReceptiveAccount methodsFor: 'balance' stamp: 'gc 10/17/2019 18:45:54' prior: 50726515!
 balance
+
+	^transactions sum: [ :aTransaction | aTransaction worth ] ifEmpty: [ 0 ]! !
+!Deposit methodsFor: 'value' stamp: 'gc 10/17/2019 18:46:13'!
+worth
+
+	^ value! !
+!Withdraw methodsFor: 'value' stamp: 'gc 10/17/2019 18:46:33'!
+worth
+
+	^ -1 * value! !
+
+!classDefinition: #Portfolio category: #Unknown!
+Object subclass: #Portfolio
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Unknown'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 18:48:18'!
+test08newPortfolioShouldBeEmpty
+
+	| portfolio account1 deposit1 |
 	
-	^accounts inject: 0 into: [:totalBalance :account | totalBalance + (account balance)]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:14' prior: 50727052!
-contains2: anAccountOrPortfolio 
-	^accounts inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: anAccountOrPortfolio ]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:20' prior: 50727072!
-hasRegistered: aTransaction 
-	^accounts inject: false into: [:hasRegistered :accountOrPortfolio | hasRegistered or: [accountOrPortfolio hasRegistered: aTransaction]]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:40:25' prior: 50727036!
+	portfolio _ Portfolio new.
+	
+	
+	
+	
+	
+	account1 := ReceptiveAccount new.
+	
+	deposit1 := Deposit register: 100 on: account1.
+		
+	self assert: 1 equals: account1 transactions size .
+	self assert: (account1 transactions includes: deposit1).
+! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 18:51:58' prior: 50726553!
+test08newPortfolioShouldBeEmpty
+
+	| portfolio  |
+	
+	portfolio _ Portfolio new.
+	
+	self assert: portfolio isEmpty.! !
+
+----STARTUP---- (17 October 2019 18:54:18) as /home/chiara/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
+
+
+----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/23-Portfolio/Portfolio-Ejercicio.st----!
+!Withdraw methodsFor: 'value' stamp: 'gc 10/17/2019 18:55:16'!
+worth
+
+	^-1*  value! !
+!Deposit methodsFor: 'value' stamp: 'gc 10/17/2019 18:55:29'!
+worth
+
+	^ value! !
+!AccountTransaction methodsFor: 'value' stamp: 'gc 10/17/2019 18:55:38'!
+worth 
+
+	self subclassResponsibility ! !
+!ReceptiveAccount methodsFor: 'balance' stamp: 'gc 10/17/2019 18:56:04' prior: 50726515!
+balance
+
+	^transactions sum: [ :aTransaction | aTransaction worth ] ifEmpty: [ 0 ]! !
+
+!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
+Object subclass: #Portfolio
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 18:57:04'!
+test08newPortfolioShouldBeEmpty
+
+	| portfolio |
+	
+	portfolio _ Portfolio new.
+	self assert: portfolio isEmpty.! !
+!Portfolio methodsFor: 'no messages' stamp: 'gc 10/17/2019 18:58:01'!
+isEmpty
+	^true! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 18:58:41'!
+test09addOneAccountToPortfolio
+
+	| portfolio |
+	
+	portfolio _ Portfolio new.
+	
+	portfolio ! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:00:03' prior: 50726560!
+test09addOneAccountToPortfolio
+
+	| portfolio account |
+	
+	portfolio _ Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:07:53'!
+test99addOneAccountToPortfolio
+
+	| portfolio account |
+	
+	portfolio _ Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .! !
+
+ReceptiveAccountTest removeSelector: #test09addOneAccountToPortfolio!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:09:36'!
+test09EmptyPortfolioShouldHaveNoTransactions
+
+	| portfolio |
+	
+	portfolio _ Portfolio new.
+	self assert: ((portfolio transactions) size) isEqualTo: 0.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:10:02' prior: 50726588!
+test09EmptyPortfolioShouldHaveNoTransactions
+
+	| portfolio |
+	
+	portfolio _ Portfolio new.
+	self assert: ((portfolio transactions) size) equals: 0.! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:10:40'!
+transactions
+	self shouldBeImplemented.! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:12:00' prior: 50726603!
+transactions
+	^OrderedCollection  new.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:13:31'!
+test10addOneAccountToPortfolio
+
+	| portfolio account |
+	
+	portfolio _ Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .! !
+
+ReceptiveAccountTest removeSelector: #test99addOneAccountToPortfolio!
+!Portfolio methodsFor: 'aaaaaaaa' stamp: 'gc 10/17/2019 19:14:13'!
+addAccount: aReceptiveAccount 
+	self shouldBeImplemented.! !
+
+!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'accounts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Portfolio methodsFor: 'aaaaaaaa' stamp: 'gc 10/17/2019 19:14:38' prior: 50726623!
+addAccount: aReceptiveAccount 
+	accounts addLast: aReceptiveAccount .! !
+!Portfolio class methodsFor: 'no messages' stamp: 'gc 10/17/2019 19:15:40'!
+new
+	Portfolio initialize new! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:15:44' prior: 50726639!
+new
+	^Portfolio initialize new! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:15:58'!
 initialize
-	accounts _ OrderedCollection new.
-	parents _ OrderedCollection new.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:33' prior: 50727271!
-isContainedIn: aPortfolio 
-	^((aPortfolio accounts ) includes: self) or: [(aPortfolio accounts ) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]] or: [(aPortfolio parents) inject: false into: [:isContained :aParent | isContained or: [aParent contains: self ]]]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:40:39' prior: 50727042!
+	! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:16:08' prior: 50726648!
+initialize
+	accounts _ OrderedCollection new.! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:16:34' prior: 50726644!
+new
+	^Portfolio initialize new! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:17:00' prior: 50726657!
+new
+	^Portfolio initialize new! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:17:15' prior: 50726662!
+new
+	^Portfolio new initialize! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:17:38'!
+create
+	^Portfolio new initialize! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:17:44' prior: 50726671!
+create
+	^Portfolio initialize new! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:18:09' prior: 50726551!
+test08newPortfolioShouldBeEmpty
+
+	| portfolio |
+	
+	portfolio _ Portfolio create.
+	self assert: portfolio isEmpty.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:18:17' prior: 50726596!
+test09EmptyPortfolioShouldHaveNoTransactions
+
+	| portfolio |
+	
+	portfolio _ Portfolio create.
+	self assert: ((portfolio transactions) size) equals: 0.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:18:23' prior: 50726611!
+test10addOneAccountToPortfolio
+
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .! !
+
+Portfolio class removeSelector: #new!
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:19:00'!
+contains: aReceptiveAccount 
+	self shouldBeImplemented.! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:19:15' prior: 50726706!
+contains: aReceptiveAccount 
+	^accounts includes: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 19:20:06' prior: 50726557!
 isEmpty
 	^accounts isEmpty ! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:44' prior: 50727247!
-isInPortfolio: anAccountOrPortfolio 
-	^accounts inject: false into: [:isIncluded :accountOrPortfolio | isIncluded or: [accountOrPortfolio includes: accountOrPortfolio ]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 21:40:49' prior: 50727092!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:21:03'!
+test11addOneAccountWithOneTransactionToPortfolio
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:21:09' prior: 50726721!
+test11addOneAccountWithOneTransactionToPortfolio
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:22:36' prior: 50726732!
+test11addOneAccountWithOneTransactionToPortfolio
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .
+	! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:23:23' prior: 50726743!
+test11addOneAccountWithOneTransactionToPortfolio
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:31:00' prior: 50726607!
+transactions
+	| transactions |
+	transactions _ OrderedCollection  new.
+	! !
+
+(1 to: 100) inject: 0 into: [:sum :each | sum + each ]!
+
+(1 to: 100) inject: 10 into: [:sum :each | sum + each ]!
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:36:20' prior: 50726770!
 transactions
 	| transactions |
 	transactions _ OrderedCollection  new.
 	
-	^accounts inject: transactions into: [:total :account | total addAll: (account transactions). total].! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:41:01' prior: 50727237!
-isContainedIn: aPortfolio 
-	^((aPortfolio accounts ) includes: self) or: [(aPortfolio accounts ) inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: self ]]]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:43:38' prior: 50727309!
-addAccount: aReceptiveAccount 
-	self assertCanBeAdded: aReceptiveAccount .
-	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accounts addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:44:00' prior: 50727410!
-addAccount: aReceptiveAccount 
-	self assertCanBeAdded: aReceptiveAccount .
-	"
-	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	"
-	accounts addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:45:29'!
-assertCanBeAdded: aReceptiveAccount 
-	! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:46:10' prior: 50727113!
-accountAlreadyInTree
-	^'Esa cuenta no se puede agregar'.! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:47:06'!
-accountCantBeAdded
-	^'Esa cuenta no se puede agregar'.! !
-!ReceptiveAccountTest methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:47:06' prior: 50726751!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
+	accounts inject: transactions into: [:total :each | total addAll: (each transactions)]! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:36:27' prior: 50726779!
+transactions
+	| transactions |
+	transactions _ OrderedCollection  new.
 	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2.
+	accounts inject: transactions into: [:total :account | total addAll: (account transactions)]! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:38:24' prior: 50726787!
+transactions
+	| transactions |
+	transactions _ OrderedCollection  new.
 	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:47:06' prior: 50726796!
-test32CantAddAccountToPortfolioIfChildContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio2 addPortfolio: portfolio1.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountCantBeAdded .! !
-
-Portfolio class removeSelector: #accountAlreadyInTree!
-
-Portfolio class removeSelector: #accountAlreadyInPortfolio!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:47:36' prior: 50726784!
-test31CantAddAccountToSamePortfolioTwice
+	^accounts inject: transactions into: [:total :account | total addAll: (account transactions)]! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:40:12'!
+test11addOneAccountWithOneTransactionToPortfolioAndBothTransactionsAreEqual
 	| portfolio account |
 	
 	portfolio _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio addAccount: account .
-	
-	self should: [portfolio addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountCantBeAdded .
-	
-	
-	! !
-
-Portfolio class removeSelector: #portfolioWithAccountAlreadyInTree!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:47:50' prior: 50727324!
-addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Portfolio accountCantBeAdded ].
-	accounts addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:47:57' prior: 50726766!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio2 addPortfolio: portfolio3 .
-	
-	portfolio1 addAccount: account .
-	portfolio2 addAccount: account .
-	
-	self should: [portfolio3 addPortfolio: portfolio1 .] 
-	raise: Error 
-	withMessageText: Portfolio accountCantBeAdded .
-	
-	
-	! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:48:21' prior: 50727452!
-accountCantBeAdded
-	^'Esa cuenta esta repetida y no se puede agregar'.! !
-
-Portfolio removeSelector: #contains2:!
-
-----SNAPSHOT----(19 October 2019 21:48:42) CuisUniversity-3839.image priorSource: 12628964!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:52:06' prior: 50727442!
-assertCanBeAdded: anAccount 
-	(self accountAlreadyInTree: anAccount ) ifTrue: [^Account ]! !
-!Account class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:52:39' prior: 50726987!
-create
-	^self subclassResponsibility ! !
-!Account class methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:52:44'!
-accountCantBeAdded
-	^'Esa cuenta esta repetida y no se puede agregar'.! !
-
-Portfolio class removeSelector: #accountCantBeAdded!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:53:02' prior: 50727508!
-addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Account accountCantBeAdded ].
-	accounts addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:53:13' prior: 50727458!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2.
-	
 	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
 	
-	portfolio1 addAccount: account .
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .
+	self assert: (portfolio transactions) equals: (account transactions).! !
 
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:53:24' prior: 50727520!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio2 addPortfolio: portfolio3 .
-	
-	portfolio1 addAccount: account .
-	portfolio2 addAccount: account .
-	
-	self should: [portfolio3 addPortfolio: portfolio1 .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .
-	
-	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:53:38' prior: 50727493!
-test31CantAddAccountToSamePortfolioTwice
+ReceptiveAccountTest removeSelector: #test11addOneAccountWithOneTransactionToPortfolio!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:40:52'!
+test12addOneAccountWithOneTransactionToPortfolioAndTransactionIsRegistered
 	| portfolio account |
 	
 	portfolio _ Portfolio create.
-	account _ ReceptiveAccount new.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:42:26'!
+test12addOneAccountToPortfolioAndShouldHaveNoTransactionsRegistered
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:42:44' prior: 50726836!
+test12addOneAccountToPortfolioAndShouldHaveNoTransactionsRegistered
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
 
-	portfolio addAccount: account .
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:42:46' prior: 50726851!
+test12addOneAccountToPortfolioAndShouldHaveNoTransactionsRegistered
+	| portfolio account |
 	
-	self should: [portfolio addAccount: account .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
 	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:43:42' prior: 50726864!
+test12addOneAccountToPortfolioAndShouldHaveNoTransactionsRegistered
+	| portfolio account |
 	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 21:53:45' prior: 50727474!
-test32CantAddAccountToPortfolioIfChildContainsIt
-	| portfolio1 portfolio2  account |
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
 	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self deny: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:43:47' prior: 50726877!
+test12addOneAccountToPortfolioAndShouldHaveNoTransactionsRegistered
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:43:54' prior: 50726803!
+test11addOneAccountWithOneTransactionToPortfolioAndBothTransactionsAreEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:44:02'!
+test13addOneAccountWithOneTransactionToPortfolioAndTransactionIsRegistered
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: portfolio isEmpty .
+	self assert: (portfolio transactions) equals: (account transactions).! !
 
-	portfolio2 addPortfolio: portfolio1.
+ReceptiveAccountTest removeSelector: #test12addOneAccountWithOneTransactionToPortfolioAndTransactionIsRegistered!
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:44:18'!
+hasRegistered: aReceptiveAccount 
+	self shouldBeImplemented.! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:44:43' prior: 50726936!
+hasRegistered: aReceptiveAccount 
+	^aReceptiveAccount transactions isEmpty .! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 19:45:06' prior: 50726941!
+hasRegistered: aReceptiveAccount 
+	^aReceptiveAccount transactions isEmpty not.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:46:08' prior: 50726918!
+test13addOneAccountWithOneTransactionToPortfolioAndTransactionIsRegistered
+	| portfolio account |
 	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:47:50'!
+test14MakingTransactionInAccountInPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:48:04'!
+test11addOneAccountWithOneTransactionToPortfolioShouldMakeBothTransactionsAreEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).! !
+
+ReceptiveAccountTest removeSelector: #test11addOneAccountWithOneTransactionToPortfolioAndBothTransactionsAreEqual!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:48:19' prior: 50726966!
+test14MakingTransactionInAccountInPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
 	account := ReceptiveAccount new.
 	
-	portfolio1 addAccount: account .
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:49:17' prior: 50726996!
+test14MakingTransactionInAccountInPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:49:34' prior: 50727009!
+test14MakingTransactionInAccountInPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:49:53' prior: 50727023!
+test14MakingTransactionInAccountInPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
 
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:54:15' prior: 50727549!
-assertCanBeAdded: anAccount 
-	(self accountAlreadyInTree: anAccount ) ifTrue: [^Account accountCantBeAdded ]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 21:54:25' prior: 50727638!
-assertCanBeAdded: anAccount 
-	(self accountAlreadyInTree: anAccount ) ifTrue: [^self error: Account accountCantBeAdded ]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:02:37'!
-accountAlreadyInTree: anAccount 
-	| accountsInHierarchy |
+	portfolio addAccount: account.
+	Deposit register: 100 on: account.
 	
-	accountsInHierarchy _ self accountsInHierarchy.
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:49:55' prior: 50727037!
+test14MakingTransactionInAccountInPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
 	
-	^accountsInHierarchy anySatisfy: [:anAccountInHierarchy | anAccountInHierarchy contains: anAccount ]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:03:37' prior: 50727652!
-accountAlreadyInTree: anAccount 
-	| accountsInTree |
-	
-	accountsInTree _ self accountsInTree.
-	
-	^accountsInTree anySatisfy: [:anAccountInHierarchy | anAccountInHierarchy contains: anAccount ]! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:04:57' prior: 50727566!
-addPortfolio: aPortfolio 
-	"
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Account accountCantBeAdded ].
-	accounts addLast: aPortfolio.
-	"
-	self assertCanBeAdded: aPortfolio .
-	aPortfolio addParent: self.! !
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
 
-----SNAPSHOT----(19 October 2019 22:09:26) CuisUniversity-3839.image priorSource: 12668625!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 22:09:27' prior: 50727220!
-contains: anAccount
-	^(anAccount = self) or: [accounts anySatisfy: [:anAccountInSelf | (anAccount contains: anAccountInSelf ) or: [anAccountInSelf contains: anAccount ]]]
+	portfolio addAccount: account.
+	
+	Deposit register: 100 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:50:29'!
+test15addAccountWithTransactionsToPortfolioAndShouldHaveTransactionsRegistered
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:50:47'!
+test15addAccountWithTransactionsToPortfolioShouldHaveTransactionsRegistered
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: (portfolio hasRegistered: account )! !
+
+ReceptiveAccountTest removeSelector: #test15addAccountWithTransactionsToPortfolioAndShouldHaveTransactionsRegistered!
+
+ReceptiveAccountTest removeSelector: #test15addAccountWithTransactionsToPortfolioShouldHaveTransactionsRegistered!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:51:58' prior: 50727051!
+test14MakingTransactionInAccountInPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+
+	portfolio addAccount: account.
+	
+	Deposit register: 100 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:53:38'!
+test15AddMultipleAccountsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+
+	portfolio addAccount: account.
+	
+	Deposit register: 100 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:53:48'!
+test11addOneAccountWithOneTransactionToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).! !
+
+ReceptiveAccountTest removeSelector: #test11addOneAccountWithOneTransactionToPortfolioShouldMakeBothTransactionsAreEqual!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:54:21' prior: 50727113!
+test15AddMultipleAccountsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+
+	portfolio addAccount: account.
+	
+	Deposit register: 100 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:54:47'!
+test15AddAccountWithMultipleTransactionsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+
+	portfolio addAccount: account.
+	
+	Deposit register: 100 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+
+ReceptiveAccountTest removeSelector: #test15AddMultipleAccountsToPortfolioShouldMakeBothTransactionsEqual!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:55:11' prior: 50727161!
+test15AddAccountWithMultipleTransactionsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+
+	portfolio addAccount: account.
+	
+	Deposit register: 100 on: account.
+	
+	Deposit register: 100 on: account.
+	
+	Deposit register: 100 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:55:29' prior: 50727181!
+test15AddAccountWithMultipleTransactionsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+
+	portfolio addAccount: account.
+	
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:55:30' prior: 50727200!
+test15AddAccountWithMultipleTransactionsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+
+	portfolio addAccount: account.
+	
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:55:52' prior: 50727222!
+test15AddAccountWithMultipleTransactionsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	Withdraw register: 50 on: account.
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:56:25' prior: 50727244!
+test15AddAccountWithMultipleTransactionsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 20 on: account.
+	
+	portfolio addAccount: account.
+	
+	Withdraw register: 150 on: account.
+	Deposit register: 80 on: account.
+	Withdraw register: 30 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:57:03'!
+test16AddMultipleAccountWithMultipleTransactionsToPortfolioShouldMakeTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 20 on: account.
+	
+	portfolio addAccount: account.
+	
+	Withdraw register: 150 on: account.
+	Deposit register: 80 on: account.
+	Withdraw register: 30 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 19:57:15'!
+test16AddMultipleAccountsWithMultipleTransactionsToPortfolioShouldMakeTransactionsEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	account := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 20 on: account.
+	
+	portfolio addAccount: account.
+	
+	Withdraw register: 150 on: account.
+	Deposit register: 80 on: account.
+	Withdraw register: 30 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: account ).! !
+
+ReceptiveAccountTest removeSelector: #test16AddMultipleAccountWithMultipleTransactionsToPortfolioShouldMakeTransactionsEqual!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:00:45' prior: 50727310!
+test16AddMultipleAccountsWithMultipleTransactionsToPortfolioShouldMakeTransactionsEqual
+	| portfolio account1 account2 account3 |
+	
+	portfolio _ Portfolio create.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio addAccount: account3.
+	
+	self assert: (portfolio transactions) equals: (((account1 transactions) addAll: (account2 transactions)) addAll: (account3 transactions)).
 ! !
-
-----SNAPSHOT----(19 October 2019 22:09:31) CuisUniversity-3839.image priorSource: 12673092!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:10:10' prior: 50727672!
-addPortfolio: aPortfolio 
-	"
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Account accountCantBeAdded ].
-	"
-	self assertCanBeAdded: aPortfolio .
-	accounts addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 22:10:24' prior: 50727336!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:02:59'!
+test17EmptyPortfolioBalanceShouldBeZero
+	| portfolio  |
+	
+	portfolio _ Portfolio create.
+	
+	self assert: (portfolio balance) equals: 0.
+! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 20:03:12'!
 balance
+	self shouldBeImplemented.! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 20:03:22' prior: 50727373!
+balance
+	^0! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:03:56'!
+test18PortfolioWithOneAccountShouldMakeBothBalancesEqual
+	| portfolio  |
+	
+	portfolio _ Portfolio create.
+	
+	self assert: (portfolio balance) equals: 0.
+! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:04:39' prior: 50727380!
+test18PortfolioWithOneAccountShouldMakeBothBalancesEqual
+	| portfolio account |
+	
+	portfolio _ Portfolio create.
+	
+	account := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 20 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio balance) equals: (account balance).! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 20:05:51' prior: 50727377!
+balance
+	
 	^accounts inject: 0 into: [:totalBalance :account | totalBalance + (account balance)]! !
-
-Portfolio removeSelector: #hasCommonElementsWith:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 22:11:24' prior: 50727350!
-hasRegistered: aTransaction 
-	^accounts anySatisfy: [:accountOrPortfolio | accountOrPortfolio hasRegistered: aTransaction]! !
-
-Portfolio removeSelector: #isContainedIn:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/19/2019 22:12:25' prior: 50727383!
-isInPortfolio: anAccountOrPortfolio 
-	^accounts anySatisfy: [:accountOrPortfolio | accountOrPortfolio includes: accountOrPortfolio ]! !
-
-Portfolio removeSelector: #isInPortfolio:!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:13:13'!
-accountsInTree
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:13:34' prior: 50727738!
-accountsInTree
-	| accountsInTree |
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:17:04' prior: 50727742!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | accountsInTree add: aParent ]
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:17:41' prior: 50727747!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree add: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		]
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:18:25' prior: 50727754!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree addAll: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		]
-	! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:18:59' prior: 50727166!
-contains: anAccount
-	^self = anAccount.! !
-
-ReceptiveAccount removeSelector: #isContainedIn:!
-
-ReceptiveAccount removeSelector: #isIncludedIn:!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:27:34' prior: 50727763!
-accountsInTree
-	| accountsInTree |
-	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree addAll: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		].
-	^accountsInTree ! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:28:29'!
-test35PortfolioNotInPortfolioIsntContainedInPortfolio
-	| portfolio1 portfolio2 portfolio3 |
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:09:38'!
+test19AddEmptyPortfolioToEmptyPortfolioShouldntBeEmpty
+	| portfolio1 portfolio2|
 	
 	portfolio1 _ Portfolio create.
 	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
 	
-	portfolio1 addPortfolio: portfolio2.
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self deny: (portfolio1 isEmpty ).
+	self assert: (portfolio2 isEmpty ).! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:09:54'!
+addPortfolio: aPortfolio 
+	self shouldBeImplemented.! !
 
-	self deny: (portfolio1 contains: portfolio3 ).! !
+!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'accounts portfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:10:12' prior: 50727419!
+addPortfolio: aPortfolio 
+	portfolios addLast: aPortfolio.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:10:59' prior: 50726652!
+initialize
+	accounts _ OrderedCollection new.
+	portfolios _ OrderedCollection new.! !
 
-ReceptiveAccountTest removeSelector: #test34PortfolioNotInPortfolioIsntContainedInPortfolio!
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:33:19' prior: 50727780!
-accountsInTree
-	| accountsInTree |
+!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'accounts portfolios accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:12:22' prior: 50726717!
+isEmpty
+	^accountsAndPortfolios isEmpty ! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:12:22' prior: 50726711!
+contains: aReceptiveAccount 
+	^accountsAndPortfolios includes: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:12:22' prior: 50726634!
+addAccount: aReceptiveAccount 
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:12:22' prior: 50727436!
+initialize
+	accountsAndPortfolios _ OrderedCollection new.
+	portfolios _ OrderedCollection new.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:12:22' prior: 50726795!
+transactions
+	| transactions |
+	transactions _ OrderedCollection  new.
 	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree addAll: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		].
-	accountsInTree add: self
-	^accountsInTree ! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/19/2019 22:33:37' prior: 50727804!
-accountsInTree
-	| accountsInTree |
+	^accountsAndPortfolios inject: transactions into: [:total :account | total addAll: (account transactions)]! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:12:22' prior: 50727402!
+balance
 	
-	accountsInTree _ Set new.
-	parents do: [:aParent | 
-		accountsInTree addAll: (aParent accountsInTree ). 
-		accountsInTree add: aParent 
-		].
-	accountsInTree add: self.
-	^accountsInTree ! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:37:09'!
-test36CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2 portfolio3 |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	
-	portfolio1 addPortfolio: portfolio2.
+	^accountsAndPortfolios inject: 0 into: [:totalBalance :account | totalBalance + (account balance)]! !
 
-	self deny: (portfolio1 contains: portfolio3 ).! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:49:39' prior: 50727824!
-test36CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'portfolios accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:12:40' prior: 50727467!
+initialize
+	accountsAndPortfolios _ OrderedCollection new.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 20:12:48' prior: 50727431!
+addPortfolio: aPortfolio 
+	accountsAndPortfolios addLast: aPortfolio.! !
 
-	portfolio2 addPortfolio: portfolio1.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio2 addAccount: account .
+Object subclass: #Portfolio
+	instanceVariableNames: 'accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
 
-	self should: [portfolio1 addAccount: account .] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:52:01'!
-test37CantAddPortfolioToSelf
-	| portfolio  account |
-	
-	portfolio _ Portfolio create.
-
-	portfolio addPortfolio: portfolio.
-	
-	account := ReceptiveAccount new.
-
-	self should: [portfolio addPortfolio: portfolio.] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:52:22' prior: 50727851!
-test37CantAddPortfolioToSelf
-	| portfolio  account |
+!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:13:30'!
+test18PortfolioWithManyAccountsShouldMakeBothBalancesEqual
+	| portfolio account |
 	
 	portfolio _ Portfolio create.
 	
 	account := ReceptiveAccount new.
-
-	self should: [portfolio addPortfolio: portfolio.] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/19/2019 22:52:37' prior: 50727863!
-test37CantAddPortfolioToSelf
-	| portfolio |
+	
+	Deposit register: 200 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 20 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio balance) equals: (account balance).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:13:43'!
+test19PortfolioWithManyAccountsShouldMakeBothBalancesEqual
+	| portfolio account |
 	
 	portfolio _ Portfolio create.
+	
+	account := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account.
+	Withdraw register: 50 on: account.
+	Deposit register: 20 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio balance) equals: (account balance).! !
 
-	self should: [portfolio addPortfolio: portfolio.] 
-	raise: Error 
-	withMessageText: Account accountCantBeAdded .! !
-!Account class methodsFor: 'error message' stamp: 'gc 10/19/2019 22:55:29' prior: 50727559!
-accountCantBeAdded
-	^'Esa cuenta esta repetida en la jerarquia y no se puede agregar'.! !
-
-----SNAPSHOT----(19 October 2019 23:09:26) CuisUniversity-3839.image priorSource: 12673454!
-!Account methodsFor: 'add' stamp: 'gc 10/19/2019 23:12:36'!
-addParent: aPortfolio 
-	^self subclassResponsibility ! !
-!Account methodsFor: 'verification' stamp: 'gc 10/19/2019 23:13:11'!
-accountAlreadyInTree: anAccount 
-	^self subclassResponsibility ! !
-!Account methodsFor: 'add' stamp: 'gc 10/19/2019 23:13:29' prior: 50726946!
-addAccount: anAccount  
-	^self subclassResponsibility ! !
-!Account methodsFor: 'add' stamp: 'gc 10/19/2019 23:13:53' prior: 50727900!
-addAccount: aReceptiveAccount  
-	^self subclassResponsibility ! !
-!Account methodsFor: 'verification' stamp: 'gc 10/19/2019 23:14:14'!
-accountsInTree
-	^self subclassResponsibility ! !
-!Account methodsFor: 'verification' stamp: 'gc 10/19/2019 23:14:29'!
-assertCanBeAdded: anAccount 
-	^self subclassResponsibility ! !
-!Account methodsFor: 'verification' stamp: 'gc 10/19/2019 23:14:37' prior: 50726968!
-contains: anAccount  
-	^self subclassResponsibility ! !
-!Account methodsFor: 'get' stamp: 'gc 10/19/2019 23:15:12'!
-accounts
-	^self subclassResponsibility ! !
-!Account methodsFor: 'get' stamp: 'gc 10/19/2019 23:15:16'!
-parents
-	^self subclassResponsibility ! !
-!Account methodsFor: 'transactions' stamp: 'gc 10/19/2019 23:15:56'!
-register: aTransaction
-	^self subclassResponsibility ! !
-!AccountTransaction methodsFor: 'value' stamp: 'gc 10/19/2019 23:17:18'!
-initializeFor: aValue
-
-	^self subclassResponsibility ! !
-!AccountTransaction methodsFor: 'value' stamp: 'gc 10/19/2019 23:17:23' prior: 50726845!
-value 
-
-	^self subclassResponsibility ! !
-!AccountTransaction methodsFor: 'value' stamp: 'gc 10/19/2019 23:17:27' prior: 50726849!
-worth 
-
-	^self subclassResponsibility ! !
-!AccountTest methodsFor: 'basic portfolio' stamp: 'gc 10/19/2019 23:29:03'!
-test20AddPortfolioToPortfolioShouldntBeEmpty
+ReceptiveAccountTest removeSelector: #test18PortfolioWithManyAccountsShouldMakeBothBalancesEqual!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:13:50'!
+test20AddEmptyPortfolioToEmptyPortfolioShouldntBeEmpty
 	| portfolio1 portfolio2|
 	
 	portfolio1 _ Portfolio create.
@@ -3689,8 +4076,952 @@ test20AddPortfolioToPortfolioShouldntBeEmpty
 	self deny: (portfolio1 isEmpty ).
 	self assert: (portfolio2 isEmpty ).! !
 
-AccountTest removeSelector: #test20AddEmptyPortfolioToEmptyPortfolioShouldntBeEmpty!
+ReceptiveAccountTest removeSelector: #test19AddEmptyPortfolioToEmptyPortfolioShouldntBeEmpty!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:16:09' prior: 50727533!
+test19PortfolioWithManyAccountsShouldMakeBothBalancesEqual
+	| portfolio account1 account2 account3 |
+	
+	portfolio _ Portfolio create.
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio addAccount: account3.
+	
+	self assert: (portfolio balance) equals: ((account1 balance)+(account2 balance)+(account3 balance)).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:18:11'!
+test21PortfolioWithEmptyPortfolioBalanceShouldBeZero
+	| portfolio1 portfolio2|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self deny: (portfolio1 isEmpty ).
+	self assert: (portfolio2 isEmpty ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:20:02' prior: 50727593!
+test21PortfolioWithEmptyPortfolioBalanceShouldBeZero
+	| portfolio1 portfolio2|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self assert: (portfolio1 balance) equals: 0.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:29:14' prior: 50726892!
+test12addOneAccountToPortfolioAndShouldHaveNoTransactionsRegistered
+	| portfolio account1 account2 deposit |
+	
+	portfolio _ Portfolio create.
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	deposit _ Deposit register: 100 on: account2.
+		
+	portfolio addAccount: account1.
+	
+	self assert: (portfolio contains: account1 ).
+	self deny: (portfolio hasRegistered: deposit )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:30:09' prior: 50727616!
+test12addOneAccountToPortfolioAndShouldHaveNoTransactionsRegistered
+	| portfolio account deposit |
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
+	deposit _  Deposit for: 100.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self deny: (portfolio hasRegistered: deposit )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:31:00' prior: 50726953!
+test13addOneAccountWithOneTransactionToPortfolioAndTransactionIsRegistered
+	| portfolio account deposit |
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
+	
+	Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:31:21' prior: 50727646!
+test13addOneAccountWithOneTransactionToPortfolioAndTransactionIsRegistered
+	| portfolio account deposit |
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
+	
+	deposit _ Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio hasRegistered: account )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:31:26' prior: 50727660!
+test13addOneAccountWithOneTransactionToPortfolioAndTransactionIsRegistered
+	| portfolio account deposit |
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
+	
+	deposit _ Deposit register: 100 on: account.
+	
+	portfolio addAccount: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio hasRegistered: deposit )! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:32:29' prior: 50727097!
+test14MakingTransactionInAccountInPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account deposit |
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
 
-----SNAPSHOT----(19 October 2019 23:35:24) CuisUniversity-3839.image priorSource: 12679609!
+	portfolio addAccount: account.
+	
+	deposit _ Deposit register: 100 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: deposit ).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:33:40' prior: 50727266!
+test15AddAccountWithMultipleTransactionsToPortfolioShouldMakeBothTransactionsEqual
+	| portfolio account withdraw deposit|
+	
+	portfolio _ Portfolio create.
+	account _ ReceptiveAccount new.
+	
+	Deposit register: 200 on: account.
+	withdraw _ Withdraw register: 50 on: account.
+	Deposit register: 20 on: account.
+	
+	portfolio addAccount: account.
+	
+	Withdraw register: 150 on: account.
+	deposit _ Deposit register: 80 on: account.
+	Withdraw register: 30 on: account.
+	
+	self assert: (portfolio contains: account ).
+	self assert: (portfolio transactions) equals: (account transactions).
+	self assert: (portfolio hasRegistered: withdraw ).
+	self assert: (portfolio hasRegistered: deposit ).! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 20:36:41' prior: 50726947!
+hasRegistered: aTransaction 
+	^accountsAndPortfolios inject: false into: [:hasRegistered :accountOrPortfolio | hasRegistered or: (accountOrPortfolio hasRegistered: aTransaction )]! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 20:37:20' prior: 50727730!
+hasRegistered: aTransaction 
+	^accountsAndPortfolios inject: false into: [:hasRegistered :accountOrPortfolio | hasRegistered or: [accountOrPortfolio hasRegistered: aTransaction]]! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:38:00'!
+test21PortfolioWithEmptyPortfolioHasNoTransactions
+	| portfolio1 portfolio2|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self assert: (portfolio1 balance) equals: 0.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:38:24' prior: 50727748!
+test21PortfolioWithEmptyPortfolioHasNoTransactions
+	| portfolio1 portfolio2|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self assert: (portfolio1 transactions isEmpty) .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:38:42'!
+test21PortfolioWithEmptyPortfolioHasNotRegisteredTransactions
+	| portfolio1 portfolio2|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self assert: (portfolio1 transactions isEmpty) .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:38:59' prior: 50727769!
+test21PortfolioWithEmptyPortfolioHasNotRegisteredTransactions
+	| portfolio1 portfolio2 deposit withdrawal|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self assert: (portfolio1 transactions isEmpty) .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:39:06' prior: 50727780!
+test21PortfolioWithEmptyPortfolioHasNotRegisteredTransactions
+	| portfolio1 portfolio2 deposit withdraw|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self assert: (portfolio1 transactions isEmpty) .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:40:26' prior: 50727792!
+test21PortfolioWithEmptyPortfolioHasNotRegisteredTransactions
+	| portfolio1 portfolio2 deposit withdraw|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	deposit _  Deposit for: 100.
+	withdraw _ Withdraw for: 100.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self deny: (portfolio1 hasRegistered: deposit ) .
+	self deny: (portfolio1 hasRegistered: withdraw ) .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:40:40'!
+test22PortfolioWithEmptyPortfolioHasNoTransactions
+	| portfolio1 portfolio2|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self assert: (portfolio1 transactions isEmpty) .! !
 
-----QUIT----(19 October 2019 23:35:40) CuisUniversity-3839.image priorSource: 12682004!
+ReceptiveAccountTest removeSelector: #test21PortfolioWithEmptyPortfolioHasNoTransactions!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:40:52'!
+test23PortfolioWithEmptyPortfolioHasNotRegisteredTransactions
+	| portfolio1 portfolio2 deposit withdraw|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	deposit _  Deposit for: 100.
+	withdraw _ Withdraw for: 100.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self deny: (portfolio1 hasRegistered: deposit ) .
+	self deny: (portfolio1 hasRegistered: withdraw ) .! !
+
+ReceptiveAccountTest removeSelector: #test21PortfolioWithEmptyPortfolioHasNotRegisteredTransactions!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:42:04'!
+test23PortfolioWithAccountsWithTransactionsBalanceIsCorrect
+	| portfolio1 portfolio2 deposit withdraw|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	deposit _  Deposit for: 100.
+	withdraw _ Withdraw for: 100.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self deny: (portfolio1 hasRegistered: deposit ) .
+	self deny: (portfolio1 hasRegistered: withdraw ) .! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:43:19'!
+test24PortfolioWithAccountsWithTransactionsBalanceIsCorrect
+	| portfolio1 portfolio2 deposit withdraw|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+	deposit _  Deposit for: 100.
+	withdraw _ Withdraw for: 100.
+	
+	portfolio1 addPortfolio: portfolio2 .
+	
+	self deny: (portfolio1 hasRegistered: deposit ) .
+	self deny: (portfolio1 hasRegistered: withdraw ) .! !
+
+ReceptiveAccountTest removeSelector: #test23PortfolioWithAccountsWithTransactionsBalanceIsCorrect!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:44:17' prior: 50727865!
+test24PortfolioWithAccountsWithTransactionsBalanceIsCorrect
+	| portfolio1 portfolio2 account1 account2 account3|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio2 addAccount: account3.
+	
+	self assert: (portfolio1 balance) equals: ((account1 balance)+(account2 balance)+(account3 balance)).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:45:11'!
+test25PortfolioWithAccountsWithTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 account3|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio2 addAccount: account3.
+	
+	self assert: (portfolio1 balance) equals: ((account1 balance)+(account2 balance)+(account3 balance)).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:46:14' prior: 50727913!
+test25PortfolioWithAccountsWithTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 account3|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio2 addAccount: account3.
+	
+	self assert: (portfolio1 transactions) equals: (((account1 transactions ) addAll: (account2 transactions )) addAll: (account3 transactions )).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:48:29' prior: 50727944!
+test25PortfolioWithAccountsWithTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 account3|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio2 addAccount: account3.
+	
+	self assert: (portfolio1 transactions) asBag equals: (((account1 transactions ) addAll: (account2 transactions )) addAll: (account3 transactions )) asBag.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:50:10'!
+test25PortfolioWithAccountsWithLittleTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	
+	Deposit register: 200 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	
+	self assert: (portfolio1 transactions) asBag equals: ((account1 transactions ) addAll: (account2 transactions )) asBag.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:50:40' prior: 50728008!
+test25PortfolioWithAccountsWithLittleTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	
+	Deposit register: 200 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	
+	self assert: (portfolio1 transactions) equals: ((account1 transactions ) addAll: (account2 transactions )).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:53:36' prior: 50728029!
+test25PortfolioWithAccountsWithLittleTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 x |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	
+	Deposit register: 200 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	x _ (account1 transactions ) addAll: (account2 transactions ).
+	
+	self assert: (portfolio1 transactions) equals: x.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 20:54:29' prior: 50728050!
+test25PortfolioWithAccountsWithLittleTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 x y|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	
+	Deposit register: 200 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	x _ (account1 transactions ) addAll: (account2 transactions ).
+	y _ portfolio1 transactions.
+	
+	self assert: y equals: x.! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 20:55:52' prior: 50727474!
+transactions
+	| transactions x |
+	transactions _ OrderedCollection  new.
+	
+	x _ accountsAndPortfolios inject: transactions into: [:total :account | total addAll: (account transactions)].
+	^x! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 20:57:57' prior: 50728092!
+transactions
+	| transactions |
+	transactions _ OrderedCollection  new.
+	
+	transactions _ accountsAndPortfolios inject: transactions into: [:total :account | total addAll: (account transactions)].
+	^transactions! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 21:00:55' prior: 50728101!
+transactions
+	| transactions |
+	transactions _ OrderedCollection  new.
+	
+	transactions _ accountsAndPortfolios inject: transactions into: [:total :account | total addAll: (account transactions). total].
+	^transactions! !
+!Portfolio methodsFor: 'observer' stamp: 'gc 10/17/2019 21:02:31' prior: 50728111!
+transactions
+	| transactions |
+	transactions _ OrderedCollection  new.
+	
+	^accountsAndPortfolios inject: transactions into: [:total :account | total addAll: (account transactions). total].! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:03:12' prior: 50728071!
+test25PortfolioWithAccountsWithLittleTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 x y|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	
+	Deposit register: 200 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	
+	portfolio2 addAccount: account2.
+	x _ OrderedCollection new
+	x addAll: (account1 transactions ).
+	x addAll: (account2 transactions ).
+	y _ portfolio1 transactions.
+	
+	self assert: y equals: x.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:03:24' prior: 50728130!
+test25PortfolioWithAccountsWithLittleTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 x y|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	
+	Deposit register: 200 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	
+	portfolio2 addAccount: account2.
+	x _ OrderedCollection new.
+	x addAll: (account1 transactions ).
+	x addAll: (account2 transactions ).
+	y _ portfolio1 transactions.
+	
+	self assert: y equals: x.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:04:50' prior: 50728153!
+test25PortfolioWithAccountsWithLittleTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 expectedAnswer|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	
+	Deposit register: 200 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	
+	portfolio2 addAccount: account2.
+	expectedAnswer _ OrderedCollection new.
+	expectedAnswer addAll: (account1 transactions ).
+	expectedAnswer addAll: (account2 transactions ).
+
+	self assert: ((portfolio1 transactions) asBag) equals: (expectedAnswer asBag).! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:05:08'!
+test26PortfolioWithAccountsWithTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 account3|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio2 addAccount: account3.
+	
+	self assert: (portfolio1 transactions) asBag equals: (((account1 transactions ) addAll: (account2 transactions )) addAll: (account3 transactions )) asBag.! !
+
+ReceptiveAccountTest removeSelector: #test25PortfolioWithAccountsWithTransactionsTransactionsAreCorrect!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:06:36' prior: 50727336!
+test16AddMultipleAccountsWithMultipleTransactionsToPortfolioShouldMakeTransactionsEqual
+	| portfolio account1 account2 account3 expectedAnswer |
+	
+	portfolio _ Portfolio create.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio addAccount: account3.
+	
+	expectedAnswer _ Bag new.
+	expectedAnswer addAll: account1 transactions.
+	expectedAnswer addAll: account2 transactions.
+	expectedAnswer addAll: account3 transactions.
+	
+	self assert: (portfolio transactions) equals: expectedAnswer .
+! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:06:57' prior: 50728176!
+test25PortfolioWithAccountsWithLittleTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 expectedAnswer|
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	
+	Deposit register: 200 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	
+	portfolio2 addAccount: account2.
+	expectedAnswer _ Bag new.
+	expectedAnswer addAll: (account1 transactions ).
+	expectedAnswer addAll: (account2 transactions ).
+
+	self assert: ((portfolio1 transactions) asBag) equals: expectedAnswer.! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:07:14' prior: 50728236!
+test16AddMultipleAccountsWithMultipleTransactionsToPortfolioShouldMakeTransactionsEqual
+	| portfolio account1 account2 account3 expectedAnswer |
+	
+	portfolio _ Portfolio create.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio addAccount: account3.
+	
+	expectedAnswer _ Bag new.
+	expectedAnswer addAll: account1 transactions.
+	expectedAnswer addAll: account2 transactions.
+	expectedAnswer addAll: account3 transactions.
+	
+	self assert: ((portfolio transactions) asBag) equals: expectedAnswer .
+! !
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:07:54' prior: 50728200!
+test26PortfolioWithAccountsWithTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 account3 expectedAnswer |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio2 addAccount: account3.
+	
+	self assert: (portfolio1 transactions) asBag equals: (((account1 transactions ) addAll: (account2 transactions )) addAll: (account3 transactions )) asBag.! !
+
+----SNAPSHOT----(17 October 2019 21:08:03) CuisUniversity-3839.image priorSource: 12628964!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/17/2019 21:09:18' prior: 50728328!
+test26PortfolioWithAccountsWithTransactionsTransactionsAreCorrect
+	| portfolio1 portfolio2 account1 account2 account3 expectedAnswer |
+	
+	portfolio1 _ Portfolio create.
+	portfolio2 _ Portfolio create.
+
+	portfolio1 addPortfolio: portfolio2 .
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Withdraw register: 50 on: account1.
+	Deposit register: 20 on: account1.
+	
+	portfolio1 addAccount: account1.
+	
+	Withdraw register: 150 on: account2.
+	Deposit register: 80 on: account2.
+	Withdraw register: 30 on: account2.
+	
+	portfolio2 addAccount: account2.
+	
+	Withdraw register: 150 on: account3.
+	Deposit register: 80 on: account3.
+	Withdraw register: 30 on: account3.
+	
+	portfolio2 addAccount: account3.
+	
+	expectedAnswer _ Bag new.
+	expectedAnswer addAll: (account1 transactions).
+	expectedAnswer addAll: (account2 transactions).
+	expectedAnswer addAll: (account3 transactions).
+	
+	self assert: (portfolio1 transactions) asBag equals: expectedAnswer .! !
+
+Object subclass: #Bank
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Bank category: #'Portfolio-Ejercicio'!
+Object subclass: #Bank
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Smalltalk removeClassNamed: #Bank!
+
+Object subclass: #Bank
+	instanceVariableNames: 'accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Bank category: #'Portfolio-Ejercicio'!
+Object subclass: #Bank
+	instanceVariableNames: 'accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Bank class
+	instanceVariableNames: ''!
+
+!classDefinition: 'Bank class' category: #'Portfolio-Ejercicio'!
+Bank class
+	instanceVariableNames: ''!
+!Bank methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:28:10'!
+addAccount: aReceptiveAccount 
+	accountsAndPortfolios addLast: aReceptiveAccount .! !
+!Bank methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:28:10'!
+addPortfolio: aPortfolio 
+	accountsAndPortfolios addLast: aPortfolio.! !
+!Bank methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:28:10'!
+initialize
+	accountsAndPortfolios _ OrderedCollection new.! !
+!Bank methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:28:10'!
+isEmpty
+	^accountsAndPortfolios isEmpty ! !
+!Bank methodsFor: 'observer' stamp: 'gc 10/17/2019 21:28:10'!
+balance
+	
+	^accountsAndPortfolios inject: 0 into: [:totalBalance :account | totalBalance + (account balance)]! !
+!Bank methodsFor: 'observer' stamp: 'gc 10/17/2019 21:28:10'!
+contains: aReceptiveAccount 
+	^accountsAndPortfolios includes: aReceptiveAccount .! !
+!Bank methodsFor: 'observer' stamp: 'gc 10/17/2019 21:28:10'!
+hasRegistered: aTransaction 
+	^accountsAndPortfolios inject: false into: [:hasRegistered :accountOrPortfolio | hasRegistered or: [accountOrPortfolio hasRegistered: aTransaction]]! !
+!Bank methodsFor: 'observer' stamp: 'gc 10/17/2019 21:28:10'!
+transactions
+	| transactions |
+	transactions _ OrderedCollection  new.
+	
+	^accountsAndPortfolios inject: transactions into: [:total :account | total addAll: (account transactions). total].! !
+!Bank class methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:28:10'!
+create
+	^Portfolio initialize new! !
+
+Bank subclass: #Portfolio
+	instanceVariableNames: 'accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Object subclass: #Bank
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Bank category: #'Portfolio-Ejercicio'!
+Object subclass: #Bank
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Bank subclass: #Portfolio
+	instanceVariableNames: 'accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
+Bank subclass: #Portfolio
+	instanceVariableNames: 'accountsAndPortfolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Bank subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #ReceptiveAccount category: #'Portfolio-Ejercicio'!
+Bank subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Bank methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:29:57' prior: 50728426!
+addAccount: aReceptiveAccount 
+	^self subclassResponsibility ! !
+!Bank methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:30:04' prior: 50728431!
+addPortfolio: aPortfolio 
+	^self subclassResponsibility ! !
+!Bank methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:30:11' prior: 50728436!
+initialize
+	^self subclassResponsibility ! !
+!Bank methodsFor: 'as yet unclassified' stamp: 'gc 10/17/2019 21:30:16' prior: 50728441!
+isEmpty
+	^self subclassResponsibility ! !
+!Bank methodsFor: 'observer' stamp: 'gc 10/17/2019 21:30:22' prior: 50728445!
+balance
+	^self subclassResponsibility ! !
+!Bank methodsFor: 'observer' stamp: 'gc 10/17/2019 21:30:27' prior: 50728451!
+contains: aReceptiveAccount 
+	^self subclassResponsibility ! !
+!Bank methodsFor: 'observer' stamp: 'gc 10/17/2019 21:30:32' prior: 50728456!
+hasRegistered: aTransaction 
+	^self subclassResponsibility ! !
+!Bank methodsFor: 'observer' stamp: 'gc 10/17/2019 21:30:38' prior: 50728464!
+transactions
+	^self subclassResponsibility ! !
+
+Bank subclass: #Portfolio
+	instanceVariableNames: 'accountsAndPortfolios parents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
+Bank subclass: #Portfolio
+	instanceVariableNames: 'accountsAndPortfolios parents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+----SNAPSHOT----(17 October 2019 21:34:27) CuisUniversity-3839.image priorSource: 12694714!
