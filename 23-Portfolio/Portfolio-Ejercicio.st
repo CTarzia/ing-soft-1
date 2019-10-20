@@ -716,24 +716,17 @@ isEmpty
 	^accounts isEmpty ! !
 
 
-!Portfolio methodsFor: 'add' stamp: 'gc 10/19/2019 21:44:00'!
+!Portfolio methodsFor: 'add' stamp: 'gc 10/20/2019 17:12:16'!
 addAccount: aReceptiveAccount 
 	self assertCanBeAdded: aReceptiveAccount .
-	"
-	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	"
 	accounts addLast: aReceptiveAccount .! !
 
 !Portfolio methodsFor: 'add' stamp: 'gc 10/18/2019 16:19:01'!
 addParent: aPortfolio 
 	parents addLast: aPortfolio.! !
 
-!Portfolio methodsFor: 'add' stamp: 'gc 10/19/2019 22:10:10'!
+!Portfolio methodsFor: 'add' stamp: 'gc 10/20/2019 17:12:25'!
 addPortfolio: aPortfolio 
-	"
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Account accountCantBeAdded ].
-	"
 	self assertCanBeAdded: aPortfolio .
 	accounts addLast: aPortfolio.
 	aPortfolio addParent: self.! !
@@ -826,7 +819,7 @@ transactions
 	^ transactions copy! !
 
 
-!ReceptiveAccount methodsFor: 'balance' stamp: 'gc 10/17/2019 18:56:04'!
+!ReceptiveAccount methodsFor: 'balance' stamp: 'gc 10/20/2019 17:13:52'!
 balance
 
 	^transactions sum: [ :aTransaction | aTransaction worth ] ifEmpty: [ 0 ]! !
