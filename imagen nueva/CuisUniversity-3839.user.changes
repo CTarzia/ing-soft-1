@@ -3114,809 +3114,602 @@ Smalltalk removeClassNamed: #LiveTypingClassToBeRemoved!
 ----STARTUP---- (1 October 2019 12:37:13) as /home/gzeitoune/Documents/UBA/ingSoft1/examen/imagen nueva/CuisUniversity-3839.image!
 
 
-----STARTUP---- (18 October 2019 10:17:59) as /Users/ctarzia/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
+----STARTUP---- (21 October 2019 19:29:13) as /Users/ctarzia/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
 
 
 ----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/23-Portfolio/Portfolio-Ejercicio.st----!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 14:53:35'!
-test27CantAddAccountWhenItIsAlsoUpperInTheTree
-	| portfolio1 portfolio2 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
 
-	portfolio1 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	
-	
-	
-	self assert: (portfolio1 transactions) .! !
+----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/2019-2c/23-Portfolio/Portfolio-Solucion.st----!
 
-----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/22-TerniLapilli/Terni Lapilli.st----!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 14:55:25' prior: 50726986!
-test27CantAddAccountWhenItIsAlsoUpperInTheTree
-	| portfolio1 portfolio2 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
 
-	portfolio1 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	
-	
-	self should: [account ] 
-	raise: Error 
-	withMessageText: 'a' 
+!classDefinition: #AccountTransfer category: #'Portfolio-Solucion'!
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
 
+TestCase subclass: #AccountTransferTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #AccountTransferTest category: #'Portfolio-Solucion'!
+TestCase subclass: #AccountTransferTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!AccountTransferTest methodsFor: 'no messages' stamp: 'gc 10/21/2019 19:47:44'!
+test01TotalMoneyBetweenAccountsAfterTransferIsTheSameAsBefore
+	| account1 account2 |
+	account1 _ ReceptiveAccount new.
+	account1 _ ReceptiveAccount new.
 	! !
-
-Smalltalk removeClassNamed: #Xwon!
-
-Smalltalk removeClassNamed: #XPlacingChips!
-
-Smalltalk removeClassNamed: #XMovingChips!
-
-Smalltalk removeClassNamed: #Owon!
-
-Smalltalk removeClassNamed: #OPlacingChips!
-
-Smalltalk removeClassNamed: #OMovingChips!
-
-Smalltalk removeClassNamed: #TerniLapilliStatus!
-
-Smalltalk removeClassNamed: #TerniLapilli!
-
-Smalltalk removeClassNamed: #TerniLapilliTest!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:05:20' prior: 50728124!
-test27CantAddAccountWhenItIsAlsoUpperInTheTree
-	| portfolio1 portfolio2 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	
-	
-	self should: [portfolio2 addAccount: account ] 
-	raise: Error 
-	withMessageText: 'Esta cuenta ya esta mas arriba en el arbol' 
-
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:07:04'!
-test28CantAddAccountWhenItIsAlsoUpperInTheTree
-	| portfolio1 portfolio2 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	
-	
-	self should: [portfolio2 addAccount: account ] 
-	raise: Error 
-	withMessageText: 'Esta cuenta ya esta mas arriba en el arbol' 
-
-	! !
-
-ReceptiveAccountTest removeSelector: #test27CantAddAccountWhenItIsAlsoUpperInTheTree!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:10:51'!
-test27CanAddAccountWhenItIsInAParallelPortfolio
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	
-	portfolio1 addPortfolio: portfolio2 .
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account _ ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	portfolio3 addAccount: account.
-	
-	self assert: portfolio1 
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:12:41' prior: 50728183!
-test27CanAddAccountWhenItIsInAParallelPortfolio
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	
-	portfolio1 addPortfolio: portfolio2 .
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account _ ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	portfolio3 addAccount: account.
-	
-	self assert: (portfolio1 contains: account ).
-	self assert: (portfolio3 contains: account ).
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 19:50:21' prior: 50728509!
+test01TotalMoneyBetweenAccountsAfterTransferIsTheSameAsBefore
+	| account1 account2 balanceBeforeTransfer balanceAfterTransfer |
+	account1 _ ReceptiveAccount new.
+	account1 _ ReceptiveAccount new.
 	
 	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:13:25' prior: 50726888!
-addAccount: aReceptiveAccount 
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:14:05' prior: 50726899!
-initialize
-	accountsAndPortfolios _ OrderedCollection new.
-	parents _ OrderedCollection new.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:14:33' prior: 50726894!
-addPortfolio: aPortfolio 
-	accountsAndPortfolios addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:15:04'!
-addParent: aPortfolio 
-	parents addLast: aPortfolio.! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:17:12'!
-test28AddingPortfolioToPortfolioUpdatesParents
-	| portfolio1 portfolio2 portfolio3 account |
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 19:53:53'!
+test01TotalBalanceBetweenAccountsAfterTransferIsTheSameAsBefore
+	| account1 account2 totalBalanceBeforeTransfer totalBalanceAfterTransfer |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
 	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
+	Deposit register: 100 on: account1.
+	Deposit register: 100 on: account2.
 	
-	portfolio1 addPortfolio: portfolio2 .
-	portfolio3 addPortfolio: portfolio2 .
+	totalBalanceBeforeTransfer _ account1 balance + account2 balance.
 	
-	account _ ReceptiveAccount new.
+	AccountTransfer transfer: 50 from: account1 to: account2.
 	
-	portfolio1 addAccount: account.
-	portfolio3 addAccount: account.
+	totalBalanceAfterTransfer _ account1 balance + account2 balance.
 	
-	self assert: (portfolio1 contains: account ).
-	self assert: (portfolio3 contains: account ).
+	self assert: totalBalanceBeforeTransfer equals: totalBalanceBeforeTransfer .
 	
 	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:25:13' prior: 50728240!
-test28AddingPortfolioToPortfolioUpdatesParents
-	| portfolio1 portfolio2 |
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 19:54:10' prior: 50728528!
+test01TotalBalanceBetweenAccountsAfterTransferIsTheSameAsBefore
+	| account1 account2 totalBalanceBeforeTransfer totalBalanceAfterTransfer |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
 	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+	Deposit register: 100 on: account1.
+	Deposit register: 100 on: account2.
 	
-	portfolio1 addPortfolio: portfolio2 .
+	totalBalanceBeforeTransfer _ account1 balance + account2 balance.
 	
-	self assert: ((portfolio2 parents) size = 1 ).
-	self assert: ((portfolio2 parents) includes: portfolio1 ).
+	AccountTransfer transfer: 50 from: account1 to: account2.
 	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:25:23'!
-test29CantAddAccountWhenItIsAlsoUpperInTheTree
-	| portfolio1 portfolio2 account |
+	totalBalanceAfterTransfer _ account1 balance + account2 balance.
 	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	
-	
-	self should: [portfolio2 addAccount: account ] 
-	raise: Error 
-	withMessageText: 'Esta cuenta ya esta mas arriba en el arbol' 
-
-	! !
-
-ReceptiveAccountTest removeSelector: #test28CantAddAccountWhenItIsAlsoUpperInTheTree!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 15:29:50'!
-parents
-	self shouldBeImplemented.
-	^parents! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 15:29:57' prior: 50728288!
-parents
-	^parents! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:30:57' prior: 50728270!
-test29CantAddAccountWhenItIsAlsoUpperInTheTree
-	| portfolio1 portfolio2 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	
-	self should: [portfolio2 addAccount: account ] 
-	raise: Error 
-	withMessageText: 'Esta cuenta ya esta mas arriba en el arbol' 
-
-	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:32:26' prior: 50728217!
-addAccount: aReceptiveAccount 
-	
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:32:52' prior: 50728313!
-addAccount: aReceptiveAccount 
-	
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:37:58' prior: 50728319!
-addAccount: aReceptiveAccount 
-	(parents inject: false into: [:includesAccount :accountOrPortfolio | includesAccount or: [accountOrPortfolio includes: aReceptiveAccount ]]) ifTrue: [^self class ].
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-
-----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/Terni Lapilli.st----!
-
-Smalltalk removeClassNamed: #TerniLapilli!
-
-Smalltalk removeClassNamed: #TerniLapilliTest!
-
-----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/22-TerniLapilli/Terni Lapilli.st----!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 15:40:46' prior: 50728297!
-test29CantAddAccountWhenItIsAlsoUpperInTheTree
-	| portfolio1 portfolio2 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account.
-	
-	self should: [portfolio2 addAccount: account ] 
-	raise: Error 
-	withMessageText: Portfolio accountAlreadyInTree.
-
-	! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:41:18'!
-accountAlreadyInTree
-	^'Esa cuenta ya esta en el arbol'! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:43:16' prior: 50728325!
-addAccount: aReceptiveAccount 
-	(parents inject: false into: [:includesAccount :accountOrPortfolio | includesAccount or: [accountOrPortfolio includes: aReceptiveAccount ]. includesAccount ]) ifTrue: [^self class ].
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 15:43:58' prior: 50729647!
-addAccount: aReceptiveAccount 
-	(parents inject: false into: [:includesAccount :accountOrPortfolio | includesAccount or: [accountOrPortfolio includes: aReceptiveAccount ]. includesAccount ]) ifTrue: [^self class ].
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-
-----STARTUP---- (18 October 2019 15:52:33) as /Users/ctarzia/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
-
-
-----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/23-Portfolio/Portfolio-Ejercicio.st----!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:13:22'!
-test27CanAddAccountToTwoPortfoliosWithoutCommonParent
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2.
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
+	self assert: totalBalanceBeforeTransfer equals: totalBalanceAfterTransfer .
 	
 	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:13:57' prior: 50730348!
-test27CanAddAccountToTwoPortfoliosWithoutCommonParent
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
 
-	portfolio1 addPortfolio: portfolio2.
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	portfolio3 addAccount: account .
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:14:26' prior: 50730361!
-test27CanAddAccountToTwoPortfoliosWithoutCommonParent
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
+AccountTransferTest removeSelector: #test01TotalMoneyBetweenAccountsAfterTransferIsTheSameAsBefore!
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 19:55:00'!
+transfer: aSmallInteger from: aReceptiveAccount to: aReceptiveAccount3 
+	self shouldBeImplemented.! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 19:55:35' prior: 50728574!
+transfer: anAmountOfMoney from: aSendingAccount to: aRecievingAccount 
+	self shouldBeImplemented.! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 19:56:32' prior: 50728581!
+transfer: anAmountOfMoney from: aSendingAccount to: aRecievingAccount 
 
-	portfolio1 addPortfolio: portfolio2.
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	portfolio3 addAccount: account .
-	
-	self assert: (portfolio1 includes: account ).
-	self assert: (portfolio3 includes: account ).
-	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:14:46' prior: 50730376!
-test27CanAddAccountToTwoPortfoliosWithoutCommonParent
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
+	^ self new initializeFor: anAmountOfMoney  from: aSendingAccount to: aRecievingAccount ! !
+!AccountTransfer methodsFor: 'no messages' stamp: 'gc 10/21/2019 19:57:06'!
+initializeFor: anAmountOfMoney  from: aSendingAccount to: aRecievingAccount ! !
 
-	portfolio1 addPortfolio: portfolio2.
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	portfolio3 addAccount: account .
-	
-	self assert: (portfolio1 contains: account ).
-	self assert: (portfolio3 contains: account ).
-	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:15:58'!
-test28AddingPortfolioToPortfolioUpdatesParents
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'value sender reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
 
-	portfolio1 addPortfolio: portfolio2.
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	portfolio3 addAccount: account .
-	
-	self assert: (portfolio1 contains: account ).
-	self assert: (portfolio3 contains: account ).
-	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:17:32' prior: 50730412!
-test28AddingPortfolioToPortfolioUpdatesParents
-	| portfolio1 portfolio2 |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+!classDefinition: #AccountTransfer category: #'Portfolio-Solucion'!
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'value sender reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 19:58:55' prior: 50728596!
+initializeFor: anAmountOfMoney  from: aSendingAccount to: aRecievingAccount 
+	value _ anAmountOfMoney.
+	sender _ aSendingAccount .
+	reciever  _  aRecievingAccount .! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:02:19'!
+register: anAmountOfMoney from: aSendingAccount to: aRecievingAccount 
 
-	portfolio1 addPortfolio: portfolio2.
-	
-	self assert: (portfolio1 contains: portfolio2 ).
-	self assert: (portfolio2 parents size = 1 ).
-	self assert: (portfolio2 parents includes: portfolio1 ).
+	^ self new initializeFor: anAmountOfMoney  from: aSendingAccount to: aRecievingAccount ! !
 
+AccountTransfer class removeSelector: #transfer:from:to:!
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:04:57'!
+for: anAmountOfMoney
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:06:34' prior: 50728622!
+register: anAmountOfMoney from: aSendingAccount to: aRecievingAccount 
 	
-	! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 16:17:45'!
-parents
-	self shouldBeImplemented.
-	^parents! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 16:17:52' prior: 50730443!
-parents
-	^parents! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:18:10' prior: 50730430!
-test28AddingPortfolioToPortfolioUpdatesParents
-	| portfolio1 portfolio2 |
+	| transfer |
 	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+	transfer := self for: anAmountOfMoney .
+	
+	aSendingAccount registerSentMoney: transfer.
+	aRecievingAccount registerRecievedMoney: transfer .
+		
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:10:29' prior: 50728632!
+for: anAmountOfMoney
+	^self! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:10:51' prior: 50728649!
+for: aValue
+	^self new initializeFor: aValue! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:11:02' prior: 50728637!
+register: aValue from: aSendingAccount to: aRecievingAccount 
+	
+	| transfer |
+	
+	transfer := self for: aValue .
+	
+	aSendingAccount registerSentMoney: transfer.
+	aRecievingAccount registerRecievedMoney: transfer .
+		
+	^ transfer 
+! !
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:11:31'!
+initializeFor: anAmountOfMoney
+	value _ anAmountOfMoney.! !
 
-	portfolio1 addPortfolio: portfolio2.
-	
-	self assert: (portfolio1 contains: portfolio2 ).
-	self assert: (portfolio2 parents size = 1 ).
-	self assert: (portfolio2 parents includes: portfolio1 ).
+AccountTransfer removeSelector: #initializeFor:from:to:!
+!AccountTransfer class methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:13:55'!
+transfer: aSmallInteger from: aReceptiveAccount to: aReceptiveAccount3 
+	self shouldBeImplemented.! !
 
+AccountTransfer class removeSelector: #transfer:from:to:!
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:14:29' prior: 50728550!
+test01TotalBalanceBetweenAccountsAfterTransferIsTheSameAsBefore
+	| account1 account2 totalBalanceBeforeTransfer totalBalanceAfterTransfer |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	
+	Deposit register: 100 on: account1.
+	Deposit register: 100 on: account2.
+	
+	totalBalanceBeforeTransfer _ account1 balance + account2 balance.
+	
+	AccountTransfer register: 50 from: account1 to: account2.
+	
+	totalBalanceAfterTransfer _ account1 balance + account2 balance.
+	
+	self assert: totalBalanceBeforeTransfer equals: totalBalanceAfterTransfer .
 	
 	! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:18:28' prior: 50730261!
-initialize
-	accountsAndPortfolios _ OrderedCollection new.
-	parents _ OrderedCollection new.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:18:44' prior: 50730256!
-addPortfolio: aPortfolio 
-	accountsAndPortfolios addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:19:01'!
-addParent: aPortfolio 
-	parents addLast: aPortfolio.! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:23:09'!
+registerSentMoney: anAccountTransfer 
+	self shouldBeImplemented.! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:23:17' prior: 50728706!
+registerSentMoney: anAccountTransfer 
+	! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:23:26'!
+registerRecievedMoney: anAccountTransfer 
+	self shouldBeImplemented.! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:23:28' prior: 50728716!
+registerRecievedMoney: anAccountTransfer 
+	! !
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:26:15'!
+test02TransferAffectsBalanceFromSenderAndReciever
+	| account1 account2 |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	
+	Deposit register: 100 on: account1.
+	Deposit register: 100 on: account2.
+	
+	AccountTransfer register: 50 from: account1 to: account2.
 
-----SNAPSHOT----(18 October 2019 16:19:09) CuisUniversity-3839.image priorSource: 12628964!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:20:56'!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2.
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	portfolio3 addAccount: account .
+	self assert: (account1 balance) equals: 50 .
+	self assert: (account2 balance) equals: 150 .
 	! !
 
-----End fileIn of /Users/ctarzia/Documents/UBA/ing-soft-1/22-TerniLapilli/Terni Lapilli.st----!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:22:42' prior: 50730485!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: 'value sender reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
 
-	portfolio1 addPortfolio: portfolio2.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: TerniLapilli wrongTurn .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:23:58' prior: 50731625!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
 
-	portfolio1 addPortfolio: portfolio2.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountAlreadyInTree .! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:25:11'!
-accountAlreadyInTree
-	^'Esa cuenta ya la contiene un portfolio de distinta jerarquia'.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:25:38' prior: 50730250!
-addAccount: aReceptiveAccount 
-	
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:29:11' prior: 50731661!
-addAccount: aReceptiveAccount 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aReceptiveAccount )])
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:29:22' prior: 50731667!
-addAccount: aReceptiveAccount 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aReceptiveAccount ). isContained .])
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:31:17' prior: 50731677!
-addAccount: aReceptiveAccount 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aReceptiveAccount ). isContained .]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!ReceptiveAccount methodsFor: 'nil' stamp: 'gc 10/18/2019 16:35:32'!
-contains: aReceptiveAccount 
-	^self = aReceptiveAccount .! !
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:35:39' prior: 50731700!
-contains: aReceptiveAccount 
-	^self == aReceptiveAccount .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:36:06' prior: 50731640!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+!classDefinition: #Recieve category: #'Portfolio-Solucion'!
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
 
-	portfolio1 addPortfolio: portfolio2.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	portfolio2 addAccount: account .
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountAlreadyInTree .! !
+AccountTransfer subclass: #Send
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
 
-----SNAPSHOT----(18 October 2019 16:36:30) CuisUniversity-3839.image priorSource: 12762615!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:37:12' prior: 50731711!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
+!classDefinition: #Send category: #'Portfolio-Solucion'!
+AccountTransfer subclass: #Send
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:39:42' prior: 50728659!
+register: aValue from: aSendingAccount to: aRecievingAccount 
 	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+	| transfer |
+	
+	transfer := self for: aValue .
+	
+	"Recieve register:  from:  to: "
+	
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:41:57' prior: 50728769!
+register: aValue from: aSendingAccount to: aRecievingAccount 
+	
+	| transfer |
+	
+	transfer := self for: aValue .
+	
+	Recieve register: aValue from: aSendingAccount to: aRecievingAccount with: transfer.
+	
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:42:16' prior: 50728778!
+register: aValue from: aSendingAccount to: aRecievingAccount 
+	
+	| transfer |
+	
+	transfer := self for: aValue .
+	
+	Recieve register: transfer from: aSendingAccount to: aRecievingAccount.
+	
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:42:41' prior: 50728789!
+register: aValue from: aSendingAccount to: aRecievingAccount 
+	
+	| transfer |
+	
+	transfer := self for: aValue .
+	
+	Recieve register: transfer from: aSendingAccount to: aRecievingAccount.
+	Send register: transfer from: aSendingAccount to: aRecievingAccount.
+	
+	^ transfer 
+! !
 
-	portfolio1 addPortfolio: portfolio2.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	portfolio2 addAccount: account .
-	"self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountAlreadyInTree ."! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:37:49' prior: 50731688!
-addAccount: aReceptiveAccount 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:38:15' prior: 50731730!
-test29CantAddAccountToPortfolioIfParentContainsIt
-	| portfolio1 portfolio2  account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
 
-	portfolio1 addPortfolio: portfolio2.
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-
-	self should: [portfolio2 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountAlreadyInTree .! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:44:44'!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-
-	portfolio1 addPortfolio: portfolio2.
-	portfolio3 addPortfolio: portfolio2 .
-	
-	account := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account .
-	portfolio2 addPortfolio: portfolio3 .
-	
-	
+!classDefinition: #AccountTransfer category: #'Portfolio-Solucion'!
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!Recieve class methodsFor: 'no messages' stamp: 'gc 10/21/2019 20:44:22'!
+register: transfer from: aSendingAccount to: aRecievingAccount.
 	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 16:45:30' prior: 50731773!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
 
-	portfolio1 addPortfolio: portfolio2.
-	portfolio3 addPortfolio: portfolio2 .
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: 'transfer sender reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #Recieve category: #'Portfolio-Solucion'!
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #AccountTransfer category: #'Portfolio-Solucion'!
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: 'transfer sender reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #Recieve category: #'Portfolio-Solucion'!
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: 'transfer sender reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #Recieve category: #'Portfolio-Solucion'!
+AccountTransfer subclass: #Recieve
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'value  sender reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #AccountTransfer category: #'Portfolio-Solucion'!
+Object subclass: #AccountTransfer
+	instanceVariableNames: 'value sender reciever'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+AccountTransfer subclass: #Send
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #Send category: #'Portfolio-Solucion'!
+AccountTransfer subclass: #Send
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:47:39' prior: 50728799!
+register: aValue from: aSendingAccount to: aRecievingAccount 
 	
-	account := ReceptiveAccount new.
+	| transfer |
 	
-	portfolio1 addAccount: account .
-	portfolio2 addPortfolio: portfolio3 .
+	transfer := self for: aValue from: aSendingAccount to: aRecievingAccount.
 	
-	self should: [portfolio3 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	Recieve register: transfer.
+	Send register: transfer from: aSendingAccount to: aRecievingAccount.
 	
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 20:48:00' prior: 50728902!
+register: aValue from: aSendingAccount to: aRecievingAccount 
 	
+	| transfer |
+	
+	transfer := self for: aValue from: aSendingAccount to: aRecievingAccount.
+	
+	Recieve register: transfer.
+	Send register: transfer.
+	
+	^ transfer 
+! !
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:48:57'!
+initializeFor: aValue from: aSendingAccount to: aRecievingAccount.
+	value _ aValue .! !
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:49:19'!
+for: aValue from: aSendingAccount to: aRecievingAccount.
+	value _ aValue .! !
+
+AccountTransfer removeSelector: #initializeFor:from:to:!
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:49:44' prior: 50728930!
+for: aValue from: aSendingAccount to: aRecievingAccount.
+	value _ aValue .
+	sender _ aSendingAccount .
+	reciever _ aRecievingAccount .! !
+!Recieve class methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:52:28'!
+register: aTransfer
 	! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:46:03'!
-portfolioWithAccountAlreadyInTree
-	^'Ese portfolio tiene una cuenta que ya la contiene un portfolio de distinta jerarquia'.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:48:16' prior: 50730472!
-addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aPortfolio ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accountsAndPortfolios addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 16:48:48' prior: 50731816!
-addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio contains: aPortfolio ).]) ifTrue: [^self error: Portfolio portfolioWithAccountAlreadyInTree ].
-	accountsAndPortfolios addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 16:58:38' prior: 50730276!
-contains: aPortfolioOrAccount 
-	^aPortfolioOrAccount isIncludedIn: accountsAndPortfolios.! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:00:15'!
-isIncludedIn: aListOfAccountsAndPortfolios 
-	^aListOfAccountsAndPortfolios includes: self .! !
-!ReceptiveAccount methodsFor: 'nil' stamp: 'gc 10/18/2019 17:00:39'!
-isIncludedIn: aListOfAccountsAndPortfolios 
-	^aListOfAccountsAndPortfolios includes: self .! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:02:38' prior: 50731845!
-isIncludedIn: aListOfAccountsAndPortfolios 
-	^accountsAndPortfolios inject: false into: [:isIncluded :accountOrPortfolio | isIncluded or: [aListOfAccountsAndPortfolios includes: accountOrPortfolio ]]! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:07:32' prior: 50731789!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
-	
 
-	portfolio2 addPortfolio: portfolio3 .
-	
-	
-	portfolio1 addAccount: account .
-	portfolio2 addPortfolio: portfolio3 .
-	
-	self should: [portfolio3 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
-	
-	
+Recieve class removeSelector: #register:from:to:!
+
+Account subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions transfers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #ReceptiveAccount category: #'Portfolio-Solucion'!
+Account subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions transfers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!Recieve class methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:53:34' prior: 50728945!
+register: aTransfer
+	^self new initializeFor: aTransfer ! !
+!Send class methodsFor: 'no messages' stamp: 'gc 10/21/2019 20:53:54'!
+register: aTransfer
+	^self new initializeFor: aTransfer ! !
+!Recieve methodsFor: 'no messages' stamp: 'gc 10/21/2019 20:54:12'!
+initializeFor: aTransfer 
 	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:07:34' prior: 50731867!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
+!Recieve methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 20:56:46' prior: 50728972!
+initializeFor: aTransfer 
+	transfer _ aTransfer ! !
+!Send methodsFor: 'no messages' stamp: 'gc 10/21/2019 20:56:56'!
+initializeFor: aTransfer 
+	transfer _ aTransfer ! !
+!Recieve class methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:00:48'!
+initializeFor: aTransfer
+	^self new initializeFor: aTransfer ! !
 
-	portfolio2 addPortfolio: portfolio3 .
+Recieve class removeSelector: #register:!
+!Send class methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:01:04'!
+initializeFor: aTransfer
+	^self new initializeFor: aTransfer ! !
+
+Send class removeSelector: #register:!
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:01:24' prior: 50728914!
+register: aValue from: aSendingAccount to: aRecievingAccount 
+	
+	| transfer |
+	
+	transfer := self for: aValue from: aSendingAccount to: aRecievingAccount.
+	
+	Recieve initializeFor: transfer.
+	Send initializeFor: transfer.
+	
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:01:47' prior: 50728998!
+register: aValue from: aSendingAccount to: aRecievingAccount 
+	
+	| transfer transferRecieve transferSend|
+	
+	transfer := self for: aValue from: aSendingAccount to: aRecievingAccount.
+	
+	Recieve initializeFor: transfer.
+	Send initializeFor: transfer.
+	
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:02:09' prior: 50729009!
+register: aValue from: aSendingAccount to: aRecievingAccount 
+	
+	| transfer transferRecieve transferSend|
+	
+	transfer := self for: aValue from: aSendingAccount to: aRecievingAccount.
+	
+	transferRecieve _ Recieve initializeFor: transfer.
+	transferSend _ Send initializeFor: transfer.
 	
 	
-	portfolio1 addAccount: account .
-	portfolio2 addPortfolio: portfolio3 .
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:02:19' prior: 50729021!
+register: aValue from: aSendingAccount to: aRecievingAccount 
 	
-	self should: [portfolio3 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
+	| transfer transferRecieve transferSend|
+	
+	transfer := self for: aValue from: aSendingAccount to: aRecievingAccount.
+	
+	transferRecieve _ Recieve initializeFor: transfer.
+	transferSend _ Send initializeFor: transfer.
 	
 	
+	
+	^ transfer 
+! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:03:05' prior: 50729034!
+register: aValue from: aSendingAccount to: aRecievingAccount 
+	
+	| transfer transferRecieve transferSend|
+	
+	transfer := self for: aValue from: aSendingAccount to: aRecievingAccount.
+	
+	transferRecieve _ Recieve initializeFor: transfer.
+	transferSend _ Send initializeFor: transfer.
+	
+	aSendingAccount register: transferSend.
+	aRecievingAccount register: transferRecieve.
+	
+	^ transfer 
+! !
+!ReceptiveAccount methodsFor: 'transactions' stamp: 'gc 10/21/2019 21:05:50' prior: 50728381!
+register: aTransactionOrTransfer
+
+	aTransactionOrTransfer registerTo: self.
+	"transactions add: aTransaction "
+! !
+!AccountTransaction methodsFor: 'nil' stamp: 'gc 10/21/2019 21:06:32'!
+registerTo: aReceptiveAccount
+	^self subclassResponsibility ! !
+!Deposit methodsFor: 'nil' stamp: 'gc 10/21/2019 21:06:50'!
+registerTo: aReceptiveAccount
 	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:07:36' prior: 50731886!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
+!Deposit methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:07:27' prior: 50729073!
+registerTo: aReceptiveAccount
+	aReceptiveAccount registerTransaction: self.! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:08:08'!
+registerTransaction: aTransaction
+	transactions add: aTransaction! !
 
-	portfolio2 addPortfolio: portfolio3 .
-	
-	portfolio1 addAccount: account .
-	portfolio2 addPortfolio: portfolio3 .
-	
-	self should: [portfolio3 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
-	
-	
+ReceptiveAccount removeSelector: #registerSentMoney:!
+
+ReceptiveAccount removeSelector: #registerRecievedMoney:!
+!Withdraw methodsFor: 'nil' stamp: 'gc 10/21/2019 21:08:29'!
+registerTo: aReceptiveAccount
+	aReceptiveAccount registerTransaction: self.! !
+
+----SNAPSHOT----(21 October 2019 21:09:22) CuisUniversity-3839.image priorSource: 12628964!
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:09:30'!
+registerTo: aReceptiveAccount
 	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:08:38' prior: 50731905!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
-	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio2 addPortfolio: portfolio3 .
-	
-	portfolio1 addAccount: account .
-	portfolio2 addAccount: account .
-	
-	self should: [portfolio3 addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
-	
-	
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:09:40' prior: 50729099!
+registerTo: aReceptiveAccount
+	^self subclassResponsibility ! !
+!Recieve methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:10:10'!
+registerTo: aReceptiveAccount
+	aReceptiveAccount registerTransfer: self.! !
+!Send methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:10:16'!
+registerTo: aReceptiveAccount
+	aReceptiveAccount registerTransfer: self.! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'gc 10/21/2019 21:10:44'!
+registerTransfer: aTransfer
+	transfers add: aTransfer ! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:11:35'!
+for: aSmallInteger from: aReceptiveAccount to: aReceptiveAccount3 
+	self shouldBeImplemented.! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:11:55' prior: 50729125!
+for: aValue from: aSender to: aReciever 
+	self shouldBeImplemented.! !
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:12:26' prior: 50729132!
+for: aValue from: aSender to: aReciever 
 	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:08:57' prior: 50731924!
-test30CantAddPortfolioToPortfolioIfOneOfItsAccountsIsInTree
-	| portfolio1 portfolio2 portfolio3 account |
+!AccountTransfer class methodsFor: 'instance creation' stamp: 'gc 10/21/2019 21:12:42' prior: 50729047!
+register: aValue from: aSendingAccount to: aRecievingAccount 
 	
-	portfolio1 _ Portfolio create.
-	portfolio2 _ Portfolio create.
-	portfolio3 _ Portfolio create.
-	account _ ReceptiveAccount new.
+	| transfer transferRecieve transferSend|
+	
+	transfer := self new for: aValue from: aSendingAccount to: aRecievingAccount.
+	
+	transferRecieve _ Recieve initializeFor: transfer.
+	transferSend _ Send initializeFor: transfer.
+	
+	aSendingAccount register: transferSend.
+	aRecievingAccount register: transferRecieve.
+	
+	^ transfer 
+! !
 
-	portfolio2 addPortfolio: portfolio3 .
-	
-	portfolio1 addAccount: account .
-	portfolio2 addAccount: account .
-	
-	self should: [portfolio3 addPortfolio: portfolio1 .] 
-	raise: Error 
-	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
-	
-	
-	! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:11:44'!
-hasCommonElementsWith: aPortfolioOrAccount 
-	^aPortfolioOrAccount isIncludedIn: accountsAndPortfolios.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:11:44' prior: 50731828!
-addPortfolio: aPortfolio 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aPortfolio ).]) ifTrue: [^self error: Portfolio portfolioWithAccountAlreadyInTree ].
-	accountsAndPortfolios addLast: aPortfolio.
-	aPortfolio addParent: self.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:11:44' prior: 50731746!
-addAccount: aReceptiveAccount 
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
+AccountTransfer class removeSelector: #for:from:to:!
 
-Portfolio removeSelector: #contains:!
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:15:59'!
-contains: anAccountOrPortfolio 
-	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountsAndPortfolios includes: accountOrPortfolio ]]! !
-
-----SNAPSHOT----(18 October 2019 17:16:16) CuisUniversity-3839.image priorSource: 12802431!
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:18:05'!
-test31CantAddAccountToSamePortfolioTwice
-	| portfolio account |
-	
-	portfolio _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio addAccount: account .
-	
-	self should: [portfolio addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio portfolioWithAccountAlreadyInTree .
-	
-	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:18:14' prior: 50732006!
-test31CantAddAccountToSamePortfolioTwice
-	| portfolio account |
-	
-	portfolio _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio addAccount: account .
-	
-	self should: [portfolio addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountAlreadyInTree .
-	
-	
-	! !
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'gc 10/18/2019 17:18:46' prior: 50732019!
-test31CantAddAccountToSamePortfolioTwice
-	| portfolio account |
-	
-	portfolio _ Portfolio create.
-	account _ ReceptiveAccount new.
-
-	portfolio addAccount: account .
-	
-	self should: [portfolio addAccount: account .] 
-	raise: Error 
-	withMessageText: Portfolio accountAlreadyInPortfolio .
-	
-	
-	! !
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:20:11'!
-accountAlreadyInPortfolio
-	^'Ese portfolio ya tiene esa cuenta'.! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:20:59' prior: 50731981!
-addAccount: aReceptiveAccount 
-	(self contains: aReceptiveAccount ).
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'gc 10/18/2019 17:22:31' prior: 50732049!
-addAccount: aReceptiveAccount 
-	(self contains: aReceptiveAccount) ifTrue: [self error: self class accountAlreadyInPortfolio ].
-	(parents inject: false into: [:isContained :accountOrPortfolio | isContained or: (accountOrPortfolio hasCommonElementsWith: aReceptiveAccount ).]) ifTrue: [^self error: Portfolio accountAlreadyInTree ].
-	accountsAndPortfolios addLast: aReceptiveAccount .! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:24:05' prior: 50731994!
-contains: anAccountOrPortfolio 
-	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountsAndPortfolios contains: accountOrPortfolio ]]! !
-!Portfolio methodsFor: 'observer' stamp: 'gc 10/18/2019 17:25:00' prior: 50732078!
-contains: anAccountOrPortfolio 
-	^accountsAndPortfolios inject: false into: [:isContained :accountOrPortfolio | isContained or: [accountOrPortfolio contains: anAccountOrPortfolio ]]! !
-
-----SNAPSHOT----(18 October 2019 17:25:21) CuisUniversity-3839.image priorSource: 12811257!
+----SNAPSHOT----(21 October 2019 21:15:33) CuisUniversity-3839.image priorSource: 12718254!
