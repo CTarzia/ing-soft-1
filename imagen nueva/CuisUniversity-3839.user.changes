@@ -3713,3 +3713,174 @@ register: aValue from: aSendingAccount to: aRecievingAccount
 AccountTransfer class removeSelector: #for:from:to:!
 
 ----SNAPSHOT----(21 October 2019 21:15:33) CuisUniversity-3839.image priorSource: 12718254!
+
+----QUIT----(21 October 2019 21:17:38) CuisUniversity-3839.image priorSource: 12720288!
+
+----STARTUP---- (23 October 2019 15:31:56) as /Users/ctarzia/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3839.image!
+
+!ReceptiveAccount methodsFor: 'balance' stamp: 'gc 10/23/2019 15:37:05' prior: 50728390!
+balance
+
+	^transactions 
+		inject: 0
+		into: [ :currentBalance :transaction | transaction affectBalance: currentBalance ]
+	+
+	(transfers 
+		inject: 0
+		into: [ :currentBalance :transfer | transfer affectBalance: currentBalance ] ).	! !
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 15:38:09'!
+affectBalance: aBalance
+
+	self subclassResponsibility ! !
+!Recieve methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 15:38:36'!
+affectBalance: aBalance
+
+	^aBalance + value ! !
+!Send methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 15:38:43'!
+affectBalance: aBalance
+
+	^aBalance - value ! !
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'gc 10/23/2019 15:39:33' prior: 50728370!
+initialize
+
+	super initialize.
+	transactions := OrderedCollection new.
+	transfers := OrderedCollection new.! !
+!ReceptiveAccount methodsFor: 'balance' stamp: 'gc 10/23/2019 15:49:41' prior: 50729170!
+balance
+	|transactionBalance transferBalance|
+	
+	transactionBalance _ transactions 
+		inject: 0
+		into: [ :currentBalance :transaction | transaction affectBalance: currentBalance ].
+	transferBalance _ transfers 
+		inject: 0
+		into: [ :currentBalance :transfer | transfer affectBalance: currentBalance ].
+		
+	^ transactionBalance + transferBalance 	! !
+!AccountTransfer methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 15:50:56'!
+value
+	^value ! !
+!Recieve methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 15:51:08' prior: 50729185!
+affectBalance: aBalance
+
+	^aBalance + transfer value ! !
+!Recieve methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 15:51:20' prior: 50729219!
+affectBalance: aBalance
+
+	^aBalance + (transfer value) ! !
+!Send methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 15:51:29' prior: 50729189!
+affectBalance: aBalance
+
+	^aBalance - (transfer value) ! !
+
+----SNAPSHOT----(23 October 2019 15:53:40) CuisUniversity-3839.image priorSource: 12720381!
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 15:55:16'!
+test03ManyTransfersAffectsBalanceFromSenderAndReciever
+	| account1 account2 |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	
+	Deposit register: 200 on: account1.
+	Deposit register: 200 on: account2.
+	
+	AccountTransfer register: 50 from: account1 to: account2.
+	AccountTransfer register: 50 from: account1 to: account2.
+	AccountTransfer register: 50 from: account1 to: account2.
+	AccountTransfer register: 50 from: account1 to: account2.
+
+	self assert: (account1 balance) equals: 0 .
+	self assert: (account2 balance) equals: 400 .
+	! !
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 16:02:43'!
+test04PortfolioBalanceBetweenAccountsAfterTransferBetweenAccountsInItIsTheSameAsBefore
+	| account1 account2 portfolio totalBalanceBeforeTransfer totalBalanceAfterTransfer |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	portfolio _ Portfolio new.
+	
+	
+	Deposit register: 100 on: account1.
+	Deposit register: 100 on: account2.
+	
+	totalBalanceBeforeTransfer _ account1 balance + account2 balance.
+	
+	AccountTransfer register: 50 from: account1 to: account2.
+	
+	totalBalanceAfterTransfer _ account1 balance + account2 balance.
+	
+	self assert: totalBalanceBeforeTransfer equals: totalBalanceAfterTransfer .
+	
+	! !
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 16:03:56' prior: 50729258!
+test04PortfolioBalanceBetweenAccountsAfterTransferBetweenAccountsInItIsTheSameAsBefore
+	| account1 account2 portfolio totalBalanceBeforeTransfer totalBalanceAfterTransfer |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	portfolio _ Portfolio new.
+	
+	portfolio add: account1 .
+	portfolio add: account2 .
+	
+	Deposit register: 100 on: account1.
+	Deposit register: 100 on: account2.
+	
+	totalBalanceBeforeTransfer _ account1 balance + account2 balance.
+	
+	AccountTransfer register: 50 from: account1 to: account2.
+	
+	totalBalanceAfterTransfer _ account1 balance + account2 balance.
+	
+	self assert: totalBalanceBeforeTransfer equals: totalBalanceAfterTransfer .
+	
+	! !
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 16:04:28' prior: 50729281!
+test04PortfolioBalanceBetweenAccountsAfterTransferBetweenAccountsInItIsTheSameAsBefore
+	| account1 account2 portfolio totalBalanceBeforeTransfer totalBalanceAfterTransfer |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	portfolio _ Portfolio new.
+	
+	portfolio add: account1 .
+	portfolio add: account2 .
+	
+	Deposit register: 100 on: account1.
+	Deposit register: 100 on: account2.
+	
+	totalBalanceBeforeTransfer _ portfolio balance.
+	
+	AccountTransfer register: 50 from: account1 to: account2.
+	
+	totalBalanceAfterTransfer _ portfolio balance.
+	
+	self assert: totalBalanceBeforeTransfer equals: totalBalanceAfterTransfer .
+	
+	! !
+!AccountTransferTest methodsFor: 'as yet unclassified' stamp: 'gc 10/23/2019 16:05:03'!
+test04PortfolioBalanceAfterTransferBetweenAccountsInItIsTheSameAsBefore
+	| account1 account2 portfolio totalBalanceBeforeTransfer totalBalanceAfterTransfer |
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	portfolio _ Portfolio new.
+	
+	portfolio add: account1 .
+	portfolio add: account2 .
+	
+	Deposit register: 100 on: account1.
+	Deposit register: 100 on: account2.
+	
+	totalBalanceBeforeTransfer _ portfolio balance.
+	
+	AccountTransfer register: 50 from: account1 to: account2.
+	
+	totalBalanceAfterTransfer _ portfolio balance.
+	
+	self assert: totalBalanceBeforeTransfer equals: totalBalanceAfterTransfer .
+	
+	! !
+
+AccountTransferTest removeSelector: #test04PortfolioBalanceBetweenAccountsAfterTransferBetweenAccountsInItIsTheSameAsBefore!
+
+----SNAPSHOT----(23 October 2019 16:08:34) CuisUniversity-3839.image priorSource: 12722650!
+
+----QUIT----(23 October 2019 16:08:45) CuisUniversity-3839.image priorSource: 12726583!
