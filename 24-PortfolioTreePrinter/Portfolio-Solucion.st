@@ -1,11 +1,11 @@
-!classDefinition: #ZAccountSummaryTest category: #'Portfolio-Solucion'!
-TestCase subclass: #ZAccountSummaryTest
+!classDefinition: #AccountSummaryTest category: #'Portfolio-Solucion'!
+TestCase subclass: #AccountSummaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ZAccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:52:11'!
+!AccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:52:11'!
 test01SummaryForAccountWithoutTransactionsIsBalance0
 	| account accountSummary |
 	account _ ReceptiveAccount new.
@@ -13,7 +13,7 @@ test01SummaryForAccountWithoutTransactionsIsBalance0
 	self assert: 1 equals: (accountSummary size).
 	self assert: 'Balance = 0' equals: (accountSummary at: 1).! !
 
-!ZAccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:52:48'!
+!AccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:52:48'!
 test02SummaryShowsRecieve
 	| account1 account2 accountSummary |
 	account1 _ ReceptiveAccount new.
@@ -26,7 +26,7 @@ test02SummaryShowsRecieve
 	self assert: 'Entrada por transferencia de 50' equals: (accountSummary at: 1).
 	self assert: 'Balance = 50' equals: (accountSummary at: 2).! !
 
-!ZAccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:01'!
+!AccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:01'!
 test03SummaryShowsSend
 	| account1 account2 accountSummary |
 	account1 _ ReceptiveAccount new.
@@ -39,7 +39,7 @@ test03SummaryShowsSend
 	self assert: 'Salida por transferencia de 50' equals: (accountSummary at: 1).
 	self assert: 'Balance = -50' equals: (accountSummary at: 2).! !
 
-!ZAccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:06'!
+!AccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:06'!
 test04SummaryShowsDeposit
 	| account1 accountSummary |
 	account1 _ ReceptiveAccount new.
@@ -51,7 +51,7 @@ test04SummaryShowsDeposit
 	self assert: 'Deposito por 50' equals: (accountSummary at: 1).
 	self assert: 'Balance = 50' equals: (accountSummary at: 2).! !
 
-!ZAccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:13'!
+!AccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:13'!
 test05SummaryShowsWithdraw
 	| account1 accountSummary |
 	account1 _ ReceptiveAccount new.
@@ -63,7 +63,7 @@ test05SummaryShowsWithdraw
 	self assert: 'Extraccion por 50' equals: (accountSummary at: 1).
 	self assert: 'Balance = -50' equals: (accountSummary at: 2).! !
 
-!ZAccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:25'!
+!AccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:25'!
 test06SummaryShowsAllTransactionsInOrder
 	| account1 account2 accountSummary |
 	account1 _ ReceptiveAccount new.
@@ -83,7 +83,7 @@ test06SummaryShowsAllTransactionsInOrder
 	self assert: 'Balance = 0' equals: (accountSummary at: 5).
 	! !
 
-!ZAccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:35'!
+!AccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:35'!
 test07SummaryShowsAllTransactionsInOrderInPortfolioWithOneAccount
 	| account1 account2 portfolio accountSummary |
 	account1 _ ReceptiveAccount new.
@@ -106,7 +106,7 @@ test07SummaryShowsAllTransactionsInOrderInPortfolioWithOneAccount
 	self assert: 'Balance = 0' equals: (accountSummary at: 5).
 	! !
 
-!ZAccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:46'!
+!AccountSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 12:53:46'!
 test08SummaryShowsAllTransactionsInOrderInPortfolioWithManyAccounts
 	| account1 account2 portfolio accountSummary |
 	account1 _ ReceptiveAccount new.
@@ -133,14 +133,14 @@ test08SummaryShowsAllTransactionsInOrderInPortfolioWithManyAccounts
 	! !
 
 
-!classDefinition: #ZAccountTransferTest category: #'Portfolio-Solucion'!
-TestCase subclass: #ZAccountTransferTest
+!classDefinition: #AccountTransferTest category: #'Portfolio-Solucion'!
+TestCase subclass: #AccountTransferTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ZAccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
+!AccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
 test01TotalBalanceBetweenAccountsAfterTransferIsTheSameAsBefore
 	| account1 account2 totalBalanceBeforeTransfer totalBalanceAfterTransfer |
 	account1 _ ReceptiveAccount new.
@@ -159,7 +159,7 @@ test01TotalBalanceBetweenAccountsAfterTransferIsTheSameAsBefore
 	
 	! !
 
-!ZAccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
+!AccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
 test02TransferAffectsBalanceFromSenderAndReciever
 	| account1 account2 |
 	account1 _ ReceptiveAccount new.
@@ -174,7 +174,7 @@ test02TransferAffectsBalanceFromSenderAndReciever
 	self assert: (account2 balance) equals: 150 .
 	! !
 
-!ZAccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
+!AccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
 test03ManyTransfersAffectsBalanceFromSenderAndReciever
 	| account1 account2 |
 	account1 _ ReceptiveAccount new.
@@ -192,7 +192,7 @@ test03ManyTransfersAffectsBalanceFromSenderAndReciever
 	self assert: (account2 balance) equals: 400 .
 	! !
 
-!ZAccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
+!AccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
 test04PortfolioBalanceAfterTransferBetweenAccountsInItIsTheSameAsBefore
 	| account1 account2 portfolio totalBalanceBeforeTransfer totalBalanceAfterTransfer |
 	account1 _ ReceptiveAccount new.
@@ -215,7 +215,7 @@ test04PortfolioBalanceAfterTransferBetweenAccountsInItIsTheSameAsBefore
 	
 	! !
 
-!ZAccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
+!AccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
 test05TransferBetweenAccountsInDifferentPortfolioLevelsAffectsBalanceCorrectly
 	| account1 account2 portfolio1 portfolio2 totalBalanceBeforeTransfer totalBalanceAfterTransfer |
 	account1 _ ReceptiveAccount new.
@@ -241,7 +241,7 @@ test05TransferBetweenAccountsInDifferentPortfolioLevelsAffectsBalanceCorrectly
 	self assert: 150 equals: (portfolio2 balance).
 	! !
 
-!ZAccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
+!AccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
 test06CantTransferToTheSameAccount
 	| account1  |
 	account1 _ ReceptiveAccount new.
@@ -255,7 +255,7 @@ test06CantTransferToTheSameAccount
 			self assert: AccountTransfer canNotTransferToSelfErrorMessage equals: anError messageText.
 			self deny: account1 hasTransfered .]! !
 
-!ZAccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
+!AccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 12:53:35'!
 test07CantTransferZero
 	| account1 account2 |
 	account1 _ ReceptiveAccount new.
@@ -270,7 +270,7 @@ test07CantTransferZero
 			self deny: account2 hasTransfered .
 			]! !
 
-!ZAccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 15:30:19'!
+!AccountTransferTest methodsFor: 'test' stamp: 'gc 10/26/2019 15:30:19'!
 test09CantTransferNegativeAmount
 	| account1 account2 |
 	account1 _ ReceptiveAccount new.
@@ -286,14 +286,14 @@ test09CantTransferNegativeAmount
 			]! !
 
 
-!classDefinition: #ZPortfolioSummaryTest category: #'Portfolio-Solucion'!
-TestCase subclass: #ZPortfolioSummaryTest
+!classDefinition: #PortfolioSummaryTest category: #'Portfolio-Solucion'!
+TestCase subclass: #PortfolioSummaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ZPortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 13:45:17'!
+!PortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 13:45:17'!
 test01EmptyPortfolioSummaryReturnsNameOfPortfolio
 	|portfolio summary|
 	portfolio _ Portfolio withName: 'mi portfolio'.
@@ -304,7 +304,7 @@ test01EmptyPortfolioSummaryReturnsNameOfPortfolio
 	self assert: 'mi portfolio' equals: (summary at: 1).
 	self assert: '	','Balance = 0' equals: (summary at: 2).! !
 
-!ZPortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 13:45:28'!
+!PortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 13:45:28'!
 test02PortfolioWithEmptyAccountSummaryReturnsNamesAndBalances
 	|portfolio account summary|
 	portfolio _ Portfolio withName: 'mi portfolio'.
@@ -320,7 +320,7 @@ test02PortfolioWithEmptyAccountSummaryReturnsNamesAndBalances
 	self assert: '	','	','Balance = 0' equals: (summary at: 3).
 	self assert: '	','Balance = 0' equals: (summary at: 4).! !
 
-!ZPortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 13:45:58'!
+!PortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 13:45:58'!
 test03PortfolioWithEmptyPortfolioSummaryReturnsNamesAndBalances
 	|portfolio1 portfolio2 summary|
 	portfolio1 _ Portfolio withName: 'mi portfolio 1'.
@@ -336,7 +336,7 @@ test03PortfolioWithEmptyPortfolioSummaryReturnsNamesAndBalances
 	self assert: '	','	','Balance = 0' equals: (summary at: 3).
 	self assert: '	','Balance = 0' equals: (summary at: 4).! !
 
-!ZPortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 13:46:27'!
+!PortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 13:46:27'!
 test04PortfolioWithPortfoliosAndAccountsSummaryReturnsNamesAndBalances
 	|portfolio1 portfolio2 account1 account2  summary|
 	portfolio1 _ Portfolio withName: 'mi portfolio 1'.
@@ -360,7 +360,7 @@ test04PortfolioWithPortfoliosAndAccountsSummaryReturnsNamesAndBalances
 	self assert: '	','	','Balance = 0' equals: (summary at: 7).
 	self assert: '	','Balance = 0' equals: (summary at: 8).! !
 
-!ZPortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 14:37:21'!
+!PortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 14:37:21'!
 test05PortfolioWithPortfoliosAndAccountsAndTransactionsSummaryReturnsNamesAndBalancesAndTransactions
 	|portfolio1 portfolio2 account1 account2  summary |
 	portfolio1 _ Portfolio withName: 'mi portfolio 1'.
@@ -392,7 +392,7 @@ test05PortfolioWithPortfoliosAndAccountsAndTransactionsSummaryReturnsNamesAndBal
 	self assert: '	','	','Balance = 25' equals: (summary at: 11).
 	self assert: '	','Balance = 50' equals: (summary at: 12).! !
 
-!ZPortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 14:39:52'!
+!PortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 14:39:52'!
 test06PortfolioTreeStructureNeedsPortfolioWithName
 	|portfolio1 |
 	portfolio1 _ Portfolio new.
@@ -405,7 +405,7 @@ test06PortfolioTreeStructureNeedsPortfolioWithName
 			]
 	! !
 
-!ZPortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 14:40:36'!
+!PortfolioSummaryTest methodsFor: 'test' stamp: 'gc 10/27/2019 14:40:36'!
 test07PortfolioTreeStructureNeedsAccountsWithNames
 	|portfolio account |
 	portfolio _ Portfolio withName: 'mi portfolio'.
@@ -421,19 +421,19 @@ test07PortfolioTreeStructureNeedsAccountsWithNames
 	! !
 
 
-!classDefinition: #ZPortfolioTest category: #'Portfolio-Solucion'!
-TestCase subclass: #ZPortfolioTest
+!classDefinition: #PortfolioTest category: #'Portfolio-Solucion'!
+TestCase subclass: #PortfolioTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:16:26'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:16:26'!
 test01BalanceOfPortfolioWithoutAccountsIsZero
 
 	self assert: 0 equals: Portfolio new balance! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:17:51'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:17:51'!
 test02BalanceOfPortfolioWithOneAccountIsAccountBalance
 
 	| account portfolio |
@@ -444,7 +444,7 @@ test02BalanceOfPortfolioWithOneAccountIsAccountBalance
 	
 	self assert: account balance equals: portfolio balance! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:23:25'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:23:25'!
 test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios
 
 	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortofolio |
@@ -459,12 +459,12 @@ test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios
 	
 	self assert: (composedPortfolioAccount balance + simplePortfolio balance) equals: composedPortofolio balance! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:43:15'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:43:15'!
 test04PortfolioWithoutAccountsHasNoRegisteredTransaction
 
 	self deny: (Portfolio new hasRegistered: (Deposit for: 100))! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:43:11'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:43:11'!
 test05PortfolioHasRegisteredItsAccountsTransactions
 
 	| account portfolio deposit |
@@ -475,7 +475,7 @@ test05PortfolioHasRegisteredItsAccountsTransactions
 	
 	self assert: (portfolio hasRegistered: deposit)! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:06'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:06'!
 test06PortfolioLooksForRegisteredTransactionsRecursively
 
 	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortfolio composedPortfolioAccountWithdraw simplePortfolioAccountDeposit |
@@ -491,12 +491,12 @@ test06PortfolioLooksForRegisteredTransactionsRecursively
 	self assert: (composedPortfolio hasRegistered: simplePortfolioAccountDeposit).
 	self assert: (composedPortfolio hasRegistered: composedPortfolioAccountWithdraw)! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:10'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:10'!
 test07PortfolioHasNoTransactionWhenHasNoAccounts
 
 	self assert: Portfolio new transactions isEmpty! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:15'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:15'!
 test08PortfolioTransasctionsIncludesAllItsAccountsTransactions
 
 	| account portfolio accountDeposit anotherAccount portfolioTransactions anotherAccountWithdraw |
@@ -513,7 +513,7 @@ test08PortfolioTransasctionsIncludesAllItsAccountsTransactions
 	self assert: (portfolioTransactions includes: accountDeposit).
 	self assert: (portfolioTransactions includes: anotherAccountWithdraw)! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:20'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:20'!
 test09PortfolioTransactionsAreCalculatedRecursively
 
 	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortfolio composedPortfolioAccountWithdraw simplePortfolioAccountDeposit composedPortfolioTransactions |
@@ -531,7 +531,7 @@ test09PortfolioTransactionsAreCalculatedRecursively
 	self assert: (composedPortfolioTransactions includes: simplePortfolioAccountDeposit).
 	self assert: (composedPortfolioTransactions includes: composedPortfolioAccountWithdraw)! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:24'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:24'!
 test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce
 
 	| account portfolio |
@@ -547,7 +547,7 @@ test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce
 			self assert: 1 equals: portfolio accountsSize.
 			self assert: (portfolio accountsIncludes: account) ]! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:28'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:28'!
 test11PortfolioCanNotIncludeAccountOfItsPortfolios
 
 	| account simplePortfolio composedPortfolio |
@@ -564,7 +564,7 @@ test11PortfolioCanNotIncludeAccountOfItsPortfolios
 			self assert: 1 equals: composedPortfolio accountsSize.
 			self assert: (composedPortfolio accountsIncludes: simplePortfolio) ]! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:32'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:32'!
 test12PortfolioCanNotIncludeItself
 
 	| account simplePortfolio |
@@ -580,7 +580,7 @@ test12PortfolioCanNotIncludeItself
 			self assert: 1 equals: simplePortfolio accountsSize.
 			self assert: (simplePortfolio accountsIncludes: account) ]! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 12:01:51'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 12:01:51'!
 test13ComposedPortfolioCanNotHaveParentPortfolioAccount
 
 	| account simplePortfolio composedPortfolio |
@@ -597,7 +597,7 @@ test13ComposedPortfolioCanNotHaveParentPortfolioAccount
 			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
 			self assert: simplePortfolio accountsIsEmpty ]! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 12:12:16'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 12:12:16'!
 test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively
 
 	| account leftParentPortfolio leftRootParentPortfolio portfolio rightParentPortfolio rightRootParentPortfolio |
@@ -619,7 +619,7 @@ test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively
 			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
 			self assert: portfolio accountsIsEmpty ]! !
 
-!ZPortfolioTest methodsFor: 'tests' stamp: 'HAW 5/29/2019 16:31:18'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/29/2019 16:31:18'!
 test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd
 
 	| portfolioToAdd portfolioToModify rootPortfolio sharedAccount |
@@ -637,14 +637,14 @@ test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd
 			self assert: portfolioToModify accountsIsEmpty ]! !
 
 
-!classDefinition: #ZReceptiveAccountTest category: #'Portfolio-Solucion'!
-TestCase subclass: #ZReceptiveAccountTest
+!classDefinition: #ReceptiveAccountTest category: #'Portfolio-Solucion'!
+TestCase subclass: #ReceptiveAccountTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ZReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:19:48'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:19:48'!
 test01ReceptiveAccountHaveZeroAsBalanceWhenCreated 
 
 	| account |
@@ -654,7 +654,7 @@ test01ReceptiveAccountHaveZeroAsBalanceWhenCreated
 	self assert: 0 equals: account balance .
 ! !
 
-!ZReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:19:54'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:19:54'!
 test02DepositIncreasesBalanceOnTransactionValue 
 
 	| account |
@@ -665,7 +665,7 @@ test02DepositIncreasesBalanceOnTransactionValue
 	self assert: 100 equals: account balance .
 ! !
 
-!ZReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:02'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:02'!
 test03WithdrawDecreasesBalanceOnTransactionValue 
 
 	| account |
@@ -677,7 +677,7 @@ test03WithdrawDecreasesBalanceOnTransactionValue
 	self assert: 50 equals: account balance .
 ! !
 
-!ZReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:32'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:32'!
 test04WithdrawValueMustBePositive 
 
 	| account withdrawValue |
@@ -688,7 +688,7 @@ test04WithdrawValueMustBePositive
 	self assert: withdrawValue equals: (Withdraw register: withdrawValue on: account) value
 ! !
 
-!ZReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:46'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:46'!
 test05ReceptiveAccountKnowsRegisteredTransactions 
 
 	| account deposit withdraw |
@@ -701,7 +701,7 @@ test05ReceptiveAccountKnowsRegisteredTransactions
 	self assert: (account hasRegistered: withdraw).
 ! !
 
-!ZReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:54'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:54'!
 test06ReceptiveAccountDoNotKnowNotRegisteredTransactions
 
 	| account deposit withdraw |
@@ -714,7 +714,7 @@ test06ReceptiveAccountDoNotKnowNotRegisteredTransactions
 	self deny: (account hasRegistered:withdraw).
 ! !
 
-!ZReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:21:24'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:21:24'!
 test07AccountKnowsItsTransactions 
 
 	| account1 deposit1 |
@@ -728,21 +728,21 @@ test07AccountKnowsItsTransactions
 ! !
 
 
-!classDefinition: #ZTransferNetTest category: #'Portfolio-Solucion'!
-TestCase subclass: #ZTransferNetTest
+!classDefinition: #TransferNetTest category: #'Portfolio-Solucion'!
+TestCase subclass: #TransferNetTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:54:53'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:54:53'!
 test01RATransferNetReturnsZeroInAccountWithoutTransfersOrTransactions
 	| account1  |
 	account1 _ ReceptiveAccount new.
 
 	self assert: 0 equals: (TransferNet for: account1 ) value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:05'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:05'!
 test02RATransferNetReturnsZeroInAccountWithoutTransfersWithTransactions
 	| account1  |
 	account1 _ ReceptiveAccount new.
@@ -750,7 +750,7 @@ test02RATransferNetReturnsZeroInAccountWithoutTransfersWithTransactions
 
 	self assert: 0 equals:  (TransferNet for: account1 ) value .! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:12'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:12'!
 test03RATransferNetReturnsBalanceInAccountWithTransfersWithoutTransactions
 	| account1  account2 |
 	account1 _ ReceptiveAccount new.
@@ -761,7 +761,7 @@ test03RATransferNetReturnsBalanceInAccountWithTransfersWithoutTransactions
 	self assert: account1 balance equals:  (TransferNet for: account1 ) value .
 	self assert: account2 balance equals:  (TransferNet for: account2 )  value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:18'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:18'!
 test04RATransferNetReturnsNetTransfersInAccountWithTransfersWithTransactions
 	| account1  account2 |
 	account1 _ ReceptiveAccount new.
@@ -775,7 +775,7 @@ test04RATransferNetReturnsNetTransfersInAccountWithTransfersWithTransactions
 	self assert: -50 equals:  (TransferNet for: account1 ) value .
 	self assert: 50 equals:  (TransferNet for: account2 )  value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:24'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:24'!
 test05RATransferNetReturnsNetTransfersInAccountsWithManyTransfersAndTransactions
 	| account1  account2  |
 	account1 _ ReceptiveAccount new.
@@ -793,14 +793,14 @@ test05RATransferNetReturnsNetTransfersInAccountsWithManyTransfersAndTransactions
 	self assert: -25 equals:  (TransferNet for: account1 ) value .
 	self assert: 25 equals:  (TransferNet for: account2 )  value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:34'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:34'!
 test06PortfolioTransferNetReturnsZeroInPortfolioWithoutAccounts
 	| portfolio  |
 	portfolio _ Portfolio new.
 
 	self assert: 0 equals:  (TransferNet for: portfolio ) value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:40'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:40'!
 test07PortfolioTransferNetReturnsZeroInPortfolioWithoutTransfersOrTransactions
 	| portfolio account1 |
 	portfolio _ Portfolio new.
@@ -810,7 +810,7 @@ test07PortfolioTransferNetReturnsZeroInPortfolioWithoutTransfersOrTransactions
 	
 	self assert: 0 equals:  (TransferNet for: portfolio ) value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:46'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:46'!
 test08PortfolioTransferNetReturnsZeroInPortfolioWithoutTransfersWithTransactions
 	| portfolio account1  |
 	portfolio _ Portfolio new.
@@ -822,7 +822,7 @@ test08PortfolioTransferNetReturnsZeroInPortfolioWithoutTransfersWithTransactions
 	
 	self assert: 0 equals: (TransferNet for: portfolio ) value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:51'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:51'!
 test09PortfolioTransferNetReturnsBalanceInPortfolioWithTransfersWithoutTransactions
 	| portfolio account1  account2 |
 	account1 _ ReceptiveAccount new.
@@ -835,7 +835,7 @@ test09PortfolioTransferNetReturnsBalanceInPortfolioWithTransfersWithoutTransacti
 	
 	self assert: portfolio balance equals: (TransferNet for: portfolio ) value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:56'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:56:56'!
 test10PortfolioTransferNetReturnsZeroInPortfolioWithTransfersWithinItself
 	| portfolio account1  account2 |
 	account1 _ ReceptiveAccount new.
@@ -849,7 +849,7 @@ test10PortfolioTransferNetReturnsZeroInPortfolioWithTransfersWithinItself
 	
 	self assert: 0 equals: (TransferNet for: portfolio ) value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:57:01'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:57:01'!
 test11PortfolioTransferNetReturnsNetTransfersInAccountWithTransfersWithTransactions
 	| account1  account2 portfolio |
 	account1 _ ReceptiveAccount new.
@@ -864,7 +864,7 @@ test11PortfolioTransferNetReturnsNetTransfersInAccountWithTransfersWithTransacti
 	
 	self assert: -50 equals: (TransferNet for: portfolio ) value.! !
 
-!ZTransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:57:06'!
+!TransferNetTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:57:06'!
 test12PortfolioTransferNetReturnsNetTransfersInPortfolioWithManyTransfersAndTransactions
 	| account1  account2 portfolio |
 	account1 _ ReceptiveAccount new.
@@ -884,14 +884,14 @@ test12PortfolioTransferNetReturnsNetTransfersInPortfolioWithManyTransfersAndTran
 	self assert: -25 equals: (TransferNet for: portfolio ) value.! !
 
 
-!classDefinition: #ZTreeStructureTest category: #'Portfolio-Solucion'!
-TestCase subclass: #ZTreeStructureTest
+!classDefinition: #TreeStructureTest category: #'Portfolio-Solucion'!
+TestCase subclass: #TreeStructureTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ZTreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:57:37'!
+!TreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:57:37'!
 test01EmptyPortfolioTreeStructureReturnsNameOfPortfolio
 	|portfolio treeStructure|
 	portfolio _ Portfolio withName: 'mi portfolio'.
@@ -902,7 +902,7 @@ test01EmptyPortfolioTreeStructureReturnsNameOfPortfolio
 	self assert: 'mi portfolio' equals: (treeStructure at: 1).
 	! !
 
-!ZTreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:57:52'!
+!TreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:57:52'!
 test02PortfolioTreeStructureWithOneAccountHasCorrectIndentation
 	|portfolio account  treeStructure|
 	portfolio _ Portfolio withName: 'mi portfolio'.
@@ -916,7 +916,7 @@ test02PortfolioTreeStructureWithOneAccountHasCorrectIndentation
 	self assert: '	','mi cuenta' equals: (treeStructure at: 2).
 	! !
 
-!ZTreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:58:56'!
+!TreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:58:56'!
 test03PortfolioTreeStructureWithOnePortfolioHasCorrectIndentation
 	|portfolio1 portfolio2  treeStructure|
 	portfolio1 _ Portfolio withName: 'mi portfolio 1'.
@@ -930,7 +930,7 @@ test03PortfolioTreeStructureWithOnePortfolioHasCorrectIndentation
 	self assert: '	','mi portfolio 2' equals: (treeStructure at: 2).
 	! !
 
-!ZTreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:59:12'!
+!TreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:59:12'!
 test04PortfolioTreeStructureWithPortfoliosAndAccountsHasCorrectIndentation
 	|portfolio1 portfolio2 account1 account2  treeStructure|
 	portfolio1 _ Portfolio withName: 'mi portfolio 1'.
@@ -951,7 +951,7 @@ test04PortfolioTreeStructureWithPortfoliosAndAccountsHasCorrectIndentation
 	self assert: '	','mi cuenta 1' equals: (treeStructure at: 4).
 	! !
 
-!ZTreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:59:27'!
+!TreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:59:27'!
 test05PortfolioTreeStructureNeedsPortfolioWithName
 	|portfolio1 |
 	portfolio1 _ Portfolio new.
@@ -964,7 +964,7 @@ test05PortfolioTreeStructureNeedsPortfolioWithName
 			]
 	! !
 
-!ZTreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:59:43'!
+!TreeStructureTest methodsFor: 'tests' stamp: 'gc 10/27/2019 12:59:43'!
 test06PortfolioTreeStructureNeedsAccountsWithNames
 	|portfolio account |
 	portfolio _ Portfolio withName: 'mi portfolio'.
