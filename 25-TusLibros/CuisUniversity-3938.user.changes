@@ -1,0 +1,626 @@
+
+
+----STARTUP---- (30 October 2019 22:15:12) as /home/gzeitoune/Downloads/linux64 (1)/linux64/CuisUniversity-3938.image!
+
+
+Object subclass: #NameOfSubclass
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #NameOfSubclass category: #TusLibros stamp: 'gc 10/30/2019 22:16:18'!
+Object subclass: #NameOfSubclass
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #NameOfSubclass stamp: 'gc 10/30/2019 22:16:31'!
+Object subclass: #NameOfSubclass
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #Cart
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cart category: #TusLibros stamp: 'gc 10/30/2019 22:16:40'!
+Object subclass: #Cart
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cart category: #TusLibros stamp: 'gc 10/30/2019 22:19:28'!
+Object subclass: #Cart
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTest methodsFor: 'nil' stamp: 'gc 10/30/2019 22:19:11'!
+test01createCartShouldBeEmpty
+	|aCart|
+	
+	aCart _ Cart create.
+	self assert: aCart isEmpty.! !
+
+TestCase subclass: #CartTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CartTest category: #TusLibros stamp: 'gc 10/30/2019 22:21:22'!
+TestCase subclass: #CartTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:21:24'!
+ERROR!
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:21:24'!
+ERROR!
+!Cart class methodsFor: 'instance creation' stamp: 'gc 10/30/2019 22:21:49'!
+create
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeCreate! !
+!Cart class methodsFor: 'instance creation' stamp: 'gc 10/30/2019 22:22:11' prior: 50777415!
+create
+	^self new initialize! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:22:15'!
+ERROR!
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:22:48'!
+isEmpty
+	self shouldBeImplemented.! !
+
+!classDefinition: #Cart category: #TusLibros stamp: 'gc 10/30/2019 22:23:04'!
+Object subclass: #Cart
+	instanceVariableNames: 'items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:23:02' prior: 50777429!
+isEmpty
+	^items isEmpty ! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:23:07'!
+ERROR!
+!Cart methodsFor: 'nil' stamp: 'gc 10/30/2019 22:24:07'!
+initialize
+	items _ Collection new! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:24:11'!
+ERROR!
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:24:11'!
+ERROR!
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:24:45' prior: 50777445!
+initialize
+	items _ OrderedCollection new! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:24:48'!
+PASSED!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:28:21'!
+test02addItemtoCartShouldHaveItemWithRightQuantity
+	|aCart|
+	
+	aCart _ Cart create.
+	aCart add: 4 of: 'item01'.
+	
+	self deny: aCart isEmpty.
+	self assert: (aCart amountOf: 'item01' isEqualTo: 4).! !
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:28:25'!
+ERROR!
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:28:42'!
+add: aSmallInteger of: aString 
+	self shouldBeImplemented.! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:31:12' prior: 50777475!
+add: aQuantity of: aProductId 
+	|item|
+	item _ Dictionary new.
+	item at: 'productId' put: aProductId.
+	item at: 'quantity' put: aQuantity.
+	^items addLast: item.! !
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:31:22'!
+ERROR!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:31:44' prior: 50777462!
+test02addItemtoCartShouldHaveItemWithRightQuantity
+	|aCart|
+	
+	aCart _ Cart create.
+	aCart add: 4 of: 'item01'.
+	
+	self deny: aCart isEmpty.
+	self assert: ((aCart amountOf: 'item01') isEqualTo: 4).! !
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:31:47'!
+ERROR!
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:31:55'!
+amountOf: aString 
+	self shouldBeImplemented.! !
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:36:27' prior: 50777504!
+amountOf: aProductId 
+	|item|
+	item = items detect: [:anItem | anItem at: 'productId' = aProductId ].
+	^item at: 'quantity'! !
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:36:44' prior: 50777508!
+amountOf: aProductId 
+	|item|
+	item _ items detect: [:anItem | anItem at: 'productId' = aProductId ].
+	^item at: 'quantity'! !
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:36:45'!
+ERROR!
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:37:13' prior: 50777515!
+amountOf: aProductId 
+	|item|
+	item _ items detect: [:anItem | anItem at: 'productId' = aProductId ].
+	^item at: 'quantity'! !
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:37:42' prior: 50777525!
+amountOf: aProductId 
+	|item|
+	item _ items detect: [:anItem | anItem at: 'productId' = aProductId ].
+	^item at: 'quantity'! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:38:37'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:38:37'!
+ERROR!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:38:37'!
+ERROR!
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:39:36' prior: 50777532!
+amountOf: aProductId 
+	|item|
+	item _ items detect: [:anItem | (anItem at: 'productId') = aProductId ].
+	^item at: 'quantity'! !
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:39:48'!
+PASSED!
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:39:51'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:39:51'!
+PASSED!
+
+----SNAPSHOT----(30 October 2019 22:39:57) CuisUniversity-3938.image priorSource: 14319118!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:42:04'!
+test03addSameItemTwicetoCartShouldSumQuantities
+	|aCart|
+	
+	aCart _ Cart create.
+	aCart add: 4 of: 'item01'.
+	aCart add: 5 of: 'item01'.
+	
+	self deny: aCart isEmpty.
+	self assert: ((aCart amountOf: 'item01') isEqualTo: 9).! !
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 22:42:05'!
+FAILURE!
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:51:30' prior: 50777455!
+initialize
+	items _ Bag new! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:52:13' prior: 50777480!
+add: aQuantity of: aProductId 
+	||
+	^(items add: aProductId) timesRepeat: aQuantity .! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:52:19' prior: 50777587!
+add: aQuantity of: aProductId 
+	^(items add: aProductId) timesRepeat: aQuantity .! !
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:53:20' prior: 50777549!
+amountOf: aProductId 
+	items occurrencesOf: aProductId.! !
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 22:53:24' prior: 50777599!
+amountOf: aProductId 
+	^items occurrencesOf: aProductId.! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:53:37'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:53:37'!
+ERROR!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 22:53:37'!
+ERROR!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:53:48'!
+ERROR!
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:54:06' prior: 50777593!
+add: aQuantity of: aProductId 
+	^[items add: aProductId] timesRepeat: aQuantity .! !
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:54:08'!
+ERROR!
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:55:31' prior: 50777623!
+add: aQuantity of: aProductId 
+	^aQuantity timesRepeat: [items add: aProductId ] .! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 22:55:33'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 22:55:33'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 22:55:33'!
+PASSED!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:57:15'!
+test04CantAddItemToCartWithAmount0
+	|aCart|
+	
+	aCart _ Cart create.
+	aCart add: 0 of: 'item01'.
+
+	self assert: aCart isEmpty.! !
+
+----End fileIn of /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/22-TerniLapilli/Terni Lapilli.st----!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 22:58:56' prior: 50777648!
+test04CantAddItemToCartWithAmount0
+	|aCart|
+	
+	aCart _ Cart create.
+	
+	self should: [ aCart add: 0 of: 'item01'..] 
+	raise: Error 
+	withMessageText: Cart invalidQuantity.
+	self assert: aCart isEmpty.! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:00:15' prior: 50777632!
+add: aQuantity of: aProductId 
+	aQuantity = 0 ifTrue: [^self error: (self class invalidQuantity)].
+	^aQuantity timesRepeat: [items add: aProductId ] .! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 23:00:19'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 23:00:19'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 23:00:19'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:00:19'!
+ERROR!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:00:19'!
+ERROR!
+!Cart class methodsFor: 'error' stamp: 'gc 10/30/2019 23:00:35'!
+invalidQuantity
+	self shouldBeImplemented.! !
+!Cart class methodsFor: 'error' stamp: 'gc 10/30/2019 23:00:56' prior: 50778831!
+invalidQuantity
+	^'Por favor ingrese una cantidad valida'! !
+!Cart class methodsFor: 'error' stamp: 'gc 10/30/2019 23:01:15' prior: 50778835!
+invalidQuantity
+	^'La cantidad debe ser mayor a 0'! !
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:01:17'!
+PASSED!
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 23:01:20'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 23:01:20'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 23:01:20'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:01:20'!
+PASSED!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:01:38'!
+test04CantAddItemToCartWithAmountNegativeAmount
+	|aCart|
+	
+	aCart _ Cart create.
+	
+	self should: [ aCart add: -1 of: 'item01'.] 
+	raise: Error 
+	withMessageText: Cart invalidQuantity.
+	self assert: aCart isEmpty.! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:01:46'!
+test05CantAddItemToCartWithAmountNegativeAmount
+	|aCart|
+	
+	aCart _ Cart create.
+	
+	self should: [ aCart add: -1 of: 'item01'.] 
+	raise: Error 
+	withMessageText: Cart invalidQuantity.
+	self assert: aCart isEmpty.! !
+
+!methodRemoval: CartTest #test04CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:01:46'!
+test04CantAddItemToCartWithAmountNegativeAmount
+	|aCart|
+	
+	aCart _ Cart create.
+	
+	self should: [ aCart add: -1 of: 'item01'.] 
+	raise: Error 
+	withMessageText: Cart invalidQuantity.
+	self assert: aCart isEmpty.!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:01:49' prior: 50778798!
+test04CantAddItemToCartWithAmount0
+	|aCart|
+	
+	aCart _ Cart create.
+	
+	self should: [ aCart add: 0 of: 'item01'.] 
+	raise: Error 
+	withMessageText: Cart invalidQuantity.
+	self assert: aCart isEmpty.! !
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:01:54'!
+FAILURE!
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:03:22' prior: 50778808!
+add: aQuantity of: aProductId 
+	aQuantity <= 0 not ifTrue: [^self error: (self class invalidQuantity)].
+	^aQuantity timesRepeat: [items add: aProductId ] .! !
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:03:24'!
+FAILURE!
+!Cart methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:03:45' prior: 50778904!
+add: aQuantity of: aProductId 
+	aQuantity <= 0 ifTrue: [^self error: (self class invalidQuantity)].
+	^aQuantity timesRepeat: [items add: aProductId ] .! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 23:03:47'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 23:03:47'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 23:03:47'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:03:47'!
+PASSED!
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:03:47'!
+PASSED!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:05:05'!
+test06CanListEmptyCartAndReturnsEmptyList
+	|aCart|
+	
+	aCart _ Cart create.
+	
+	self assert: ((aCart items) isEmpty)! !
+
+!testRun: #CartTest #test06CanListEmptyCartAndReturnsEmptyList stamp: 'gc 10/30/2019 23:05:06'!
+ERROR!
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 23:05:15'!
+items
+	self shouldBeImplemented.
+	^items! !
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 23:05:31' prior: 50778949!
+items
+	^items! !
+
+!testRun: #CartTest #test06CanListEmptyCartAndReturnsEmptyList stamp: 'gc 10/30/2019 23:05:34'!
+PASSED!
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 23:05:34'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 23:05:34'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 23:05:34'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:05:34'!
+PASSED!
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:05:34'!
+PASSED!
+
+!testRun: #CartTest #test06CanListEmptyCartAndReturnsEmptyList stamp: 'gc 10/30/2019 23:05:34'!
+PASSED!
+
+----SNAPSHOT----(30 October 2019 23:07:21) CuisUniversity-3938.image priorSource: 14269281!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:10:13'!
+test06CanListCardWithItemsAndReturnsItemWithAmount
+	|aCart expectedItems|
+	
+	aCart _ Cart create.
+	aCart add: 5 of: 'item01'.
+	
+	expectedItems _ Bag with: (Dictionary newFrom: 'item01'->5).
+	
+	self assert: ((aCart items) isEqualTo: expectedItems)! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:10:28'!
+test07CanListCardWithItemsAndReturnsItemWithAmount
+	|aCart expectedItems|
+	
+	aCart _ Cart create.
+	aCart add: 5 of: 'item01'.
+	
+	expectedItems _ Bag with: (Dictionary newFrom: 'item01'->5).
+	
+	self assert: ((aCart items) isEqualTo: expectedItems)! !
+
+!methodRemoval: CartTest #test06CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:10:28'!
+test06CanListCardWithItemsAndReturnsItemWithAmount
+	|aCart expectedItems|
+	
+	aCart _ Cart create.
+	aCart add: 5 of: 'item01'.
+	
+	expectedItems _ Bag with: (Dictionary newFrom: 'item01'->5).
+	
+	self assert: ((aCart items) isEqualTo: expectedItems)!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:10:32'!
+ERROR!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:10:32'!
+ERROR!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:11:01' prior: 50778993!
+test07CanListCardWithItemsAndReturnsItemWithAmount
+	|aCart expectedItems|
+	
+	aCart _ Cart create.
+	aCart add: 5 of: 'item01'.
+	
+	expectedItems _ Bag with: (Dictionary newFrom: {'item01'->5}).
+	
+	self assert: ((aCart items) isEqualTo: expectedItems)! !
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:11:03'!
+FAILURE!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:11:27'!
+FAILURE!
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 23:17:06' prior: 50778953!
+items
+	^(items asSet) collect: [:item | Dictionary newFrom: item->(items occurrencesOf: item)]! !
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 23:17:10'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 23:17:10'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 23:17:10'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:17:10'!
+PASSED!
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:17:10'!
+PASSED!
+
+!testRun: #CartTest #test06CanListEmptyCartAndReturnsEmptyList stamp: 'gc 10/30/2019 23:17:10'!
+PASSED!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:17:10'!
+ERROR!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:17:10'!
+ERROR!
+!Cart methodsFor: 'observer' stamp: 'gc 10/30/2019 23:17:37' prior: 50779040!
+items
+	^(items asSet) collect: [:item | Dictionary newFrom: {item->(items occurrencesOf: item)}]! !
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:17:39'!
+FAILURE!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:18:25' prior: 50779022!
+test07CanListCardWithItemsAndReturnsItemWithAmount
+	|aCart expectedItems|
+	
+	aCart _ Cart create.
+	aCart add: 5 of: 'item01'.
+	
+	expectedItems _ Set with: (Dictionary newFrom: {'item01'->5}).
+	
+	self assert: ((aCart items) isEqualTo: expectedItems)! !
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:18:29'!
+PASSED!
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 23:18:32'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 23:18:32'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 23:18:32'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:18:32'!
+PASSED!
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:18:32'!
+PASSED!
+
+!testRun: #CartTest #test06CanListEmptyCartAndReturnsEmptyList stamp: 'gc 10/30/2019 23:18:32'!
+PASSED!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:18:32'!
+PASSED!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'gc 10/30/2019 23:20:33'!
+test07CanListCardWithItemsAndReturnsItemsWithAmount
+	|aCart expectedItems|
+	
+	aCart _ Cart create.
+	aCart add: 5 of: 'item01'.
+	aCart add: 6 of: 'item01'.
+	aCart add: 4 of: 'item02'.
+	
+	expectedItems _ Set with: (Dictionary newFrom: {'item01'->11}) with: (Dictionary newFrom: {'item02'->4}).
+	
+	self assert: ((aCart items) isEqualTo: expectedItems)! !
+
+!methodRemoval: CartTest #test07CanListCardWithItemsAndReturnsItemWithAmount stamp: 'gc 10/30/2019 23:20:37'!
+test07CanListCardWithItemsAndReturnsItemWithAmount
+	|aCart expectedItems|
+	
+	aCart _ Cart create.
+	aCart add: 5 of: 'item01'.
+	
+	expectedItems _ Set with: (Dictionary newFrom: {'item01'->5}).
+	
+	self assert: ((aCart items) isEqualTo: expectedItems)!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemsWithAmount stamp: 'gc 10/30/2019 23:20:39'!
+PASSED!
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 23:20:42'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 23:20:42'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 23:20:42'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:20:42'!
+PASSED!
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:20:42'!
+PASSED!
+
+!testRun: #CartTest #test06CanListEmptyCartAndReturnsEmptyList stamp: 'gc 10/30/2019 23:20:42'!
+PASSED!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemsWithAmount stamp: 'gc 10/30/2019 23:20:42'!
+PASSED!
+
+----SNAPSHOT----(30 October 2019 23:21:09) CuisUniversity-3938.image priorSource: 14314513!
+
+----QUIT----(30 October 2019 23:21:17) CuisUniversity-3938.image priorSource: 14320710!
+
+----STARTUP---- (30 October 2019 23:23:04) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/25-TusLibros/CuisUniversity-3938.image!
+
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/30/2019 23:23:18'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/30/2019 23:23:18'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/30/2019 23:23:18'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/30/2019 23:23:18'!
+PASSED!
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/30/2019 23:23:18'!
+PASSED!
+
+!testRun: #CartTest #test06CanListEmptyCartAndReturnsEmptyList stamp: 'gc 10/30/2019 23:23:18'!
+PASSED!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemsWithAmount stamp: 'gc 10/30/2019 23:23:18'!
+PASSED!
