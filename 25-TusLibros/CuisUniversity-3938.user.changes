@@ -624,3 +624,27 @@ PASSED!
 
 !testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemsWithAmount stamp: 'gc 10/30/2019 23:23:18'!
 PASSED!
+
+----STARTUP---- (31 October 2019 16:30:03) as /home/chiara/Documents/UBA/ing-soft-1/25-TusLibros/CuisUniversity-3938.image!
+
+
+!testRun: #CartTest #test01createCartShouldBeEmpty stamp: 'gc 10/31/2019 16:30:18'!
+PASSED!
+
+!testRun: #CartTest #test02addItemtoCartShouldHaveItemWithRightQuantity stamp: 'gc 10/31/2019 16:30:18'!
+PASSED!
+
+!testRun: #CartTest #test03addSameItemTwicetoCartShouldSumQuantities stamp: 'gc 10/31/2019 16:30:18'!
+PASSED!
+
+!testRun: #CartTest #test04CantAddItemToCartWithAmount0 stamp: 'gc 10/31/2019 16:30:18'!
+PASSED!
+
+!testRun: #CartTest #test05CantAddItemToCartWithAmountNegativeAmount stamp: 'gc 10/31/2019 16:30:18'!
+PASSED!
+
+!testRun: #CartTest #test06CanListEmptyCartAndReturnsEmptyList stamp: 'gc 10/31/2019 16:30:18'!
+PASSED!
+
+!testRun: #CartTest #test07CanListCardWithItemsAndReturnsItemsWithAmount stamp: 'gc 10/31/2019 16:30:18'!
+PASSED!
