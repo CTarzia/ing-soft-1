@@ -1,0 +1,424 @@
+
+
+----STARTUP---- (31 October 2019 20:58:24) as /home/chiara/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3938.image!
+
+
+----End fileIn of /home/chiara/Documents/UBA/ing-soft-1/2019-2c/25-TusLibros/Iteracion1/TusLibros-18.st----!
+!Cart methodsFor: 'initialization' stamp: 'gc 10/31/2019 21:00:38' prior: 50777395!
+initializeAcceptingItemsOf: aCatalog
+
+	catalog := aCatalog.
+	items := Bag new.! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 10/31/2019 21:00:55'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 10/31/2019 21:00:55'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 10/31/2019 21:00:55'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 10/31/2019 21:00:55'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 10/31/2019 21:00:55'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 10/31/2019 21:00:55'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 10/31/2019 21:00:55'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 10/31/2019 21:00:55'!
+PASSED!
+
+TestCase subclass: #CashierTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CashierTest category: #TusLibros stamp: 'gc 10/31/2019 21:02:05'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTest methodsFor: 'no messages' stamp: 'gc 10/31/2019 21:03:52'!
+test01cashierCantCheckOutEmptyCart
+	|cart cashier|
+	cart _ Cart new.
+	! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:06:03'!
+setup
+	"^ Cart acceptingItemsOf: "! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:07:17' prior: 50777594!
+setup
+	^ Cart acceptingItemsOf: self defaultCatalog.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:07:38'!
+defaultCatalog
+	^ Array with: self itemSellByTheStore! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:07:56'!
+itemSellByTheStore
+	^ 'validBook'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:09:34' prior: 50777604!
+defaultCatalog
+	^ Dictionary newFrom:  {self itemSellByTheStore -> 10}! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:10:00' prior: 50777614!
+defaultCatalog
+	^ Dictionary newFrom:  {self itemSellByTheStore -> (10*peso) }.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:10:34' prior: 50777599!
+setup
+	^ Cart acceptingItemsOf: self defaultCatalog keys ! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:10:48' prior: 50777589!
+test01cashierCantCheckOutEmptyCart
+	! !
+
+TestCase subclass: #CashierTest
+	instanceVariableNames: ' cart '
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CashierTest category: #TusLibros stamp: 'gc 10/31/2019 21:11:05'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:11:17' prior: 50777626!
+setup
+	cart _ Cart acceptingItemsOf: self defaultCatalog keys ! !
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'gc 10/31/2019 21:12:56'!
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:12:50' prior: 50777631!
+test01cashierCantCheckOutEmptyCart
+	| cashier |
+	cashier _ Cashier acceptingFrom: self defaultCatalog ! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:13:15' prior: 50777659!
+test01cashierCantCheckOutEmptyCart
+	| cashier |
+	cashier _ Cashier acceptingItemsOf: self defaultCatalog ! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:14:09' prior: 50777666!
+test01cashierCantCheckOutEmptyCart
+	| cashier |
+	cashier _ Cashier acceptingItemsOf: self defaultCatalog.
+	cashier checkout: cart.
+	! !
+
+----SNAPSHOT----(31 October 2019 21:16:52) CuisUniversity-3938.image priorSource: 14319118!
+
+----QUIT----(31 October 2019 21:16:59) CuisUniversity-3938.image priorSource: 14272935!
+
+----STARTUP---- (31 October 2019 21:17:36) as /home/chiara/Documents/UBA/ing-soft-1/imagen nueva/CuisUniversity-3938.image!
+
+
+Object subclass: #Cashier
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'gc 10/31/2019 21:18:04'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'gc 10/31/2019 21:18:12'!
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+----SNAPSHOT----(31 October 2019 21:18:25) CuisUniversity-3938.image priorSource: 14273028!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:23:03' prior: 50777673!
+test01cashierCantCheckOutEmptyCart
+	| cashier |
+	cashier _ Cashier acceptingItemsOf: self defaultCatalog.
+	
+	self 
+		should: [ cashier checkout: cart.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier emptyCartErrorMessage.
+			self assert: cart isEmpty ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:24:06' prior: 50777714!
+test01cashierCantCheckOutEmptyCart
+	| cashier |
+	cashier _ Cashier acceptingItemsOf: self defaultCatalog.
+	
+	self 
+		should: [ cashier checkout: cart.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier emptyCartErrorMessage. ]! !
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:24:08'!
+ERROR!
+!Cashier class methodsFor: 'instance creation' stamp: 'gc 10/31/2019 21:24:17'!
+acceptingItemsOf: aDictionary 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeAcceptingItemsOf: aDictionary ! !
+!Cashier class methodsFor: 'instance creation' stamp: 'gc 10/31/2019 21:24:25' prior: 50777743!
+acceptingItemsOf: aDictionary 
+	^self new initializeAcceptingItemsOf: aDictionary ! !
+!Cashier class methodsFor: 'instance creation' stamp: 'gc 10/31/2019 21:24:39' prior: 50777752!
+acceptingItemsOf: aCatalog 
+	^self new initializeAcceptingItemsOf: aCatalog ! !
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:24:41'!
+ERROR!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'gc 10/31/2019 21:25:04'!
+Object subclass: #Cashier
+	instanceVariableNames: 'catalog'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cashier methodsFor: 'initialization' stamp: 'gc 10/31/2019 21:25:04'!
+initializeAcceptingItemsOf: aCatalog 
+	self shouldBeImplemented.
+	catalog := aCatalog.! !
+!Cashier methodsFor: 'initialization' stamp: 'gc 10/31/2019 21:25:10' prior: 50777773!
+initializeAcceptingItemsOf: aCatalog 
+	catalog := aCatalog.! !
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:25:19'!
+ERROR!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:25:30'!
+checkout: anUndefinedObject 
+	self shouldBeImplemented.! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:26:16' prior: 50777787!
+checkout: aCart 
+	^ self class emptyCartErrorMessage! !
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:26:18'!
+ERROR!
+!Cashier class methodsFor: 'error message' stamp: 'gc 10/31/2019 21:26:42'!
+emptyCartErrorMessage
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error message' stamp: 'gc 10/31/2019 21:27:00' prior: 50777800!
+emptyCartErrorMessage
+	^'No se puede hacer checkout de carritos vacios'! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:27:26' prior: 50777792!
+checkout: aCart 
+	^ self error: Cashier emptyCartErrorMessage! !
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:27:29'!
+PASSED!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:27:29'!
+PASSED!
+
+----SNAPSHOT----(31 October 2019 21:27:38) CuisUniversity-3938.image priorSource: 14273909!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:31:00' prior: 50777728!
+test01cashierCantCheckOutEmptyCart
+	| cashier creditCard |
+	cashier _ Cashier acceptingItemsOf: self defaultCatalog.
+	
+	self 
+		should: [ cashier checkout: cart with: creditCard.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier emptyCartErrorMessage. ]! !
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:31:06'!
+ERROR!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:31:19'!
+checkout: anUndefinedObject with: anUndefinedObject2 
+	self shouldBeImplemented.! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:31:51' prior: 50777842!
+checkout: aCart with: aCreditCard 
+	^ self error: Cashier emptyCartErrorMessage! !
+
+!methodRemoval: Cashier #checkout: stamp: 'gc 10/31/2019 21:31:54'!
+checkout: aCart 
+	^ self error: Cashier emptyCartErrorMessage!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:32:02'!
+PASSED!
+
+----SNAPSHOT----(31 October 2019 21:32:12) CuisUniversity-3938.image priorSource: 14277482!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:34:44'!
+test02cashierCantCheckOutItemIfItIsntInItsCatalog
+	| cashier creditCard |
+	cashier _ Cashier acceptingItemsOf: self defaultCatalog.
+
+	self 
+		should: [ cashier checkout: cart with: creditCard.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier emptyCartErrorMessage. ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:35:21' prior: 50777864!
+test02cashierCantCheckOutItemIfItIsntInItsCatalog
+	| cashier creditCard |
+	cashier _ Cashier acceptingItemsOf: self defaultCatalog.
+	cart add: self itemSellByTheStore .
+	self 
+		should: [ cashier checkout: cart with: creditCard.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier emptyCartErrorMessage. ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:36:21'!
+cashierDefaultCatalog
+	^ Dictionary newFrom:  {self itemSellByTheStore -> (10*peso) }.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:37:08'!
+cartDefaultCatalog
+	^ Array with: self itemSellByTheStore.! !
+
+!methodRemoval: CashierTest #defaultCatalog stamp: 'gc 10/31/2019 21:37:13'!
+defaultCatalog
+	^ Dictionary newFrom:  {self itemSellByTheStore -> (10*peso) }.!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:37:23' prior: 50777647!
+setup
+	cart _ Cart acceptingItemsOf: self cartDefaultCatalog ! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:37:30' prior: 50777826!
+test01cashierCantCheckOutEmptyCart
+	| cashier creditCard |
+	cashier _ Cashier acceptingItemsOf: self cashierDefaultCatalog .
+	
+	self 
+		should: [ cashier checkout: cart with: creditCard.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier emptyCartErrorMessage. ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:37:43' prior: 50777878!
+test02cashierCantCheckOutItemIfItIsntInItsCatalog
+	| cashier creditCard |
+	cashier _ Cashier acceptingItemsOf: self cashierDefaultCatalog .
+	cart add: self itemSellByTheStore .
+	self 
+		should: [ cashier checkout: cart with: creditCard.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier emptyCartErrorMessage. ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:38:31' prior: 50777899!
+cartDefaultCatalog
+	^ Array with: self itemSellByTheStore with: self itemInCartCatalogNotInCashierCatalog.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:38:46'!
+itemInCartCatalogNotInCashierCatalog
+	^'item'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:39:03' prior: 50777950!
+itemInCartCatalogNotInCashierCatalog
+	^'inCart'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:39:12' prior: 50777955!
+itemInCartCatalogNotInCashierCatalog
+	^'inCartNotInCashier'! !
+
+----SNAPSHOT----(31 October 2019 21:39:54) CuisUniversity-3938.image priorSource: 14278715!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:41:09' prior: 50777929!
+test02cashierCantCheckOutItemIfItIsntInItsCatalog
+	| cashier creditCard |
+	cashier _ Cashier acceptingItemsOf: self cashierDefaultCatalog .
+	cart add: self itemInCartCatalogNotInCashierCatalog .
+	self 
+		should: [ cashier checkout: cart with: creditCard.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier emptyCartErrorMessage. ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:41:28' prior: 50777968!
+test02cashierCantCheckOutItemIfItIsntInItsCatalog
+	| cashier creditCard |
+	cashier _ Cashier acceptingItemsOf: self cashierDefaultCatalog .
+	cart add: self itemInCartCatalogNotInCashierCatalog .
+	self 
+		should: [ cashier checkout: cart with: creditCard.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier itemNotInCatalogErrorMessage. ]! !
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:41:33'!
+ERROR!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:42:06' prior: 50777984!
+test02cashierCantCheckOutItemIfItIsntInItsCatalog
+	| cashier creditCard |
+	cashier _ Cashier acceptingItemsOf: self cashierDefaultCatalog .
+	cart add: (self itemInCartCatalogNotInCashierCatalog) .
+	self 
+		should: [ cashier checkout: cart with: creditCard.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier itemNotInCatalogErrorMessage. ]! !
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:42:09'!
+ERROR!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:42:20'!
+PASSED!
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:42:20'!
+ERROR!
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:42:20'!
+ERROR!
+
+TestCase subclass: #CashierTest
+	instanceVariableNames: 'cart'
+	classVariableNames: 'cart'
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+TestCase subclass: #CashierTest
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CashierTest category: #TusLibros stamp: 'gc 10/31/2019 21:43:09'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 10/31/2019 21:43:14'!
+PASSED!
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:43:14'!
+ERROR!
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:43:14'!
+ERROR!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 10/31/2019 21:44:02'!
+setUp
+	cart _ Cart acceptingItemsOf: self cartDefaultCatalog ! !
+
+!methodRemoval: CashierTest #setup stamp: 'gc 10/31/2019 21:44:02'!
+setup
+	cart _ Cart acceptingItemsOf: self cartDefaultCatalog !
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:44:04'!
+ERROR!
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:44:04'!
+ERROR!
+!Cashier class methodsFor: 'error message' stamp: 'gc 10/31/2019 21:44:22'!
+itemNotInCatalogErrorMessage
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error message' stamp: 'gc 10/31/2019 21:55:07' prior: 50778075!
+itemNotInCatalogErrorMessage
+	^'No se puede hacer checkout de este carrito porque tiene elementos que no estan en el catalogo del cajero'! !
+
+!testRun: #CashierTest #test02cashierCantCheckOutItemIfItIsntInItsCatalog stamp: 'gc 10/31/2019 21:55:09'!
+FAILURE!
+
+----SNAPSHOT----(31 October 2019 21:56:40) CuisUniversity-3938.image priorSource: 14282046!
+
+----QUIT----(31 October 2019 21:56:58) CuisUniversity-3938.image priorSource: 14286081!
