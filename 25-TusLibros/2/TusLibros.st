@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: #CartTest category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 TestCase subclass: #CartTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -125,32 +125,34 @@ itemSoldByTheStore
 	^ 'validBook'! !
 
 
-!classDefinition: #CashierTest category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: #CashierTest category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: 'cart debitInformation'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/6/2019 20:31:25'!
-debit: anAmount from: aCreditCard 
-	^debitInformation value: anAmount value: aCreditCard ! !
-
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/4/2019 19:18:01'!
+!CashierTest methodsFor: 'setUp' stamp: 'gc 11/4/2019 19:18:01'!
 defaultCatalog
 	^ Dictionary newFrom:  {self itemSoldByTheStore -> (10*peso) }.! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/4/2019 19:18:01'!
+!CashierTest methodsFor: 'setUp' stamp: 'gc 11/4/2019 19:18:01'!
 itemSoldByTheStore
 	^ 'validBook'! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/6/2019 20:32:11'!
+!CashierTest methodsFor: 'setUp' stamp: 'gc 11/6/2019 20:32:11'!
 setUp
 	cart _ Cart acceptingItemsOf: self defaultCatalog .
 	debitInformation _ [:aDebitedAmount :aCardDebitedFrom |
 		].! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/6/2019 20:11:26'!
+
+!CashierTest methodsFor: 'merchant processor mock' stamp: 'gc 11/6/2019 20:31:25'!
+debit: anAmount from: aCreditCard 
+	^debitInformation value: anAmount value: aCreditCard ! !
+
+
+!CashierTest methodsFor: 'test' stamp: 'gc 11/6/2019 20:11:26'!
 test01cashierCantCheckOutEmptyCart
 	| creditCard date salesBook expireDate|
 	salesBook _ OrderedCollection new.
@@ -165,7 +167,7 @@ test01cashierCantCheckOutEmptyCart
 			self assert: anError messageText = Cashier emptyCartErrorMessage.
 			self assert: salesBook isEmpty .]! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/6/2019 20:14:41'!
+!CashierTest methodsFor: 'test' stamp: 'gc 11/6/2019 20:14:41'!
 test02cashierCantCheckOutWithExpiredCreditCard
 	| creditCard date salesBook expireDate|
 	salesBook _ OrderedCollection new.
@@ -181,7 +183,7 @@ test02cashierCantCheckOutWithExpiredCreditCard
 			self assert: anError messageText = Cashier expiredCardErrorMessage.
 			self assert: salesBook isEmpty .]! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/6/2019 20:17:59'!
+!CashierTest methodsFor: 'test' stamp: 'gc 11/6/2019 20:17:59'!
 test03cashierCalculatesTotalPriceWhenCheckingOut
 	| creditCard date salesBook expireDate cashier total |
 	salesBook _ OrderedCollection new.
@@ -194,7 +196,7 @@ test03cashierCalculatesTotalPriceWhenCheckingOut
 	total _ cashier checkout.
 	self assert: (total) equals: (2 * (self defaultCatalog at: self itemSoldByTheStore) ).! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/6/2019 20:17:49'!
+!CashierTest methodsFor: 'test' stamp: 'gc 11/6/2019 20:17:49'!
 test04cashierRegistersSaleWhenCheckingOut
 	| creditCard date salesBook expireDate cashier total |
 	salesBook _ OrderedCollection new.
@@ -208,7 +210,7 @@ test04cashierRegistersSaleWhenCheckingOut
 	self assert: (salesBook size) equals: 1.
 	self assert: total equals: (salesBook at: 1).! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'gc 11/6/2019 20:28:57'!
+!CashierTest methodsFor: 'test' stamp: 'gc 11/6/2019 20:28:57'!
 test05cashierUsesMerchantProcessor
 	| creditCard date salesBook expireDate cashier total debitedAmount cardDebitedFrom |
 	salesBook _ OrderedCollection new.
@@ -227,14 +229,14 @@ test05cashierUsesMerchantProcessor
 	self assert: total equals: debitedAmount .! !
 
 
-!classDefinition: #CreditCardTest category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: #CreditCardTest category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 TestCase subclass: #CreditCardTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CreditCardTest methodsFor: 'as yet unclassified' stamp: 'gc 11/4/2019 20:58:02'!
+!CreditCardTest methodsFor: 'test' stamp: 'gc 11/4/2019 20:58:02'!
 test01CantCreateCardWithShortNumber
 	| expireDate year |
 	year _ GregorianYear number: 1995.
@@ -245,7 +247,7 @@ test01CantCreateCardWithShortNumber
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = CreditCard invalidNumberErrorMessage.]	! !
 
-!CreditCardTest methodsFor: 'as yet unclassified' stamp: 'gc 11/4/2019 20:58:15'!
+!CreditCardTest methodsFor: 'test' stamp: 'gc 11/4/2019 20:58:15'!
 test02CantCreateCardWithLongNumber
 	| expireDate year |
 	year _ GregorianYear number: 1995.
@@ -256,7 +258,7 @@ test02CantCreateCardWithLongNumber
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = CreditCard invalidNumberErrorMessage.]	! !
 
-!CreditCardTest methodsFor: 'as yet unclassified' stamp: 'gc 11/4/2019 20:58:25'!
+!CreditCardTest methodsFor: 'test' stamp: 'gc 11/4/2019 20:58:25'!
 test03CantCreateCardWithLongName
 	| expireDate year |
 	year _ GregorianYear number: 1995.
@@ -268,7 +270,7 @@ test03CantCreateCardWithLongName
 			self assert: anError messageText = CreditCard invalidNameErrorMessage.]	! !
 
 
-!classDefinition: #Cart category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: #Cart category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -340,7 +342,7 @@ add: aQuantity of: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -350,7 +352,7 @@ acceptingItemsOf: aCatalog
 	^self new initializeAcceptingItemsOf: aCatalog ! !
 
 
-!classDefinition: #Cashier category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: #Cashier category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 Object subclass: #Cashier
 	instanceVariableNames: 'cart date creditCard salesBook merchantProcessor'
 	classVariableNames: ''
@@ -366,7 +368,7 @@ initializeForCheckingOut: aCart on: aDate chargingFrom: aCreditCard registeringO
 	merchantProcessor := aMerchantProcessor.! !
 
 
-!Cashier methodsFor: 'as yet unclassified' stamp: 'gc 11/6/2019 20:29:58'!
+!Cashier methodsFor: 'checkout' stamp: 'gc 11/6/2019 20:29:58'!
 checkout
 	| total |
 	total _ cart total .
@@ -376,7 +378,7 @@ checkout
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 Cashier class
 	instanceVariableNames: ''!
 
@@ -405,7 +407,7 @@ itemNotInCatalogErrorMessage
 	^'No se puede hacer checkout de este carrito porque tiene elementos que no estan en el catalogo del cajero'! !
 
 
-!classDefinition: #CreditCard category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: #CreditCard category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 Object subclass: #CreditCard
 	instanceVariableNames: 'number name expirationDate'
 	classVariableNames: ''
@@ -425,7 +427,7 @@ isExpiredAt: aDate
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'gc 11/6/2019 20:33:42'!
+!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'gc 11/6/2019 20:39:44'!
 CreditCard class
 	instanceVariableNames: ''!
 
