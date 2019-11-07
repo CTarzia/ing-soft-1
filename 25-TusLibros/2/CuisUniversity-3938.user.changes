@@ -2358,3 +2358,306 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(6 November 2019 20:32:47) CuisUniversity-3938.image priorSource: 14345048!
+
+----SNAPSHOT----(6 November 2019 22:06:26) CuisUniversity-3938.image priorSource: 14369613!
+
+----QUIT----(6 November 2019 22:06:30) CuisUniversity-3938.image priorSource: 14369706!
+
+----STARTUP---- (7 November 2019 16:00:59) as /home/chiara/Documents/UBA/ing-soft-1/25-TusLibros/CuisUniversity-3938.image!
+
+!CashierTest methodsFor: 'test' stamp: 'gc 11/7/2019 16:03:30'!
+test06cashierDoesntRegisterSaleIfLimitIsReachedInCard
+	| creditCard date salesBook expireDate cashier total   |
+	salesBook _ OrderedCollection new.
+	date _ FixedGregorianDate today.
+	expireDate _ GregorianMonthOfYear year: (date year next ) month: (date month ).
+	creditCard _ CreditCard with: 1234567891234567 for: 'Alan Kay' expiresOn: expireDate.
+	cart add: 2 of: self itemSoldByTheStore .
+
+	cashier _  Cashier forCheckingOut: cart on: date chargingFrom: creditCard registeringOn: salesBook  processingOn: self .
+	debitInformation _ [^self error: 'CreditCard limit reached'.].
+	total _ cashier checkout.
+	! !
+!CashierTest methodsFor: 'test' stamp: 'gc 11/7/2019 16:05:01' prior: 50780713!
+test06cashierDoesntRegisterSaleIfLimitIsReachedInCard
+	| creditCard date salesBook expireDate cashier |
+	salesBook _ OrderedCollection new.
+	date _ FixedGregorianDate today.
+	expireDate _ GregorianMonthOfYear year: (date year next ) month: (date month ).
+	creditCard _ CreditCard with: 1234567891234567 for: 'Alan Kay' expiresOn: expireDate.
+	cart add: 2 of: self itemSoldByTheStore .
+
+	cashier _  Cashier forCheckingOut: cart on: date chargingFrom: creditCard registeringOn: salesBook  processingOn: self .
+	debitInformation _ [^self error: 'CreditCard limit reached'.].
+
+	self 
+		should: [cashier checkout.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier creditCardLimitReachedErrorMessage.
+			self assert: salesBook isEmpty .]! !
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:05:04'!
+ERROR!
+!Cashier class methodsFor: 'error message' stamp: 'gc 11/7/2019 16:05:15'!
+creditCardLimitReachedErrorMessage
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error message' stamp: 'gc 11/7/2019 16:06:19' prior: 50780767!
+creditCardLimitReachedErrorMessage
+	^'La venta no se proceso porque se la tarjeta ya supero el limite.'! !
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:06:21'!
+FAILURE!
+!CashierTest methodsFor: 'test' stamp: 'gc 11/7/2019 16:08:16' prior: 50780735!
+test06cashierDoesntRegisterSaleIfLimitIsReachedInCard
+	| creditCard date salesBook expireDate cashier |
+	salesBook _ OrderedCollection new.
+	date _ FixedGregorianDate today.
+	expireDate _ GregorianMonthOfYear year: (date year next ) month: (date month ).
+	creditCard _ CreditCard with: 1234567891234567 for: 'Alan Kay' expiresOn: expireDate.
+	cart add: 2 of: self itemSoldByTheStore .
+
+	cashier _  Cashier forCheckingOut: cart on: date chargingFrom: creditCard registeringOn: salesBook  processingOn: self .
+	debitInformation _ [^self error:'La venta no se proceso porque se la tarjeta ya supero el limite.'].
+
+	self 
+		should: [cashier checkout.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier creditCardLimitReachedErrorMessage.
+			self assert: salesBook isEmpty .]! !
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:08:17'!
+FAILURE!
+!CashierTest methodsFor: 'test' stamp: 'gc 11/7/2019 16:09:12' prior: 50780782!
+test06cashierDoesntRegisterSaleIfLimitIsReachedInCard
+	| creditCard date salesBook expireDate cashier |
+	salesBook _ OrderedCollection new.
+	date _ FixedGregorianDate today.
+	expireDate _ GregorianMonthOfYear year: (date year next ) month: (date month ).
+	creditCard _ CreditCard with: 1234567891234567 for: 'Alan Kay' expiresOn: expireDate.
+	cart add: 2 of: self itemSoldByTheStore .
+
+	cashier _  Cashier forCheckingOut: cart on: date chargingFrom: creditCard registeringOn: salesBook  processingOn: self .
+	debitInformation _ [
+		^self error:'La venta no se proceso porque se la tarjeta ya supero el limite.'].
+
+	self 
+		should: [cashier checkout.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier creditCardLimitReachedErrorMessage.
+			self assert: salesBook isEmpty .]! !
+!CashierTest methodsFor: 'test' stamp: 'gc 11/7/2019 16:09:31' prior: 50780815!
+test06cashierDoesntRegisterSaleIfLimitIsReachedInCard
+	| creditCard date salesBook expireDate cashier |
+	salesBook _ OrderedCollection new.
+	date _ FixedGregorianDate today.
+	expireDate _ GregorianMonthOfYear year: (date year next ) month: (date month ).
+	creditCard _ CreditCard with: 1234567891234567 for: 'Alan Kay' expiresOn: expireDate.
+	cart add: 2 of: self itemSoldByTheStore .
+
+	cashier _  Cashier forCheckingOut: cart on: date chargingFrom: creditCard registeringOn: salesBook  processingOn: self .
+	debitInformation _ [:aDebitedAmount :aCardDebitedFrom |
+		^self error:'La venta no se proceso porque se la tarjeta ya supero el limite.'].
+
+	self 
+		should: [cashier checkout.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier creditCardLimitReachedErrorMessage.
+			self assert: salesBook isEmpty .]! !
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:09:32'!
+PASSED!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 11/7/2019 16:09:32'!
+PASSED!
+
+!testRun: #CashierTest #test02cashierCantCheckOutWithExpiredCreditCard stamp: 'gc 11/7/2019 16:09:32'!
+PASSED!
+
+!testRun: #CashierTest #test03cashierCalculatesTotalPriceWhenCheckingOut stamp: 'gc 11/7/2019 16:09:32'!
+PASSED!
+
+!testRun: #CashierTest #test04cashierRegistersSaleWhenCheckingOut stamp: 'gc 11/7/2019 16:09:32'!
+PASSED!
+
+!testRun: #CashierTest #test05cashierUsesMerchantProcessor stamp: 'gc 11/7/2019 16:09:32'!
+PASSED!
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:09:32'!
+PASSED!
+!CashierTest methodsFor: 'test' stamp: 'gc 11/7/2019 16:10:27'!
+test07cashierDoesntRegisterSaleIfCardIsNotRegistered
+	| creditCard date salesBook expireDate cashier |
+	salesBook _ OrderedCollection new.
+	date _ FixedGregorianDate today.
+	expireDate _ GregorianMonthOfYear year: (date year next ) month: (date month ).
+	creditCard _ CreditCard with: 1234567891234567 for: 'Alan Kay' expiresOn: expireDate.
+	cart add: 2 of: self itemSoldByTheStore .
+
+	cashier _  Cashier forCheckingOut: cart on: date chargingFrom: creditCard registeringOn: salesBook  processingOn: self .
+	debitInformation _ [:aDebitedAmount :aCardDebitedFrom |
+		^self error:'La venta no se proceso porque la tarjeta ya supero el limite.'].
+
+	self 
+		should: [cashier checkout.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier creditCardLimitReachedErrorMessage.
+			self assert: salesBook isEmpty .]! !
+!Cashier class methodsFor: 'error message' stamp: 'gc 11/7/2019 16:10:38' prior: 50780772!
+creditCardLimitReachedErrorMessage
+	^'La venta no se proceso porque la tarjeta ya supero el limite.'! !
+!CashierTest methodsFor: 'test' stamp: 'gc 11/7/2019 16:11:11' prior: 50780898!
+test07cashierDoesntRegisterSaleIfCardIsNotRegistered
+	| creditCard date salesBook expireDate cashier |
+	salesBook _ OrderedCollection new.
+	date _ FixedGregorianDate today.
+	expireDate _ GregorianMonthOfYear year: (date year next ) month: (date month ).
+	creditCard _ CreditCard with: 1234567891234567 for: 'Alan Kay' expiresOn: expireDate.
+	cart add: 2 of: self itemSoldByTheStore .
+
+	cashier _  Cashier forCheckingOut: cart on: date chargingFrom: creditCard registeringOn: salesBook  processingOn: self .
+	debitInformation _ [:aDebitedAmount :aCardDebitedFrom |
+		^self error:'La venta no se proceso porque la tarjeta no esta registrada.'].
+
+	self 
+		should: [cashier checkout.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier creditCardNotRegisteredErrorMessage.
+			self assert: salesBook isEmpty .]! !
+
+!testRun: #CashierTest #test07cashierDoesntRegisterSaleIfCardIsNotRegistered stamp: 'gc 11/7/2019 16:11:15'!
+ERROR!
+!Cashier class methodsFor: 'error message' stamp: 'gc 11/7/2019 16:11:28'!
+creditCardNotRegisteredErrorMessage
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error message' stamp: 'gc 11/7/2019 16:11:47' prior: 50780969!
+creditCardNotRegisteredErrorMessage
+	^'La venta no se proceso porque la tarjeta no esta registrada.'! !
+
+!testRun: #CashierTest #test07cashierDoesntRegisterSaleIfCardIsNotRegistered stamp: 'gc 11/7/2019 16:11:48'!
+PASSED!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 11/7/2019 16:11:48'!
+PASSED!
+
+!testRun: #CashierTest #test02cashierCantCheckOutWithExpiredCreditCard stamp: 'gc 11/7/2019 16:11:48'!
+PASSED!
+
+!testRun: #CashierTest #test03cashierCalculatesTotalPriceWhenCheckingOut stamp: 'gc 11/7/2019 16:11:48'!
+PASSED!
+
+!testRun: #CashierTest #test04cashierRegistersSaleWhenCheckingOut stamp: 'gc 11/7/2019 16:11:48'!
+PASSED!
+
+!testRun: #CashierTest #test05cashierUsesMerchantProcessor stamp: 'gc 11/7/2019 16:11:48'!
+PASSED!
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:11:48'!
+FAILURE!
+
+!testRun: #CashierTest #test07cashierDoesntRegisterSaleIfCardIsNotRegistered stamp: 'gc 11/7/2019 16:11:48'!
+PASSED!
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:11:48'!
+FAILURE!
+
+!testRun: #CashierTest #test07cashierDoesntRegisterSaleIfCardIsNotRegistered stamp: 'gc 11/7/2019 16:12:44'!
+PASSED!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 11/7/2019 16:12:44'!
+PASSED!
+
+!testRun: #CashierTest #test02cashierCantCheckOutWithExpiredCreditCard stamp: 'gc 11/7/2019 16:12:44'!
+PASSED!
+
+!testRun: #CashierTest #test03cashierCalculatesTotalPriceWhenCheckingOut stamp: 'gc 11/7/2019 16:12:44'!
+PASSED!
+
+!testRun: #CashierTest #test04cashierRegistersSaleWhenCheckingOut stamp: 'gc 11/7/2019 16:12:44'!
+PASSED!
+
+!testRun: #CashierTest #test05cashierUsesMerchantProcessor stamp: 'gc 11/7/2019 16:12:44'!
+PASSED!
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:12:44'!
+FAILURE!
+
+!testRun: #CashierTest #test07cashierDoesntRegisterSaleIfCardIsNotRegistered stamp: 'gc 11/7/2019 16:12:44'!
+PASSED!
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:12:44'!
+FAILURE!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 11/7/2019 16:13:01'!
+PASSED!
+
+!testRun: #CashierTest #test02cashierCantCheckOutWithExpiredCreditCard stamp: 'gc 11/7/2019 16:13:01'!
+PASSED!
+
+!testRun: #CashierTest #test03cashierCalculatesTotalPriceWhenCheckingOut stamp: 'gc 11/7/2019 16:13:01'!
+PASSED!
+
+!testRun: #CashierTest #test04cashierRegistersSaleWhenCheckingOut stamp: 'gc 11/7/2019 16:13:01'!
+PASSED!
+
+!testRun: #CashierTest #test05cashierUsesMerchantProcessor stamp: 'gc 11/7/2019 16:13:01'!
+PASSED!
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:13:01'!
+FAILURE!
+
+!testRun: #CashierTest #test07cashierDoesntRegisterSaleIfCardIsNotRegistered stamp: 'gc 11/7/2019 16:13:01'!
+PASSED!
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:13:01'!
+FAILURE!
+!CashierTest methodsFor: 'test' stamp: 'gc 11/7/2019 16:13:43' prior: 50780844!
+test06cashierDoesntRegisterSaleIfLimitIsReachedInCard
+	| creditCard date salesBook expireDate cashier |
+	salesBook _ OrderedCollection new.
+	date _ FixedGregorianDate today.
+	expireDate _ GregorianMonthOfYear year: (date year next ) month: (date month ).
+	creditCard _ CreditCard with: 1234567891234567 for: 'Alan Kay' expiresOn: expireDate.
+	cart add: 2 of: self itemSoldByTheStore .
+
+	cashier _  Cashier forCheckingOut: cart on: date chargingFrom: creditCard registeringOn: salesBook  processingOn: self .
+	debitInformation _ [:aDebitedAmount :aCardDebitedFrom |
+		^self error: 'La venta no se proceso porque la tarjeta ya supero el limite.'].
+
+	self 
+		should: [cashier checkout.]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier creditCardLimitReachedErrorMessage.
+			self assert: salesBook isEmpty .]! !
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:13:45'!
+PASSED!
+
+!testRun: #CashierTest #test01cashierCantCheckOutEmptyCart stamp: 'gc 11/7/2019 16:13:45'!
+PASSED!
+
+!testRun: #CashierTest #test02cashierCantCheckOutWithExpiredCreditCard stamp: 'gc 11/7/2019 16:13:45'!
+PASSED!
+
+!testRun: #CashierTest #test03cashierCalculatesTotalPriceWhenCheckingOut stamp: 'gc 11/7/2019 16:13:45'!
+PASSED!
+
+!testRun: #CashierTest #test04cashierRegistersSaleWhenCheckingOut stamp: 'gc 11/7/2019 16:13:45'!
+PASSED!
+
+!testRun: #CashierTest #test05cashierUsesMerchantProcessor stamp: 'gc 11/7/2019 16:13:45'!
+PASSED!
+
+!testRun: #CashierTest #test06cashierDoesntRegisterSaleIfLimitIsReachedInCard stamp: 'gc 11/7/2019 16:13:45'!
+PASSED!
+
+!testRun: #CashierTest #test07cashierDoesntRegisterSaleIfCardIsNotRegistered stamp: 'gc 11/7/2019 16:13:45'!
+PASSED!
+
+----SNAPSHOT----(7 November 2019 16:13:53) CuisUniversity-3938.image priorSource: 14369799!
