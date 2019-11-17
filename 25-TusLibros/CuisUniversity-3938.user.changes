@@ -8440,3 +8440,1643 @@ FAILURE!
 ----SNAPSHOT----(12 November 2019 08:21:37) CuisUniversity-3938.image priorSource: 14661767!
 
 ----QUIT----(12 November 2019 08:21:42) CuisUniversity-3938.image priorSource: 14661861!
+
+----STARTUP---- (14 November 2019 17:46:29) as /home/gzeitoune/Documents/UBA/ingSoft1/ing-soft-1/25-TusLibros/CuisUniversity-3938.image!
+
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 17:48:54'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 17:48:54'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 17:48:54'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:16:15'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:16:15'!
+FAILURE!
+!InternalInterface methodsFor: 'testing' stamp: 'gc 11/14/2019 19:18:45' prior: 50782155!
+hasACartWith: aCartID 
+	carts at: aCartID ifAbsent: [^false].
+	^true
+! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:18:48'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:18:48'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:18:48'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:18:48'!
+FAILURE!
+
+Object subclass: #InternalInterface
+	instanceVariableNames: 'userList cartOwners nextCartID catalog salesBook listedPurchases cartsAndOwners'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InternalInterface category: #TusLibros stamp: 'gc 11/14/2019 19:19:14'!
+Object subclass: #InternalInterface
+	instanceVariableNames: 'userList cartOwners nextCartID catalog salesBook listedPurchases cartsAndOwners'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InternalInterface methodsFor: 'testing' stamp: 'gc 11/14/2019 19:19:30' prior: 50789932!
+hasACartWith: aCartID 
+	cartsAndOwners at: aCartID ifAbsent: [^false].
+	^true
+! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:19:32'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:19:32'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:19:33'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:20:42' prior: 50789156!
+addToListedPurchases: aCart
+	^listedPurchases add: 'aa'.! !
+!InternalInterface methodsFor: 'initialization' stamp: 'gc 11/14/2019 19:21:08' prior: 50789170!
+initializeWithUserList: aUserList andCatalog: aCatalog  
+	userList _ aUserList.
+	cartsAndOwners _ Dictionary new.
+	nextCartID _ 1.
+	catalog _ aCatalog .
+	salesBook _ OrderedCollection new.! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:21:52' prior: 50789732!
+checkOutCart: aCartID charging: aCreditCard through: aMerchantProcessor  
+	| cartData cart cashier |
+	cartData _ cartsAndOwners at: aCartID ifAbsent: [^self error: self class invalidCartIDErrorMessage] .
+	cart _ cartData at: 'cart'.
+	cashier _ Cashier toCheckout: cart charging: aCreditCard through: aMerchantProcessor on: (DateAndTime now) registeringOn: salesBook .
+	self addToListedPurchases: aCartID.	
+	^cashier checkOut ! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:23:23' prior: 50790114!
+addToListedPurchases: aCartID
+	| cart cartData owner |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	^listedPurchases at: owner put: (cart list).! !
+!InternalInterface methodsFor: 'initialization' stamp: 'gc 11/14/2019 19:23:46' prior: 50790119!
+initializeWithUserList: aUserList andCatalog: aCatalog  
+	userList _ aUserList.
+	cartsAndOwners _ Dictionary new.
+	nextCartID _ 1.
+	catalog _ aCatalog .
+	salesBook _ OrderedCollection new.
+	listedPurchases _ Dictionary new.! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:24:18' prior: 50789144!
+listPurchasesOf: aUser with: aPassword 
+	| recordedPassword|
+	
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	
+	^listedPurchases ! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:24:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:24:23'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:24:23'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:24:43' prior: 50790167!
+listPurchasesOf: aUser with: aPassword 
+	| recordedPassword|
+	
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	
+	^listedPurchases at: aUser ! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:24:44'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:24:44'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:24:44'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:25:33' prior: 50790259!
+listPurchasesOf: aUser with: aPassword 
+	| recordedPassword|
+	
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	
+	^listedPurchases at: aUser ifAbsent: [^Dictionary new]! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:25:34'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:25:34'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:25:34'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:29:21' prior: 50790347!
+listPurchasesOf: aUser with: aPassword 
+	| recordedPassword|
+	
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	
+	^listedPurchases at: aUser ifAbsent: [^Dictionary new]! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:33:58' prior: 50790146!
+addToListedPurchases: aCartID
+	| cart cartData owner previousPurchases |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	previousPurchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	(cart list) collect: [:item | | amount | 
+		amount _ previousPurchases at: (item key) ifAbsent: [0]. 
+		previousPurchases at: (item key) put: amount + (item value) .
+	].
+	listedPurchases at: owner put: (cart list).! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:34:02'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:34:02'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:34:02'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:34:09'!
+ERROR!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:35:07' prior: 50790454!
+addToListedPurchases: aCartID
+	| cart cartData owner previousPurchases |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	previousPurchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	(cart list) collect: [:item | | amount | 
+		amount _ previousPurchases at: item ifAbsent: [0]. 
+		previousPurchases at: (item key) put: amount + (item value) .
+	].
+	listedPurchases at: owner put: (cart list).! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:36:03' prior: 50790551!
+addToListedPurchases: aCartID
+	| cart cartData owner previousPurchases |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	previousPurchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	(cart list) collect: [:item | | amount | 
+		amount _ previousPurchases at: item ifAbsent: [0]. 
+		previousPurchases at: (item key) put: amount + (item value) .
+	].
+	listedPurchases at: owner put: (cart list).! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:36:06'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:36:06'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:36:06'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:36:08'!
+ERROR!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:36:35' prior: 50790569!
+addToListedPurchases: aCartID
+	| cart cartData owner previousPurchases |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	previousPurchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	(cart list) collect: [:item | | amount | 
+		amount _ previousPurchases at: item ifAbsent: [0]. 
+		previousPurchases at: (item) put: amount + (item value) .
+	].
+	listedPurchases at: owner put: (cart list).! !
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:36:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:36:43'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:38:54' prior: 50790666!
+addToListedPurchases: aCartID
+	| cart cartData owner previousPurchases list |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	previousPurchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	list _ cart list.
+	(list) collect: [:item | | amount | 
+		amount _ previousPurchases at: item ifAbsent: [0]. 
+		previousPurchases at: (item) put: amount + (item value) .
+	].
+	listedPurchases at: owner put: (cart list).! !
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:38:58'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:40:21' prior: 50790692!
+addToListedPurchases: aCartID
+	| cart cartData owner previousPurchases list |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	previousPurchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	list _ cart list.
+	(list keys) collect: [:item | | amount | 
+		amount _ previousPurchases at: item ifAbsent: [0]. 
+		previousPurchases at: (item) put: amount + (list at: item) .
+	].
+	listedPurchases at: owner put: (cart list).! !
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:40:22'!
+FAILURE!
+
+(list at: item)!
+
+(list at: item)!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:42:50' prior: 50790715!
+addToListedPurchases: aCartID
+	| cart cartData owner previousPurchases list |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	previousPurchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	list _ cart list.
+	(list keys) collect: [:item | | amount | 
+		amount _ previousPurchases at: item ifAbsent: [0]. 
+		previousPurchases at: (item) put: amount + (list at: item) .
+	].
+	listedPurchases at: owner put: previousPurchases.! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:43:07' prior: 50790739!
+addToListedPurchases: aCartID
+	| cart cartData owner previousPurchases list |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	previousPurchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	list _ cart list.
+	(list keys) collect: [:item | | amount | 
+		amount _ previousPurchases at: item ifAbsent: [0]. 
+		listedPurchases at: (item) put: amount + (list at: item) .
+	].! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:44:33' prior: 50790758!
+addToListedPurchases: aCartID
+	| cart cartData owner purchases list |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	purchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	list _ cart list.
+	(list keys) collect: [:item | | amount | 
+		amount _ purchases at: item ifAbsent: [0]. 
+		purchases at: (item) put: amount + (list at: item) .
+	].
+
+	listedPurchases at: owner put: purchases .! !
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:44:35'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:45:38' prior: 50790775!
+addToListedPurchases: aCartID
+	| cart cartData owner purchases list |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	purchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	list _ cart list.
+	(list keys) collect: [:item | | amount | 
+		amount _ purchases at: item ifAbsent: [0]. 
+		purchases at: (item) put: (amount + (list at: item)) .
+	].
+
+	listedPurchases at: owner put: purchases .! !
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:45:39'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:48:58' prior: 50790797!
+addToListedPurchases: aCartID
+	| cart cartData owner purchases list |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	purchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	list _ cart list.
+	(list keys) collect: [:item | | amount | 
+		amount _ purchases at: item ifAbsent: [0]. 
+		purchases at: (item) put: (amount + (cart at: item)) .
+	].
+
+	listedPurchases at: owner put: purchases .! !
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:49:00'!
+ERROR!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 19:50:24' prior: 50790819!
+addToListedPurchases: aCartID
+	| cart cartData owner purchases list |
+	cartData _ cartsAndOwners at: aCartID.
+	cart _ cartData at: 'cart'.
+	owner _ cartData at: 'owner'.
+	purchases _ listedPurchases at: owner ifAbsent: [Dictionary new].
+	list _ cart list.
+	(list keys) collect: [:item | | amount | 
+		amount _ purchases at: item ifAbsent: [0]. 
+		purchases at: (item) put: (amount + (list at: item)) .
+	].
+
+	listedPurchases at: owner put: purchases .! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:50:39'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:50:39'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:50:39'!
+FAILURE!
+!Cart methodsFor: 'initialization' stamp: 'gc 11/14/2019 19:53:34' prior: 50781211!
+initializeAcceptingItemsOf: aCatalog
+
+	catalog := aCatalog.
+	items := Bag new.! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 11/14/2019 19:53:42'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 11/14/2019 19:53:42'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 11/14/2019 19:53:42'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 11/14/2019 19:53:42'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 11/14/2019 19:53:42'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 11/14/2019 19:53:42'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 11/14/2019 19:53:42'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 11/14/2019 19:53:42'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:53:46'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:53:46'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:53:46'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 19:55:09'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:55:09'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 19:55:09'!
+FAILURE!
+
+self list!
+!InternalInterfaceTest methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:03:14' prior: 50788972!
+test20listPurchasesOfClientThatBoughtReturnsPurchases
+	| internalInterface userList user password cart1 cart2 book creditCard total listedPurchases expectedListedPurchases|
+	
+	userList  _ testObjectsFactory defaultUserList .
+	user _ testObjectsFactory userOfTheStore .
+	password _ testObjectsFactory passwordOfUserOfTheStore .
+	book _ testObjectsFactory validEditorialISBN .
+	creditCard _ testObjectsFactory notExpiredCreditCard .
+	
+	internalInterface _ InternalInterface withUserList: userList andCatalog: (testObjectsFactory defaultBookCatalog).
+	
+	cart1 _ internalInterface createCartFor: user with: password .
+	internalInterface addToCart: cart1 book: book quantity: 1.
+	total _ internalInterface checkOutCart: cart1 charging: creditCard through: self.
+	
+	cart2 _ internalInterface createCartFor: user with: password .
+	internalInterface addToCart: cart2 book: book quantity: 2.
+	total _ total + (internalInterface checkOutCart: cart2 charging: creditCard through: self).
+	
+	listedPurchases _ internalInterface listPurchasesOf: user with: password.
+	expectedListedPurchases _ Dictionary newFrom: {book -> 3}.
+	
+	self assert: expectedListedPurchases equals: listedPurchases.! !
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 20:03:17'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 20:03:22'!
+PASSED!
+!InternalInterfaceTest methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:06:01'!
+test21listPurchasedAmountOfClientThatBoughtReturnsTotal
+	| internalInterface userList user password cart1 cart2 book creditCard total purchasedAmount |
+	
+	userList  _ testObjectsFactory defaultUserList .
+	user _ testObjectsFactory userOfTheStore .
+	password _ testObjectsFactory passwordOfUserOfTheStore .
+	book _ testObjectsFactory validEditorialISBN .
+	creditCard _ testObjectsFactory notExpiredCreditCard .
+	
+	internalInterface _ InternalInterface withUserList: userList andCatalog: (testObjectsFactory defaultBookCatalog).
+	
+	cart1 _ internalInterface createCartFor: user with: password .
+	internalInterface addToCart: cart1 book: book quantity: 1.
+	total _ internalInterface checkOutCart: cart1 charging: creditCard through: self.
+	
+	cart2 _ internalInterface createCartFor: user with: password .
+	internalInterface addToCart: cart2 book: book quantity: 2.
+	total _ total + (internalInterface checkOutCart: cart2 charging: creditCard through: self).
+	
+	purchasedAmount _ internalInterface purchasedAmountOf: user with: password.
+	
+	self assert: total equals: purchasedAmount.! !
+!InternalInterfaceTest methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:06:14' prior: 50791129!
+test20listPurchasesOfClientThatBoughtReturnsPurchases
+	| internalInterface userList user password cart1 cart2 book creditCard listedPurchases expectedListedPurchases|
+	
+	userList  _ testObjectsFactory defaultUserList .
+	user _ testObjectsFactory userOfTheStore .
+	password _ testObjectsFactory passwordOfUserOfTheStore .
+	book _ testObjectsFactory validEditorialISBN .
+	creditCard _ testObjectsFactory notExpiredCreditCard .
+	
+	internalInterface _ InternalInterface withUserList: userList andCatalog: (testObjectsFactory defaultBookCatalog).
+	
+	cart1 _ internalInterface createCartFor: user with: password .
+	internalInterface addToCart: cart1 book: book quantity: 1.
+	internalInterface checkOutCart: cart1 charging: creditCard through: self.
+	
+	cart2 _ internalInterface createCartFor: user with: password .
+	internalInterface addToCart: cart2 book: book quantity: 2.
+	(internalInterface checkOutCart: cart2 charging: creditCard through: self).
+	
+	listedPurchases _ internalInterface listPurchasesOf: user with: password.
+	expectedListedPurchases _ Dictionary newFrom: {book -> 3}.
+	
+	self assert: expectedListedPurchases equals: listedPurchases.! !
+!InternalInterfaceTest methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:06:20' prior: 50791286!
+test20listPurchasesOfClientThatBoughtReturnsPurchases
+	| internalInterface userList user password cart1 cart2 book creditCard listedPurchases expectedListedPurchases|
+	
+	userList  _ testObjectsFactory defaultUserList .
+	user _ testObjectsFactory userOfTheStore .
+	password _ testObjectsFactory passwordOfUserOfTheStore .
+	book _ testObjectsFactory validEditorialISBN .
+	creditCard _ testObjectsFactory notExpiredCreditCard .
+	
+	internalInterface _ InternalInterface withUserList: userList andCatalog: (testObjectsFactory defaultBookCatalog).
+	
+	cart1 _ internalInterface createCartFor: user with: password .
+	internalInterface addToCart: cart1 book: book quantity: 1.
+	internalInterface checkOutCart: cart1 charging: creditCard through: self.
+	
+	cart2 _ internalInterface createCartFor: user with: password .
+	internalInterface addToCart: cart2 book: book quantity: 2.
+	internalInterface checkOutCart: cart2 charging: creditCard through: self.
+	
+	listedPurchases _ internalInterface listPurchasesOf: user with: password.
+	expectedListedPurchases _ Dictionary newFrom: {book -> 3}.
+	
+	self assert: expectedListedPurchases equals: listedPurchases.! !
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:06:24'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:06:24'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:11:18' prior: 50788855!
+purchasedAmountOf: aUser with: aPassword 
+
+	| recordedPassword |
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	^(self listPurchasesOf: aUser with: aPassword ) inject: 0 into: [:sum :each | sum + catalog at: (each key) * (each value)]! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 20:11:23'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:11:23'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:11:23'!
+ERROR!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:11:38' prior: 50791374!
+purchasedAmountOf: aUser with: aPassword 
+
+	| recordedPassword |
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	^(self listPurchasesOf: aUser with: aPassword ) inject: 0 into: [:sum :each | sum + catalog at: each * (each)]! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 20:11:40'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:11:40'!
+ERROR!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:11:40'!
+ERROR!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:11:54' prior: 50791473!
+purchasedAmountOf: aUser with: aPassword 
+
+	| recordedPassword |
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	^(self listPurchasesOf: aUser with: aPassword ) inject: 0 into: [:sum :each | sum ]! !
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 20:11:55'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:11:55'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:11:55'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:12:17'!
+FAILURE!
+
+----SNAPSHOT----(14 November 2019 20:13:03) CuisUniversity-3938.image priorSource: 14661955!
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 20:13:04'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:13:04'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:13:04'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 20:13:15'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:13:15'!
+FAILURE!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:13:15'!
+FAILURE!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:14:27' prior: 50791572!
+purchasedAmountOf: aUser with: aPassword 
+
+	| recordedPassword |
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	^((self listPurchasesOf: aUser with: aPassword ) keys) inject: 0 into: [:sum :each | sum ]! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:15:47' prior: 50791844!
+purchasedAmountOf: aUser with: aPassword 
+
+	| recordedPassword purchases |
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	purchases _ self listPurchasesOf: aUser with: aPassword.
+	^( purchases keys) inject: 0 into: [:sum :each | sum + catalog at: each * (purchases at: each) ]! !
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:16:10' prior: 50791859!
+purchasedAmountOf: aUser with: aPassword 
+
+	| recordedPassword purchases |
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	purchases _ self listPurchasesOf: aUser with: aPassword.
+	^( purchases keys) inject: 0 into: [:sum :each | sum + (catalog at: each * (purchases at: each) )]! !
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:16:17'!
+ERROR!
+!InternalInterface methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:16:39' prior: 50791876!
+purchasedAmountOf: aUser with: aPassword 
+
+	| recordedPassword purchases |
+	recordedPassword _ userList at: aUser ifAbsent: [^self error: self class invalidUserErrorMessage].
+	(recordedPassword = aPassword) ifFalse: [^self error: self class invalidPasswordErrorMessage].
+	purchases _ self listPurchasesOf: aUser with: aPassword.
+	^( purchases keys) inject: 0 into: [:sum :each | sum + ((catalog at: each) * (purchases at: each) )]! !
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:16:56'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test01CreateCartForAValidUserAndPasswordCreatesACart stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test02CreateCartForAnInvalidUserDoesntCreateACart stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test03CreateCartForValidUserAndInvalidPasswordDoesntCreateACart stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test04DifferentCartsHaveDifferentIDs stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test05CantAddToCartWithInvalidCartID stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test06CanAddToCartWithValidCartIDAndISBN stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test07CantAddToCartWithInvalidISBN stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test08CantListCartWithInvalidCartID stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test09ListEmptyCartWithValidCartIDReturnsEmptyCollection stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test10ListCartWithValidCartIDWorks stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test11checkOutCartWithInvalidIDShouldFail stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test12checkOutCartWithExpiredCardShouldFail stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test13checkOutCartWithEmptyCartShouldFail stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test14checkOutCartCorrectlyChecksOut stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test15listPurchasesOfClientThatDidntBuyReturns0 stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test16listPurchasesOfInvalidClientFails stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test17purchasedAmountOfInvalidClientFails stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test18listPurchasesWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test19purchasedAmountWithInvalidPasswordFails stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test20listPurchasesOfClientThatBoughtReturnsPurchases stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+
+!testRun: #InternalInterfaceTest #test21listPurchasedAmountOfClientThatBoughtReturnsTotal stamp: 'gc 11/14/2019 20:16:58'!
+PASSED!
+!InternalInterfaceTest methodsFor: 'as yet unclassified' stamp: 'gc 11/14/2019 20:19:44'!
+test22CheckOutCart30MinAfterLastTransactionFails
+	| internalInterface userList cartID creditCard user password|
+	
+	userList  _ testObjectsFactory defaultUserList .
+	creditCard _ testObjectsFactory notExpiredCreditCard .
+	user _ testObjectsFactory userOfTheStore .
+	password _ testObjectsFactory passwordOfUserOfTheStore .
+	
+	internalInterface _ InternalInterface withUserList: userList andCatalog: (testObjectsFactory defaultBookCatalog).
+	cartID _ internalInterface createCartFor: user with: password .
+	
+	self
+		should: [ internalInterface checkOutCart: cartID charging: creditCard through: self . ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError | 
+			self assert: anError messageText = Cashier cartCanNotBeEmptyErrorMessage . ]! !
+
+----SNAPSHOT----(14 November 2019 20:34:13) CuisUniversity-3938.image priorSource: 14720719!
+
+----SNAPSHOT----(14 November 2019 20:34:20) CuisUniversity-3938.image priorSource: 14731923!
+
+----SNAPSHOT----(14 November 2019 20:40:30) CuisUniversity-3938.image priorSource: 14732017!
+
+----QUIT----(14 November 2019 20:40:33) CuisUniversity-3938.image priorSource: 14732111!
