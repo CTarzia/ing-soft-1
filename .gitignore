@@ -9,4 +9,4 @@ linux64/Documentation/
 linux64/Packages/
 linux64/run.sh
 linux64/vm/
-
+*.DS_Store
