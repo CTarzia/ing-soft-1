@@ -24202,3 +24202,660 @@ initializeWith: aPortNumber
 ----SNAPSHOT----(21 November 2019 21:08:30) CuisUniversity-3958.image priorSource: 14675071!
 
 ----QUIT----(21 November 2019 21:08:41) CuisUniversity-3958.image priorSource: 15966305!
+
+----STARTUP---- (25 November 2019 19:32:18) as /home/chiara/Documents/UBA/ing-soft-1/25-TusLibros/CuisUniversity-3958.image!
+
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:01:52' prior: 50830545!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest|
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+	acceptingItemsOf: aCatalog
+	registeringOn: aSalesBook
+	debitingThrought: aMerchantProcessor
+	measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:02:52' prior: 50830609!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	"testObjectFactory _ "
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:04:45' prior: 50830665!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory catalog .
+	aSalesBook _ testObjectFactory salesBook .
+	aMerchantProcessor _ self.
+	
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:06:22' prior: 50830722!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory catalog .
+	aSalesBook _ testObjectFactory salesBook .
+	aMerchantProcessor _ self.
+	aClock _ Clock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			"test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test)."
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:07:18' prior: 50830783!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory catalog .
+	aSalesBook _ testObjectFactory salesBook .
+	aMerchantProcessor _ self.
+	aClock _ Clock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:08:19' prior: 50830845!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory catalog .
+	aSalesBook _ testObjectFactory salesBook .
+	aMerchantProcessor _ self.
+	aClock _ Clock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			system createCartFor: clientId authenticatedWith: password .
+			test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server1 _ TusLibrosServerController allInstances.!
+
+TusLibrosServerController allInstances.!
+
+self stopListening!
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+TusLibrosServerController allInstances.!
+
+server := TusLibrosServerController listeningOn: 8082.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:12:38' prior: 50830907!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ testObjectFactory salesBook .
+	aMerchantProcessor _ self.
+	aClock _ Clock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			system createCartFor: clientId authenticatedWith: password .
+			test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8082.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:13:22' prior: 50830980!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ Clock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			system createCartFor: clientId authenticatedWith: password .
+			test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8082.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:16:50' prior: 50831046!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson test |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			system createCartFor: clientId authenticatedWith: password .
+			test _ 'test'.
+			substringsAsJson:= WebUtils jsonEncode: (test).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server stopListening .!
+
+server := TusLibrosServerController listeningOn: 8082.!
+
+server stopListening .!
+
+server1 _ TusLibrosServerController allInstances. !
+
+server1 _ TusLibrosServerController allInstances. !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+server1 _ TusLibrosServerController allInstances. !
+
+self destroy!
+
+self destroy!
+
+self destroy!
+
+self destroy!
+
+self destroy!
+
+self destroy!
+
+self destroy!
+
+server1 _ TusLibrosServerController allInstances. !
+
+server1 _ TusLibrosServerController allInstances. !
+
+server := TusLibrosServerController listeningOn: 8082.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/25/2019 20:23:51' prior: 50831112!
+initializeWith: aPortNumber
+	
+	| system aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock
+.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			cartId _ system createCartFor: clientId authenticatedWith: password .
+			substringsAsJson:= WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server stopListening .!
+
+server := TusLibrosServerController listeningOn: 8082.!
+
+server stopListening .!
+
+server stopListening .!
+
+server stopListening .!
+
+server destroy .!
+
+server destroy .!
+
+server := TusLibrosServerController listeningOn: 8082.!
+
+server1 _ TusLibrosServerController allInstances. !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+self stopListening !
+
+server := TusLibrosServerController listeningOn: 8082.!
+
+server1 _ TusLibrosServerController allInstances. !
+
+server := TusLibrosServerController listeningOn: 8083.!
+
+----QUIT----(25 November 2019 23:52:52) CuisUniversity-3958.image priorSource: 15966399!
