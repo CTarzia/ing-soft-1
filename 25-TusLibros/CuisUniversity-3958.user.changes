@@ -26427,3 +26427,3869 @@ server := TusLibrosServerController listeningOn: 8088.!
 server := TusLibrosServerController listeningOn: 8089.!
 
 ----SNAPSHOT----(30 November 2019 16:57:55) CuisUniversity-3958.image priorSource: 16052597!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 16:59:58'!
+addServiceListCart
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ systemFacade listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+! !
+
+server := TusLibrosServerController listeningOn: 8090.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:02:22' prior: 50833073!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	systemFacade _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart .
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server stopListening .!
+
+server destroy .!
+
+server := TusLibrosServerController listeningOn: 8090. !
+
+server := TusLibrosServerController listeningOn: 8091. !
+
+----SNAPSHOT----(30 November 2019 17:04:38) CuisUniversity-3958.image priorSource: 16052748!
+
+server := TusLibrosServerController listeningOn: 8092.!
+
+!classDefinition: #TusLibrosServerController category: #'TusLibros-Server' stamp: 'gc 11/30/2019 17:06:21'!
+Object subclass: #TusLibrosServerController
+	instanceVariableNames: 'system webServer port stringGenius hiList'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Server'!
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'gc 11/30/2019 17:06:21' prior: 50833143!
+addServiceAddToCart
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK' ).
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	! !
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'gc 11/30/2019 17:06:21' prior: 50833303!
+addServiceListCart
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+! !
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'gc 11/30/2019 17:06:21' prior: 50833191!
+addServiceCreateCart
+	webServer addService: '/createCart' action:[:request | 
+		|clientId password cartId responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			cartId _ system createCartFor: clientId authenticatedWith: password .
+			responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+! !
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'gc 11/30/2019 17:06:21' prior: 50833326!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart .
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+----SNAPSHOT----(30 November 2019 17:08:47) CuisUniversity-3958.image priorSource: 16055262!
+
+----QUIT----(30 November 2019 17:08:52) CuisUniversity-3958.image priorSource: 16059448!
+
+----STARTUP---- (30 November 2019 17:13:31) as /home/chiara/Documents/UBA/ing-soft-1/25-TusLibros/CuisUniversity-3958.image!
+
+
+server := TusLibrosServerController listeningOn: 8080.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:17:47' prior: 50833439!
+addServiceCreateCart
+"	webServer addService: '/createCart' action:[:request | 
+		|clientId password cartId responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			cartId _ system createCartFor: clientId authenticatedWith: password .
+			responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+		
+			cartId _ system createCartFor: clientId authenticatedWith: password .
+			substringsAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	! !
+
+server := TusLibrosServerController listeningOn: 8081.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:19:45' prior: 50833462!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	self addServiceCreateCart .
+	"self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:20:07' prior: 50833565!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+		webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+		
+			cartId _ system createCartFor: clientId authenticatedWith: password .
+			substringsAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8082.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:21:48' prior: 50833613!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		substringsAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:22:47' prior: 50833682!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		substringsAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK' ).
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:23:09' prior: 50833748!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		substringsAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:23:49' prior: 50833835!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		substringsAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8083.!
+
+server := TusLibrosServerController listeningOn: 8084.!
+
+server := TusLibrosServerController listeningOn: 8085.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:26:44' prior: 50833922!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		substringsAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	"webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+"
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8086.!
+
+server!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:32:46' prior: 50834030!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	"webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+"
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:34:58' prior: 50834135!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ 'hola'.
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	"webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+"
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:35:07' prior: 50834238!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ 'hola'.
+		"cartId _ system createCartFor: clientId authenticatedWith: password ."
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	"webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+"
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8087.!
+
+server1 _ TusLibrosServerController allInstances!
+
+server1 _ TusLibrosServerController allInstances!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:39:19' prior: 50834341!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:48:07' prior: 50834449!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId transactionId responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			transactionId _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: DateAndTime today.
+			responseAsJson := WebUtils jsonEncode: (transactionId ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 17:51:02' prior: 50834568!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId transactionId responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			transactionId _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (transactionId ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+!methodRemoval: TusLibrosServerController #addServiceAddToCart stamp: 'gc 11/30/2019 17:55:14'!
+addServiceAddToCart
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK' ).
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	!
+
+!methodRemoval: TusLibrosServerController #addServiceCreateCart stamp: 'gc 11/30/2019 17:55:16'!
+addServiceCreateCart
+"	webServer addService: '/createCart' action:[:request | 
+		|clientId password cartId responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			cartId _ system createCartFor: clientId authenticatedWith: password .
+			responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+
+	webServer addService: '/createCart' action:[:request | |clientId password substringsAsJson cartId |
+		
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+		
+			cartId _ system createCartFor: clientId authenticatedWith: password .
+			substringsAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	!
+
+!methodRemoval: TusLibrosServerController #addServiceListCart stamp: 'gc 11/30/2019 17:55:17'!
+addServiceListCart
+	webServer addService: '/createCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:00:59' prior: 50834690!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:06:45' prior: 50834900!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9000.!
+
+server := TusLibrosServerController listeningOn: 9000.!
+
+server := TusLibrosServerController listeningOn: 9000.!
+
+self createCartFor: 'validUser' authenticatedWith: 'validUserId'!
+
+self createCartFor: 'validUser' authenticatedWith: 'validUserPassword'!
+
+self add: 1 of: 'validBook' toCartIdentifiedAs: 1!
+
+self add: 1 of: 'validBook' toCartIdentifiedAs: 1!
+
+----SNAPSHOT----(30 November 2019 18:16:41) CuisUniversity-3958.image priorSource: 16059542!
+!CartTest methodsFor: 'tests' stamp: 'gc 11/30/2019 18:27:07'!
+test09RemoveFromCartWithoutItemsShouldFail
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+
+	! !
+!CartTest methodsFor: 'tests' stamp: 'gc 11/30/2019 18:29:57' prior: 50835182!
+test09RemoveFromCartWithoutItemsShouldFail
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+
+	self
+		should: [cart remove: testObjectsFactory itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart cantRemoveItemErrorMessage.
+			self assert: cart isEmpty ]! !
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 11/30/2019 18:30:14'!
+ERROR!
+!Cart methodsFor: 'error messages' stamp: 'gc 11/30/2019 18:30:27'!
+remove: aString 
+	self shouldBeImplemented.! !
+!Cart methodsFor: 'error messages' stamp: 'gc 11/30/2019 18:31:10' prior: 50835205!
+remove: anItem 
+	^self error: self cantRemoveItemErrorMessage.! !
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 11/30/2019 18:31:12'!
+ERROR!
+!Cart methodsFor: 'error messages' stamp: 'gc 11/30/2019 18:31:19'!
+cantRemoveItemErrorMessage
+	self shouldBeImplemented.! !
+!Cart methodsFor: 'error messages' stamp: 'gc 11/30/2019 18:31:55' prior: 50835218!
+cantRemoveItemErrorMessage
+	^'That item is not in the cart'.! !
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 11/30/2019 18:31:57'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 11/30/2019 18:32:43'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'gc 11/30/2019 18:33:57'!
+test10RemoveFromCartWithOneItemLeavesCartEmpty
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore .
+	cart remove: testObjectsFactory itemSellByTheStore.! !
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 11/30/2019 18:33:59'!
+ERROR!
+!Cart methodsFor: 'removing' stamp: 'gc 11/30/2019 18:36:28' prior: 50835210!
+remove: anItem 
+	self isEmpty ifTrue: [self error: self cantRemoveItemErrorMessage ].
+	items remove: anItem.! !
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 11/30/2019 18:36:30'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 11/30/2019 18:37:40'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'gc 11/30/2019 18:38:34'!
+test11RemoveFromCartWithTwoItemsLeavesOnlyOne
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore .
+	cart remove: testObjectsFactory itemSellByTheStore.! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:43:07' prior: 50835024!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asUtf8 ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:44:14' prior: 50835393!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId').
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: (cartId asInteger).
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9001.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:45:34' prior: 50835537!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asUtf8 .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+						.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:46:34' prior: 50835683!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId.
+						.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:46:45' prior: 50835827!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: 1.
+						.
+			responseAsJson = WebUtils jsonEncode: ('OK').
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9002.!
+
+server := TusLibrosServerController listeningOn: 9002.!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 11/30/2019 18:48:24'!
+PASSED!
+
+server!
+
+self createCartFor: 'validUser' authenticatedWith: 'validUserPassword'!
+
+self add: 1 of: 'validBook' toCartIdentifiedAs: 1!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 11/30/2019 18:53:22' prior: 50829059!
+createCartFor: aUser authenticatedWith: aPassword
+
+	^ self if: aUser authenticatesWith: aPassword do: [ | cartId cartSession |
+
+		cartId := self generateCartId.
+		cartSession := CartSession ownedBy: aUser with: (Cart acceptingItemsOf: catalog) on: self.
+		cartSessions at: cartId put: cartSession.
+
+		cartId  ]! !
+!CartSession methodsFor: 'time/expiration' stamp: 'gc 11/30/2019 18:54:02' prior: 50828487!
+isExpiredAt: aTime
+
+	^ (lastUsedTime + (systemFacade sessionDuration)) < aTime! !
+!CartSession methodsFor: 'time/expiration' stamp: 'gc 11/30/2019 18:54:31' prior: 50836207!
+isExpiredAt: aTime
+	^false
+"	^ (lastUsedTime + (systemFacade sessionDuration)) < aTime"! !
+
+server := TusLibrosServerController listeningOn: 9003.!
+
+self add: 1 of: 'validBook' toCartIdentifiedAs: 1!
+
+self add: 1 of: 'validBook' toCartIdentifiedAs: 1.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:56:31' prior: 50835971!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: 1.
+						.
+			responseAsJson = WebUtils jsonEncode: 0.
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9004.!
+!CartSession methodsFor: 'time/expiration' stamp: 'gc 11/30/2019 18:57:50' prior: 50836213!
+isExpiredAt: aTime
+	^ false
+"	^ (lastUsedTime + (systemFacade sessionDuration)) < aTime"! !
+!CartSession methodsFor: 'time/expiration' stamp: 'gc 11/30/2019 18:58:20' prior: 50836370!
+isExpiredAt: aTime
+	^ (lastUsedTime + (systemFacade sessionDuration)) < aTime! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 18:59:41' prior: 50836225!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			responseAsJson = WebUtils jsonEncode: 0.
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9005.!
+
+1 class!
+
+(1 asInteger) = 1!
+
+1 = '1'!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:04:24' prior: 50836382!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ Clock new.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			responseAsJson = WebUtils jsonEncode: 0.
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:05:35' prior: 50836529!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: DateAndTime now.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity').
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			responseAsJson = WebUtils jsonEncode: 0.
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9006.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:08:47' prior: 50836673!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: DateAndTime now.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			responseAsJson = WebUtils jsonEncode: 0.
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9007.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:09:38' prior: 50836819!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: DateAndTime now.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			responseAsJson = WebUtils jsonEncode: 'OK'.
+			request send200Response: ( responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:11:37' prior: 50836966!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: DateAndTime now.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9008.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:12:34' prior: 50837111!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: DateAndTime now.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId').
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:12:58' prior: 50837258!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: DateAndTime now.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: listedCart.
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9009.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:21:54' prior: 50837403!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: DateAndTime now.
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:23:26' prior: 50837550!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (GregorianDate today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+DateAndTime!
+
+self today!
+
+self today monthIndex !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 11/30/2019 19:27:48' prior: 50837696!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (GregorianDate today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 9010.!
+
+GregorianDate today!
+
+----SNAPSHOT----(30 November 2019 19:32:28) CuisUniversity-3958.image priorSource: 16112927!
