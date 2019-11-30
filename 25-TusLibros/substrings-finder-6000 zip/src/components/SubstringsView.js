@@ -1,0 +1,235 @@
+const catalog = [
+  {
+      title: '1',
+      isbn: 'validBook',
+      quantity: 0,
+      author: 'author1',
+  },
+  {
+      title: '2',
+      isbn: 'isbn2',
+      quantity: 0,
+      author: 'author2',
+  },
+  {
+      title: '3',
+      isbn: 'isbn3',
+      quantity: 0,
+      author: 'author3',
+  },
+  {
+      title: '4',
+      isbn: 'isbn4',
+      quantity: 0,
+      author: 'author4',
+  },
+  {
+      title: '5',
+      isbn: 'isbn5',
+      quantity: 0,
+      author: 'author5',
+  },
+  {
+      title: '6',
+      isbn: 'isbn6',
+      quantity: 0,
+      author: 'author6',
+  },
+  {
+      title: '7',
+      isbn: 'isbn7',
+      quantity: 0,
+      author: 'author7',
+  },
+  {
+      title: '8',
+      isbn: 'isbn8',
+      quantity: 0,
+      author: 'author8',
+  },
+  {
+      title: '9',
+      isbn: 'isbn9',
+      quantity: 0,
+      author: 'author9',
+  },
+]
+
+
+class SubstringsComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      catalog: catalog,
+      cartItems: [],
+      refresh: false
+    }
+  }
+
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.refresh && this.state.refresh) {
+      this.listCart()
+    }
+  }
+
+  componentDidMount() {
+    this.listCart()
+    
+  }
+
+  listCart = () => {
+    this.setState({
+      loading: true,
+      error: null,
+      refresh: false
+    })
+    let cartItems = []
+
+    getLocalAsJson(`listCart?cartId=${this.props.cartId}`)
+      .then(function (response) {
+        return response.json()
+      })
+      .then(function (json) {
+        cartItems = json
+      })
+      .then((details) => {
+        this.setState({
+          loading: false,
+          cartItems: cartItems
+        })
+      })
+      .catch(err => {
+        this.setState({
+          loading: false,
+          error: err,
+        })
+      })
+  }
+
+  getItemQty = (isbn) => {
+    const total = this.state.cartItems.reduce((accum, curr) => {
+      if(curr == isbn) {
+        return accum + 1
+      }
+      return accum
+    }, 0)
+    return total
+  }
+
+  render() {
+    if (this.state.loading) return <div>Loading...</div>
+    const {
+      router,
+      cartId,
+      classes,
+    } = this.props
+    return (
+      <div>
+        <Typography component="h1" gutterBottom>
+          Catalogo:
+          </Typography>
+        <List component="nav" className={classes.rootList} >
+          {
+            this.state.catalog.map((item) => {
+              return (
+                <CatalogItem
+                  item={item}
+                  key={item.isbn}
+                  classes={classes}
+                  getItemQty={this.getItemQty}
+                  router={router}
+                  cartId={this.props.cartId}
+                />
+              )
+            })
+          }
+        </List>
+      </div>
+    )
+  }
+}
+
+
+
+class CatalogItem extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      quantity: props.getItemQty(props.item.isbn)
+    }
+
+  }
+
+  add = () => {
+    getLocalAsJson(`addToCart?cartId=${this.props.cartId}&bookIsbn=${this.props.item.isbn}&bookQuantity=1`)
+      .then(() => {
+        this.setState({
+          quantity: this.state.quantity + 1,
+        })
+      })
+      .catch(err => {
+        this.setState({
+          error: err,
+        })
+      })
+
+  }
+
+  remove = () => {
+    getLocalAsJson(`removeFromCart?cartId=${this.props.cartId}&bookIsbn=${this.props.item.isbn}`)
+      .then(() => {
+        this.setState({
+          quantity: this.state.quantity - 1,
+        })
+      })
+      .catch(err => {
+        this.setState({
+          error: err,
+        })
+      })
+
+  }
+
+  details = () => {
+    this.props.router.navigate("/details", { item: this.props.item, quantity: this.state.quantity })
+  }
+
+  render() {
+    const {
+      router,
+      item,
+      classes,
+      getItemQty
+    } = this.props
+    return (
+      <ListItem
+        key={item.isbn}
+        button
+        onClick={this.details}
+      >
+        <ListItemText primary={item.title} secondary={item.isbn} />
+          <ListItemSecondaryAction
+            className={classes.catalogListItem}             
+          >
+            <IconButton
+              onClick={this.remove}
+            >
+              -
+            </IconButton>
+            <IconButton disabled>{this.state.quantity}</IconButton>
+            <IconButton
+              onClick={this.add}
+            >
+              +
+            </IconButton>
+          </ListItemSecondaryAction>
+      </ListItem>      
+    )
+  }
+}
+
+// Add style
+const SubstringsView = withStyles(styles, {
+  withTheme: true
+})(SubstringsComponent)
