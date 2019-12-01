@@ -33570,3 +33570,109 @@ Object subclass: #StringGenius
 	category: 'TusLibros-Server'!
 
 ----SNAPSHOT----(1 December 2019 17:05:50) CuisUniversity-3958.image priorSource: 16329129!
+
+----STARTUP---- (1 December 2019 17:11:11) as /home/chiara/Documents/UBA/ing-soft-1/25-TusLibros/CuisUniversity-3958.image!
+
+
+Object subclass: #TusLibrosServerController
+	instanceVariableNames: 'system webServer port hiList'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Server'!
+
+!classDefinition: #TusLibrosServerController category: #'TusLibros-Server' stamp: 'gc 12/1/2019 17:11:19'!
+Object subclass: #TusLibrosServerController
+	instanceVariableNames: 'system webServer port hiList'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Server'!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 17:11:33' prior: 50841382!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords |
+	port := aPortNumber.
+	
+	aValidUsersAndPasswords _ self usersAndPasswords.
+	aCatalog _ self catalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ DateAndTime .
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	self addServiceAddToCart.
+	self addServiceRemoveFromCart.
+	self addServiceListCart.
+	self addServiceCheckoutCart.	
+	self addServiceListPurchases.
+	! !
+
+Object subclass: #TusLibrosServerController
+	instanceVariableNames: 'system webServer port'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Server'!
+
+!classDefinition: #TusLibrosServerController category: #'TusLibros-Server' stamp: 'gc 12/1/2019 17:11:52'!
+Object subclass: #TusLibrosServerController
+	instanceVariableNames: 'system webServer port'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Server'!
+!TusLibrosServerController methodsFor: 'private' stamp: 'gc 12/1/2019 17:12:28' prior: 50839373!
+addServiceListCart
+
+	^ webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'private' stamp: 'gc 12/1/2019 17:12:36' prior: 50842014!
+addServiceListCart
+
+	^ webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: anError messageText ]]! !
+!TusLibrosServerController methodsFor: 'private' stamp: 'gc 12/1/2019 17:12:46' prior: 50842035!
+addServiceListCart
+
+	^ webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+
+----SNAPSHOT----(1 December 2019 17:12:51) CuisUniversity-3958.image priorSource: 16329638!
