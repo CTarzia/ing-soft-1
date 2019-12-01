@@ -33554,3 +33554,19 @@ server := TusLibrosServerController listeningOn: 8009.!
 ----SNAPSHOT----(1 December 2019 17:04:10) CuisUniversity-3958.image priorSource: 16315004!
 
 ----SNAPSHOT----(1 December 2019 17:04:27) CuisUniversity-3958.image priorSource: 16329036!
+
+!classRemoval: #InterfaceResponse stamp: 'gc 12/1/2019 17:05:30'!
+Object subclass: #InterfaceResponse
+	instanceVariableNames: 'code message'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Server'!
+
+!classRemoval: #StringGenius stamp: 'gc 12/1/2019 17:05:34'!
+Object subclass: #StringGenius
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Server'!
+
+----SNAPSHOT----(1 December 2019 17:05:50) CuisUniversity-3958.image priorSource: 16329129!
