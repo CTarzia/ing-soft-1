@@ -82,13 +82,13 @@ class SubstringDetailsComponent extends React.Component {
           variant="outlined"
         />
         <IconButton
-          //onClick={this.remove}
+          onClick={this.remove}
         >
           -
         </IconButton>
         <IconButton disabled>{this.state.quantity}</IconButton>
         <IconButton
-          //onClick={this.add}
+          onClick={this.add}
         >
           +
         </IconButton>

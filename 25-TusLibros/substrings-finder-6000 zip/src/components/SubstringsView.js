@@ -66,13 +66,6 @@ class SubstringsComponent extends React.Component {
     }
   }
 
-
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.refresh && this.state.refresh) {
-      this.listCart()
-    }
-  }
-
   componentDidMount() {
     this.listCart()
     
@@ -117,17 +110,38 @@ class SubstringsComponent extends React.Component {
     return total
   }
 
+  checkout = () => {
+    let ticket = []
+    getLocalAsJson(`checkOutCart?cartId=${this.props.cartId}`)
+      .then(function (response) {
+        return response.json()
+      })
+      .then(function (json) {
+        ticket = json
+      })
+      .then((details) => {
+        this.props.router.navigate("/checkout", {ticket, cartId: 0})
+      })
+      .catch(err => {
+        this.setState({
+          loading: false,
+          error: err,
+        })
+      })
+  }
+
   render() {
     if (this.state.loading) return <div>Loading...</div>
     const {
       router,
       cartId,
       classes,
+      cartView
     } = this.props
     return (
       <div>
         <Typography component="h1" gutterBottom>
-          Catalogo:
+          {cartView ? 'Carrito:' :  'Catalogo:'}
           </Typography>
         <List component="nav" className={classes.rootList} >
           {
@@ -140,11 +154,17 @@ class SubstringsComponent extends React.Component {
                   getItemQty={this.getItemQty}
                   router={router}
                   cartId={this.props.cartId}
+                  cartView={cartView}
                 />
               )
             })
           }
         </List>
+        { cartView &&
+          <Button onClick={this.checkout}>
+            Checkout
+          </Button>
+        }
       </div>
     )
   }
@@ -200,8 +220,9 @@ class CatalogItem extends React.Component {
       router,
       item,
       classes,
-      getItemQty
+      cartView
     } = this.props
+    if (cartView && this.state.quantity == 0) return null
     return (
       <ListItem
         key={item.isbn}

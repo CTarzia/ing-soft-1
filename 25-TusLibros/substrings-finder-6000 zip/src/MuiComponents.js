@@ -25,4 +25,10 @@ const {
   Toolbar,
   Typography,
   ListItemSecondaryAction,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableFooter
 } = MaterialUI;

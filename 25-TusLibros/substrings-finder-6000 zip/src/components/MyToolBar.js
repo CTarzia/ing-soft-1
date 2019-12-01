@@ -10,6 +10,21 @@ class MyToolBarComponent extends React.Component {
     })
   }
 
+  goToCart = () => {
+    this.props.router.navigate("/cart", {
+    })
+  }
+
+  goToCatalog = () => { 
+    this.props.router.navigate("/catalog", {
+      cartId: this.props.cartId,
+    })
+  }
+
+
+  goToHistory = () => this.props.router.navigate("/history", {
+  })
+
   render() {
     const {
       router,
@@ -19,40 +34,41 @@ class MyToolBarComponent extends React.Component {
     } = this.props
 
     const current_path = router.current()
-    let onclick = () => {}
-    let icon = ""
-
-    if (current_path === "/") {
-      icon = "home"
-      onclick = () => {}
-    } else if (current_path === "/catalog") {
-      icon = "home"
-      onclick = () => router.navigate("/", {
-        substrings: [],
-        selectedSubstring: "",
-      })
-    } else if (current_path === "/details") {
-      icon = "keyboard_arrow_left"
-      onclick = () => router.navigate("/catalog", {
-        cartId: cartId,
-      })
-    } else {
-      console.error("Not a valid current path!")
-    }
-
 
     return (
       <div className={classes.rootToolBar}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              onClick={onclick}
-            >
-              <Icon>{icon}</Icon>
-            </IconButton>
+            {!!cartId && current_path != '/catalog' &&
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                onClick={this.goToCatalog}
+              >
+                <Icon>{'menu_book'}</Icon>
+              </IconButton>
+            }
+            {!!cartId && current_path != '/cart' &&
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                onClick={this.goToCart}
+              >
+                <Icon>{'shopping_cart'}</Icon>
+              </IconButton>
+            }
+            {current_path != '/' && current_path != '/history' &&
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                onClick={this.goToHistory}
+              >
+                <Icon>{'history'}</Icon>
+              </IconButton>
+            }
             <Typography variant="h6" className={classes.title}>
               {title}
             </Typography>

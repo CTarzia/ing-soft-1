@@ -25,16 +25,29 @@ class App extends React.Component {
         router={router}
       />)
     } else if (this.state.path === "/catalog") {
-      content = (<SubstringsView
+        content = (<SubstringsView
         router={router}
         cartId={this.state.cartId}
+      />)
+    } else if (this.state.path === "/cart") {
+        content = (<SubstringsView
+        router={router}
+        cartId={this.state.cartId}
+        cartView
       />)
     } else if (this.state.path === "/details") {
       content = (<SubstringDetailsView
         router={router}
         item={this.state.item}
         quantity={this.state.quantity}
+        cartId={this.state.cartId}
       />)
+    } else if (this.state.path === '/checkout') {
+      content = (
+        <CheckoutView
+          ticket={this.state.ticket}
+        />
+      )
     }
     return (
       <div>

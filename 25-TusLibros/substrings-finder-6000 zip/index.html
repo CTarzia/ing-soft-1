@@ -57,6 +57,12 @@
       Toolbar,
       Typography,
       ListItemSecondaryAction,
+      Table,
+      TableHead,
+      TableBody,
+      TableRow,
+      TableCell,
+      TableFooter
     } = MaterialUI;
     const theme = createMuiTheme({
       palette: {
@@ -148,6 +154,21 @@
         })
       }
     
+      goToCart = () => {
+        this.props.router.navigate("/cart", {
+        })
+      }
+    
+      goToCatalog = () => { 
+        this.props.router.navigate("/catalog", {
+          cartId: this.props.cartId,
+        })
+      }
+    
+    
+      goToHistory = () => this.props.router.navigate("/history", {
+      })
+    
       render() {
         const {
           router,
@@ -157,40 +178,41 @@
         } = this.props
     
         const current_path = router.current()
-        let onclick = () => {}
-        let icon = ""
-    
-        if (current_path === "/") {
-          icon = "home"
-          onclick = () => {}
-        } else if (current_path === "/catalog") {
-          icon = "home"
-          onclick = () => router.navigate("/", {
-            substrings: [],
-            selectedSubstring: "",
-          })
-        } else if (current_path === "/details") {
-          icon = "keyboard_arrow_left"
-          onclick = () => router.navigate("/catalog", {
-            cartId: cartId,
-          })
-        } else {
-          console.error("Not a valid current path!")
-        }
-    
     
         return (
           <div className={classes.rootToolBar}>
             <AppBar position="static">
               <Toolbar>
-                <IconButton
-                  edge="start"
-                  className={classes.menuButton}
-                  color="inherit"
-                  onClick={onclick}
-                >
-                  <Icon>{icon}</Icon>
-                </IconButton>
+                {!!cartId && current_path != '/catalog' &&
+                  <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    onClick={this.goToCatalog}
+                  >
+                    <Icon>{'menu_book'}</Icon>
+                  </IconButton>
+                }
+                {!!cartId && current_path != '/cart' &&
+                  <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    onClick={this.goToCart}
+                  >
+                    <Icon>{'shopping_cart'}</Icon>
+                  </IconButton>
+                }
+                {current_path != '/' && current_path != '/history' &&
+                  <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    onClick={this.goToHistory}
+                  >
+                    <Icon>{'history'}</Icon>
+                  </IconButton>
+                }
                 <Typography variant="h6" className={classes.title}>
                   {title}
                 </Typography>
@@ -253,7 +275,7 @@
             return response.json()
           })
           .then(function (json) {
-            router.navigate("/catalog", { cartId: json })
+            router.navigate("/catalog", { cartId: json, user: clientId })
           })
           .catch(function (error) {
             console.log('Looks like there was a problem: \n', error);
@@ -373,13 +395,6 @@
         }
       }
     
-    
-      componentDidUpdate(prevProps, prevState) {
-        if (!prevState.refresh && this.state.refresh) {
-          this.listCart()
-        }
-      }
-    
       componentDidMount() {
         this.listCart()
         
@@ -424,17 +439,38 @@
         return total
       }
     
+      checkout = () => {
+        let ticket = []
+        getLocalAsJson(`checkOutCart?cartId=${this.props.cartId}`)
+          .then(function (response) {
+            return response.json()
+          })
+          .then(function (json) {
+            ticket = json
+          })
+          .then((details) => {
+            this.props.router.navigate("/checkout", {ticket, cartId: 0})
+          })
+          .catch(err => {
+            this.setState({
+              loading: false,
+              error: err,
+            })
+          })
+      }
+    
       render() {
         if (this.state.loading) return <div>Loading...</div>
         const {
           router,
           cartId,
           classes,
+          cartView
         } = this.props
         return (
           <div>
             <Typography component="h1" gutterBottom>
-              Catalogo:
+              {cartView ? 'Carrito:' :  'Catalogo:'}
               </Typography>
             <List component="nav" className={classes.rootList} >
               {
@@ -447,11 +483,17 @@
                       getItemQty={this.getItemQty}
                       router={router}
                       cartId={this.props.cartId}
+                      cartView={cartView}
                     />
                   )
                 })
               }
             </List>
+            { cartView &&
+              <Button onClick={this.checkout}>
+                Checkout
+              </Button>
+            }
           </div>
         )
       }
@@ -507,8 +549,9 @@
           router,
           item,
           classes,
-          getItemQty
+          cartView
         } = this.props
+        if (cartView && this.state.quantity == 0) return null
         return (
           <ListItem
             key={item.isbn}
@@ -624,13 +667,13 @@
               variant="outlined"
             />
             <IconButton
-              //onClick={this.remove}
+              onClick={this.remove}
             >
               -
             </IconButton>
             <IconButton disabled>{this.state.quantity}</IconButton>
             <IconButton
-              //onClick={this.add}
+              onClick={this.add}
             >
               +
             </IconButton>
@@ -643,7 +686,77 @@
     const SubstringDetailsView = withStyles(styles, {
       withTheme: true
     })(SubstringDetailsComponent)
-    class App extends React.Component {
+    class CheckoutComponent extends React.Component {
+        constructor(props) {
+          super(props)
+      
+          this.state = {
+            
+          }
+        }
+    
+        calcTotal = () => {
+            const total = this.props.ticket.reduce((accum, curr) => {
+                  return accum + curr[2]
+              }, 0)
+            return total
+        }
+    
+        render() {
+          const {
+            // router,
+            classes,
+            ticket
+          } = this.props
+      
+          const {
+            loading,
+            error,
+          } = this.state
+      
+          if (loading) return <div>Loading...</div>
+          if (error) return <div>{error}</div>
+          return (
+            <div>
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Libro</TableCell>
+                        <TableCell align="right">Cantidad</TableCell>
+                        <TableCell align="right">Precio</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                {ticket.map(row => (
+                    <TableRow key={row[0]}>
+                    <TableCell component="th" scope="row">
+                        {row[0]}
+                    </TableCell>
+                    <TableCell align="right">{row[1]}</TableCell>
+                    <TableCell align="right">{row[2]}</TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+                <TableFooter>
+                    <TableRow key={'total'}>
+                    <TableCell component="th" scope="row">
+                        {'Total'}
+                    </TableCell>
+                    <TableCell align="left"></TableCell>
+                    <TableCell align="right">{this.calcTotal()}</TableCell>
+                    </TableRow>
+                </TableFooter>
+            </Table>
+            </div>
+          )
+        }
+      }
+      
+      // Add style
+      const CheckoutView = withStyles(styles, {
+        withTheme: true
+      })(CheckoutComponent)
+          class App extends React.Component {
       constructor(props) {
         super(props);
         this.state = {
@@ -670,16 +783,29 @@
             router={router}
           />)
         } else if (this.state.path === "/catalog") {
-          content = (<SubstringsView
+            content = (<SubstringsView
             router={router}
             cartId={this.state.cartId}
+          />)
+        } else if (this.state.path === "/cart") {
+            content = (<SubstringsView
+            router={router}
+            cartId={this.state.cartId}
+            cartView
           />)
         } else if (this.state.path === "/details") {
           content = (<SubstringDetailsView
             router={router}
             item={this.state.item}
             quantity={this.state.quantity}
+            cartId={this.state.cartId}
           />)
+        } else if (this.state.path === '/checkout') {
+          content = (
+            <CheckoutView
+              ticket={this.state.ticket}
+            />
+          )
         }
         return (
           <div>

@@ -35,7 +35,7 @@ class StringInputComponent extends React.Component {
         return response.json()
       })
       .then(function (json) {
-        router.navigate("/catalog", { cartId: json })
+        router.navigate("/catalog", { cartId: json, user: clientId })
       })
       .catch(function (error) {
         console.log('Looks like there was a problem: \n', error);
