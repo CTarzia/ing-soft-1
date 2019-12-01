@@ -1,66 +1,8 @@
-const catalog = [
-  {
-      title: '1',
-      isbn: 'validBook',
-      quantity: 0,
-      author: 'author1',
-  },
-  {
-      title: '2',
-      isbn: 'isbn2',
-      quantity: 0,
-      author: 'author2',
-  },
-  {
-      title: '3',
-      isbn: 'isbn3',
-      quantity: 0,
-      author: 'author3',
-  },
-  {
-      title: '4',
-      isbn: 'isbn4',
-      quantity: 0,
-      author: 'author4',
-  },
-  {
-      title: '5',
-      isbn: 'isbn5',
-      quantity: 0,
-      author: 'author5',
-  },
-  {
-      title: '6',
-      isbn: 'isbn6',
-      quantity: 0,
-      author: 'author6',
-  },
-  {
-      title: '7',
-      isbn: 'isbn7',
-      quantity: 0,
-      author: 'author7',
-  },
-  {
-      title: '8',
-      isbn: 'isbn8',
-      quantity: 0,
-      author: 'author8',
-  },
-  {
-      title: '9',
-      isbn: 'isbn9',
-      quantity: 0,
-      author: 'author9',
-  },
-]
-
-
 class SubstringsComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      catalog: catalog,
+      catalog: props.catalog,
       cartItems: [],
       refresh: false
     }

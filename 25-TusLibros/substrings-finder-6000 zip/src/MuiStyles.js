@@ -42,7 +42,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     position: 'relative',
     overflow: 'auto',
-    maxHeight: 300,
+    maxHeight: 400,
   },
   textFieldDetails: {
     margin: theme.spacing(2),
@@ -50,16 +50,22 @@ const styles = theme => ({
   catalogListItem: {
     display: 'flex'
   },
-  // catalogListItemQty: {
-  //   flex: 0 0 auto;
-  //   color: rgba(0, 0, 0, 0.54);
-  //   padding: 12px;
-  //   overflow: visible;
-  //   font-size: 1.5rem;
-  //   text-align: center;
-  //   transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  //   border-radius: 50%;
-  // }
+  bookimage: {
+    maxWidth: '50%',
+    maxHeight: 200,
+  },
+  container: {
+    display: 'flex'
+  },
+  fields: {
+    width: '50%'
+  },
+  buttons: {
+    textAlign: 'right'
+  },
+  error: {
+    color: 'red'
+  }
 })
 
 const useStyles = makeStyles(styles);

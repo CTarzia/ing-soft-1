@@ -14,6 +14,15 @@ class CheckoutComponent extends React.Component {
         return total
     }
 
+    getTitle = (row) => {
+        const catalog = this.props.catalog
+        const index = catalog.findIndex((i) => {
+            return i.isbn == row[0]
+        })
+
+        return index > -1 ? catalog[index].title : ''
+    }
+
     render() {
       const {
         // router,
@@ -27,13 +36,13 @@ class CheckoutComponent extends React.Component {
       } = this.state
   
       if (loading) return <div>Loading...</div>
-      if (error) return <div>{error}</div>
       return (
         <div>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
                 <TableRow>
-                    <TableCell>Libro</TableCell>
+                    <TableCell>Titulo</TableCell>
+                    <TableCell>ISBN</TableCell>
                     <TableCell align="right">Cantidad</TableCell>
                     <TableCell align="right">Precio</TableCell>
                 </TableRow>
@@ -42,8 +51,9 @@ class CheckoutComponent extends React.Component {
             {ticket.map(row => (
                 <TableRow key={row[0]}>
                 <TableCell component="th" scope="row">
-                    {row[0]}
+                    {this.getTitle(row)}
                 </TableCell>
+                <TableCell align="left">{row[0]}</TableCell>
                 <TableCell align="right">{row[1]}</TableCell>
                 <TableCell align="right">{row[2]}</TableCell>
                 </TableRow>
@@ -54,6 +64,7 @@ class CheckoutComponent extends React.Component {
                 <TableCell component="th" scope="row">
                     {'Total'}
                 </TableCell>
+                <TableCell align="left"></TableCell>
                 <TableCell align="left"></TableCell>
                 <TableCell align="right">{this.calcTotal()}</TableCell>
                 </TableRow>
