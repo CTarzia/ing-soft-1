@@ -33193,3 +33193,7 @@ addServiceRemoveFromCart
 server := TusLibrosServerController listeningOn: 8005.!
 
 ----SNAPSHOT----(1 December 2019 15:39:54) CuisUniversity-3958.image priorSource: 16304031!
+
+----SNAPSHOT----(1 December 2019 15:42:38) CuisUniversity-3958.image priorSource: 16314818!
+
+----SNAPSHOT----(1 December 2019 15:43:28) CuisUniversity-3958.image priorSource: 16314911!
