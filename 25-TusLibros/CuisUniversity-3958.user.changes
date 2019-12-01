@@ -32895,3 +32895,301 @@ initializeWith: aPortNumber
 server := TusLibrosServerController listeningOn: 8003.!
 
 ----SNAPSHOT----(1 December 2019 15:09:29) CuisUniversity-3958.image priorSource: 16237985!
+!TusLibrosServerController methodsFor: 'nil' stamp: 'gc 12/1/2019 15:20:40'!
+catalog
+	^ Dictionary new
+		at: 'Iliada' put: 10;
+		at: 'Eneida' put: 15;
+		at: 'Cormen' put: 50;
+		at: '1984' put: 20;
+		at: 'Eneida' put: 15;
+		yourself ! !
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'gc 12/1/2019 15:21:59' prior: 50841155!
+catalog
+	^ Dictionary new
+		at: 1111 put: 10;
+		at: 2222 put: 15;
+		at: 3333 put: 50;
+		at: 4444 put: 20;
+		at: 5555 put: 15;
+		yourself ! !
+!TusLibrosServerController methodsFor: 'private' stamp: 'gc 12/1/2019 15:22:37' prior: 50841076!
+addServiceAddToCart
+
+	^ webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn') asInteger .
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'private' stamp: 'gc 12/1/2019 15:23:05' prior: 50841055!
+addServiceRemoveFromCart
+
+	^ webServer addService: '/removeFromCart' action:[:request | 
+		|cartId bookIsbn responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn') asInteger.
+			system remove: bookIsbn fromCartIdentifiedAs: cartId .
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 15:24:15' prior: 50841100!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ self catalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	self addServiceAddToCart.
+	self addServiceRemoveFromCart.
+	self addServiceListCart.
+	self addServiceCheckoutCart.	
+	self addServiceListPurchases.
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 15:24:25' prior: 50841217!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	aCatalog _ self catalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	self addServiceAddToCart.
+	self addServiceRemoveFromCart.
+	self addServiceListCart.
+	self addServiceCheckoutCart.	
+	self addServiceListPurchases.
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!Clock methodsFor: 'time' stamp: 'gc 12/1/2019 15:25:28' prior: 50828708!
+now
+	^DateAndTime now! !
+
+DateAndTime now!
+
+DateAndTime today!
+
+DateAndTime today!
+!Clock methodsFor: 'time' stamp: 'gc 12/1/2019 15:26:10' prior: 50841314!
+now
+	self subclassResponsibility ! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 15:26:28' prior: 50841267!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	aCatalog _ self catalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ DateAndTime .
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	self addServiceAddToCart.
+	self addServiceRemoveFromCart.
+	self addServiceListCart.
+	self addServiceCheckoutCart.	
+	self addServiceListPurchases.
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'gc 12/1/2019 15:28:44'!
+usersAndPasswords
+	^Dictionary new
+		at: 'user1' put: 'pass1';
+		at: 'user2' put: 'pass2';
+		at: 'user3' put: 'pass3';
+		at: 'user4' put: 'pass4';
+		at: 'user5' put: 'pass5';
+		at: 'user6' put: 'pass6';
+		at: 'user7' put: 'pass7';
+		yourself! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 15:29:05' prior: 50841324!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords |
+	port := aPortNumber.
+	
+	aValidUsersAndPasswords _ self usersAndPasswords.
+	aCatalog _ self catalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ DateAndTime .
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	self addServiceAddToCart.
+	self addServiceRemoveFromCart.
+	self addServiceListCart.
+	self addServiceCheckoutCart.	
+	self addServiceListPurchases.
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8004.!
+!Cart methodsFor: 'removing' stamp: 'gc 12/1/2019 15:32:47' prior: 50835305!
+remove: anItem 
+	(items includes: anItem) ifFalse: [self error: self cantRemoveItemErrorMessage ].
+	items remove: anItem.! !
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'gc 12/1/2019 15:38:31' prior: 50841164!
+catalog
+	^ Dictionary new
+		at: '1111' put: 10;
+		at: '2222' put: 15;
+		at: '3333' put: 50;
+		at: '4444' put: 20;
+		at: '5555' put: 15;
+		yourself ! !
+!TusLibrosServerController methodsFor: 'private' stamp: 'gc 12/1/2019 15:38:42' prior: 50841172!
+addServiceAddToCart
+
+	^ webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn') .
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'private' stamp: 'gc 12/1/2019 15:38:48' prior: 50841196!
+addServiceRemoveFromCart
+
+	^ webServer addService: '/removeFromCart' action:[:request | 
+		|cartId bookIsbn responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn') .
+			system remove: bookIsbn fromCartIdentifiedAs: cartId .
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+
+server := TusLibrosServerController listeningOn: 8005.!
+
+----SNAPSHOT----(1 December 2019 15:39:54) CuisUniversity-3958.image priorSource: 16304031!
