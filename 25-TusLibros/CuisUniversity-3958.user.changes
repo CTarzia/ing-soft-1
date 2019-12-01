@@ -30577,3 +30577,2321 @@ asArray
 	^ticketArray .! !
 
 ----SNAPSHOT----(30 November 2019 20:20:21) CuisUniversity-3958.image priorSource: 16202899!
+
+----STARTUP---- (1 December 2019 13:57:53) as /home/chiara/Documents/UBA/ing-soft-1/25-TusLibros/CuisUniversity-3958.image!
+
+
+server1 _ TusLibrosServerController allInstances!
+
+server1 _ TusLibrosServerController allInstances!
+
+server := TusLibrosServerController listeningOn: 8000.!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:03:01' prior: 50838149!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText, ' - ', anError sender) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (DateAndTime today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:04:06' prior: 50838357!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText, ' - ', anError sender, ' - ', anError class) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (DateAndTime today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			password := (request fields at:'password').
+			listedPurchases _ system listPurchasesOf: clientId authenticatingWith: password .
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8001.!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'gc 12/1/2019 14:07:25' prior: 50829678!
+test10CanCheckoutACart
+
+	| cartId purchases ticket|
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	ticket _ systemFacade
+		checkOutCartIdentifiedAs: cartId
+		withCreditCardNumbered: testObjectsFactory notExpiredCreditCardNumber
+		ownedBy: testObjectsFactory notExpiredCreditCardOwner
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+
+	purchases := systemFacade listPurchasesOf: self validUser authenticatingWith: self validUserPassword.
+
+	self assert: (purchases at: self validBook) equals: testObjectsFactory itemSellByTheStorePrice.
+! !
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:07:31'!
+PASSED!
+
+self asArray !
+!Ticket methodsFor: 'line items' stamp: 'gc 12/1/2019 14:09:08' prior: 50838334!
+asArray
+	| ticketArray ticketLine |
+	ticketArray _ OrderedCollection new.
+	lineItems do: [ :anItem |
+		ticketLine _ Array with: anItem item with: anItem quantity with: anItem total.
+		ticketArray add: ticketLine .
+	].
+	^ticketArray .! !
+
+self asArray  asArray !
+
+self asArray  asArray !
+!Ticket methodsFor: 'line items' stamp: 'gc 12/1/2019 14:11:04' prior: 50838751!
+asArray
+	| ticketCollection ticketLine |
+	ticketCollection _ OrderedCollection new.
+	lineItems do: [ :anItem |
+		ticketLine _ Array with: anItem item with: anItem quantity with: anItem total.
+		ticketCollection add: ticketLine .
+	].
+	^ticketCollection .! !
+!Ticket methodsFor: 'line items' stamp: 'gc 12/1/2019 14:11:10' prior: 50838763!
+asArray
+	| ticketCollection ticketLine |
+	ticketCollection _ OrderedCollection new.
+	lineItems do: [ :anItem |
+		ticketLine _ Array with: anItem item with: anItem quantity with: anItem total.
+		ticketCollection add: ticketLine .
+	].
+	^ticketCollection asArray .! !
+
+server stopListening .!
+
+server destroy .!
+
+server := TusLibrosServerController listeningOn: 8002.!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 14:22:20'!
+listPurchasesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:22:47' prior: 50838504!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText, ' - ', anError sender, ' - ', anError class) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (DateAndTime today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId password listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			listedPurchases _ system listPurchasesOf: clientId.
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:23:00' prior: 50838799!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText, ' - ', anError sender, ' - ', anError class) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (DateAndTime today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			listedPurchases _ system listPurchasesOf: clientId.
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+----SNAPSHOT----(1 December 2019 14:23:11) CuisUniversity-3958.image priorSource: 16214176!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:23:56'!
+addServiceCreateCart
+
+	^ webServer addService: '/createCart' action:[:request | |clientId password responseAsJson cartId |		
+		[
+		clientId := (request fields at:'clientId').
+		password := (request fields at:'password').
+		cartId _ system createCartFor: clientId authenticatedWith: password .
+		responseAsJson := WebUtils jsonEncode: (cartId).
+			request send200Response: (responseAsJson asUtf8) 
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+				resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:23:56' prior: 50838944!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	
+	webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText, ' - ', anError sender, ' - ', anError class) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (DateAndTime today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			listedPurchases _ system listPurchasesOf: clientId.
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:24:19'!
+addServiceAddToCart
+
+	^ webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+						.
+			"responseAsJson = WebUtils jsonEncode: 'OK'."
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:24:19' prior: 50839114!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	
+	self addServiceAddToCart.
+	
+	webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText, ' - ', anError sender, ' - ', anError class) ]].
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (DateAndTime today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			listedPurchases _ system listPurchasesOf: clientId.
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:24:35'!
+addServiceListCart
+
+	^ webServer addService: '/listCart' action:[:request | 
+		| cartId listedCart responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			listedCart _ system listCartIdentifiedAs: cartId .
+			responseAsJson := WebUtils jsonEncode: (listedCart asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText, ' - ', anError sender, ' - ', anError class) ]]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:24:35' prior: 50839266!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	
+	self addServiceAddToCart.
+	
+	self addServiceListCart.
+	
+	webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (DateAndTime today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			listedPurchases _ system listPurchasesOf: clientId.
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:24:58'!
+addServiceCheckoutCart
+
+	^ webServer addService: '/checkOutCart' action:[:request | 
+		| cartId ticket responseAsJson|
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			ticket _ system checkOutCartIdentifiedAs: cartId withCreditCardNumbered: 4111111111111111 ownedBy: 'Pepe' expiringOn: ( Month month: (DateAndTime today) monthIndex year: (DateAndTime today yearNumber + 1)).
+			responseAsJson := WebUtils jsonEncode: (ticket asArray ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:24:58' prior: 50839396!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	
+	self addServiceAddToCart.
+	
+	self addServiceListCart.
+	
+	self addServiceCheckoutCart.
+	
+	webServer addService: '/listPurchases' action:[:request | 
+		| clientId listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			listedPurchases _ system listPurchasesOf: clientId.
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]].
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:25:16'!
+addServiceListPurchases
+
+	^ webServer addService: '/listPurchases' action:[:request | 
+		| clientId listedPurchases responseAsJson|
+		[
+			clientId := (request fields at:'clientId').
+			listedPurchases _ system listPurchasesOf: clientId.
+			responseAsJson := WebUtils jsonEncode: (listedPurchases ).
+			request send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:25:16' prior: 50839511!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	
+	self addServiceAddToCart.
+	
+	self addServiceListCart.
+	
+	self addServiceCheckoutCart.
+	
+	self addServiceListPurchases.
+
+	"self addServiceCreateCart .
+	self addServiceAddToCart .
+	self addServiceListCart ."
+	
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 14:25:36' prior: 50839602!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	self addServiceAddToCart.
+	self addServiceListCart.
+	self addServiceCheckoutCart.	
+	self addServiceListPurchases.
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+!CartTest methodsFor: 'tests' stamp: 'gc 12/1/2019 14:26:58' prior: 50835383!
+test11RemoveFromCartWithTwoItemsLeavesOnlyOne
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore .
+	cart remove: testObjectsFactory itemSellByTheStore.
+	
+	self deny: cart isEmpty .
+	! !
+!CartTest methodsFor: 'tests' stamp: 'gc 12/1/2019 14:27:33' prior: 50835292!
+test10RemoveFromCartWithOneItemLeavesCartEmpty
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore .
+	cart remove: testObjectsFactory itemSellByTheStore.
+	
+	self assert: cart isEmpty.! !
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 12/1/2019 14:27:34'!
+PASSED!
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 14:27:34'!
+FAILURE!
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 14:27:34'!
+FAILURE!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 12/1/2019 14:28:19'!
+PASSED!
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 14:28:19'!
+FAILURE!
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 14:28:19'!
+FAILURE!
+
+items _ Bag new.!
+
+items add: 1!
+
+items add: 1!
+
+items add: 1!
+
+items add: 1!
+
+items _ Bag new.!
+
+items!
+
+items add: 1!
+
+items add: 1!
+
+items!
+
+items remove: 1!
+
+items !
+!CartTest methodsFor: 'tests' stamp: 'gc 12/1/2019 14:31:49' prior: 50839704!
+test11RemoveFromCartWithTwoItemsLeavesOnlyOne
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore .
+	cart add: testObjectsFactory itemSellByTheStore .
+	cart remove: testObjectsFactory itemSellByTheStore.
+	
+	self deny: cart isEmpty .
+	self assert: cart includes: testObjectsFactory itemSellByTheStore .
+	self assert: cart size equals: 1.
+	! !
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 14:31:50'!
+ERROR!
+!CartTest methodsFor: 'tests' stamp: 'gc 12/1/2019 14:32:51' prior: 50839814!
+test11RemoveFromCartWithTwoItemsLeavesOnlyOne
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore .
+	cart add: testObjectsFactory itemSellByTheStore .
+	cart remove: testObjectsFactory itemSellByTheStore.
+	
+	self deny: cart isEmpty .
+	self assert: cart includes: testObjectsFactory itemSellByTheStore .
+	! !
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 14:32:54'!
+PASSED!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:34:39'!
+test20CanRemoveItemsOfACreatedCart
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade remove: self validBook fromCartIdentifiedAs: cartId.
+	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 1
+		! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:35:04' prior: 50839885!
+test20CanRemoveItemsOfACreatedCart
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade remove: self validBook fromCartIdentifiedAs: cartId.
+	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 0.
+		! !
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 14:35:04'!
+ERROR!
+!TusLibrosSystemFacade methodsFor: 'as yet unclassified' stamp: 'gc 12/1/2019 14:35:24'!
+remove: aString fromCartIdentifiedAs: aSmallInteger 
+	self shouldBeImplemented.! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 14:38:02' prior: 50839920!
+remove: aBook fromCartIdentifiedAs: aCartId 
+	self withCartSessionIdentifiedAs: aCartId do: [ :cartSession | cartSession remove: aBook ]! !
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 14:38:04'!
+ERROR!
+!CartSession methodsFor: 'as yet unclassified' stamp: 'gc 12/1/2019 14:39:38'!
+remove: aString 
+	self shouldBeImplemented.! !
+!CartSession methodsFor: 'cart' stamp: 'gc 12/1/2019 14:40:22' prior: 50839937!
+remove: aBook 
+	^cart remove: aBook! !
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 14:40:23'!
+PASSED!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:41:14'!
+test21CanNotRemoveItemToNotCreatedCart
+
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: self invalidCartId]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
+		! !
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 14:41:15'!
+PASSED!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:41:40'!
+test06CanNotRemoveItemNotSellByTheStore
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	self
+		should: [systemFacade remove: self invalidBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidItemErrorMessage.
+			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
+		! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:41:59' prior: 50829467!
+test06CanNotAddItemNotSellByTheStore
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	self
+		should: [systemFacade add: 1 of: self invalidBook toCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidItemErrorMessage.
+			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
+		! !
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotRemoveItemNotSellByTheStore stamp: 'gc 12/1/2019 14:42:07'!
+FAILURE!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotRemoveItemNotSellByTheStore stamp: 'gc 12/1/2019 14:42:07'!
+FAILURE!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'HAW 11/26/2018 18:03:17' prior: 50840135!
+test06CanNotAddItemNotSellByTheStore
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	self
+		should: [systemFacade add: 1 of: self invalidBook toCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidItemErrorMessage.
+			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
+		! !
+
+!methodRemoval: TusLibrosSystemFacadeTest #test06CanNotRemoveItemNotSellByTheStore stamp: 'gc 12/1/2019 14:42:34'!
+test06CanNotRemoveItemNotSellByTheStore
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	self
+		should: [systemFacade remove: self invalidBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidItemErrorMessage.
+			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
+		!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:44:02'!
+test22CanNotRemoveItemNotInCartCart
+	| cart |
+	
+	
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: self invalidCartId]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
+		! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:44:31' prior: 50840278!
+test22CanNotRemoveItemNotInCartCart
+	| cartId |
+	
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: self invalidCartId]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
+		! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:44:43' prior: 50840292!
+test22CanNotRemoveItemNotInCartCart
+	| cartId |
+	
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
+		! !
+!CartTest methodsFor: 'tests' stamp: 'gc 12/1/2019 14:49:31'!
+test09RemoveFromCartItemNotInCartShouldFail
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+
+	self
+		should: [cart remove: testObjectsFactory itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart cantRemoveItemErrorMessage.
+			self assert: cart isEmpty ]! !
+
+!methodRemoval: CartTest #test09RemoveFromCartWithoutItemsShouldFail stamp: 'gc 12/1/2019 14:49:31'!
+test09RemoveFromCartWithoutItemsShouldFail
+
+	| cart |
+
+	cart := testObjectsFactory createCart.
+
+	self
+		should: [cart remove: testObjectsFactory itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart cantRemoveItemErrorMessage.
+			self assert: cart isEmpty ]!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartItemNotInCartShouldFail stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 14:49:34'!
+PASSED!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:49:59' prior: 50840311!
+test22CanNotRemoveItemNotInCartCart
+	| cartId |
+	
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
+		! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:50:05'!
+test22CanNotRemoveItemNotInCart
+	| cartId |
+	
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
+		! !
+
+!methodRemoval: TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCartCart stamp: 'gc 12/1/2019 14:50:05'!
+test22CanNotRemoveItemNotInCartCart
+	| cartId |
+	
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
+		!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:50:37' prior: 50840408!
+test22CanNotRemoveItemNotInCart
+	| cartId |
+	
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade cantRemoveItemErrorMessage ]
+		! !
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCart stamp: 'gc 12/1/2019 14:50:40'!
+ERROR!
+!TusLibrosSystemFacade methodsFor: 'as yet unclassified' stamp: 'gc 12/1/2019 14:51:55'!
+cantRemoveItemErrorMessage
+	self shouldBeImplemented.! !
+!Cart class methodsFor: 'error messages' stamp: 'gc 12/1/2019 14:53:36'!
+cantRemoveItemErrorMessage
+	^'That item is not in the cart'.! !
+!Cart methodsFor: 'error messages' stamp: 'gc 12/1/2019 14:53:58' prior: 50835223!
+cantRemoveItemErrorMessage
+	^self class cantRemoveItemErrorMessage! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:54:28' prior: 50840440!
+test22CanNotRemoveItemNotInCart
+	| cartId |
+	
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: Cart cantRemoveItemErrorMessage ]
+		! !
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCart stamp: 'gc 12/1/2019 14:54:36'!
+PASSED!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'gc 12/1/2019 14:57:25'!
+test23CanNotRemoveFromCartWhenSessionIsExpired
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	self advanceTime: (systemFacade sessionDuration + 1 minutes) .
+	self
+		should: [systemFacade remove: self validBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade sessionHasExpiredErrorDescription.
+			self revertTime: systemFacade sessionDuration.
+			self assert: ((systemFacade listCartIdentifiedAs: cartId) includes: self validBook )]
+! !
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveFromCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCart stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveFromCartWhenSessionIsExpired stamp: 'gc 12/1/2019 14:57:26'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartItemNotInCartShouldFail stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 15:04:26'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 15:04:27'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'gc 12/1/2019 15:04:27'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'gc 12/1/2019 15:04:27'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'gc 12/1/2019 15:04:27'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'gc 12/1/2019 15:04:27'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'gc 12/1/2019 15:04:27'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCart stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveFromCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:29'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCart stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveFromCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test09RemoveFromCartItemNotInCartShouldFail stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test10RemoveFromCartWithOneItemLeavesCartEmpty stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #CartTest #test11RemoveFromCartWithTwoItemsLeavesOnlyOne stamp: 'gc 12/1/2019 15:04:30'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCart stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveFromCartWhenSessionIsExpired stamp: 'gc 12/1/2019 15:04:31'!
+PASSED!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 15:06:37'!
+addServiceRemoveFromCart
+
+	^ webServer addService: '/removeFromCart' action:[:request | 
+		|cartId bookIsbn responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			system remove: bookIsbn fromCartIdentifiedAs: cartId .
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 15:06:47' prior: 50839241!
+addServiceAddToCart
+
+	^ webServer addService: '/addToCart' action:[:request | 
+		|cartId bookIsbn bookQuantity responseAsJson |
+		[
+			cartId := (request fields at:'cartId') asInteger .
+			bookIsbn := (request fields at:'bookIsbn').
+			bookQuantity := (request fields at:'bookQuantity') asInteger .
+			system add: bookQuantity of: bookIsbn toCartIdentifiedAs: cartId .
+			request send200Response: ( 'OK' asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'gc 12/1/2019 15:07:07' prior: 50839655!
+initializeWith: aPortNumber
+	
+	| aCatalog aClock aMerchantProcessor aSalesBook aValidUsersAndPasswords systemFacadeTest testObjectFactory |
+	port := aPortNumber.
+	
+	systemFacadeTest _ TusLibrosSystemFacadeTest new.
+	aValidUsersAndPasswords _ systemFacadeTest validUsersAndPasswords .
+	testObjectFactory _ StoreTestObjectsFactory new.
+	aCatalog _ testObjectFactory defaultCatalog .
+	aSalesBook _ OrderedCollection new.
+	aMerchantProcessor _ self.
+	aClock _ ManualClock now: (DateAndTime now).
+	
+	system _ TusLibrosSystemFacade authenticatingWith: aValidUsersAndPasswords
+		acceptingItemsOf: aCatalog
+		registeringOn: aSalesBook
+		debitingThrought: aMerchantProcessor
+		measuringTimeWith: aClock.
+	
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	self addServiceCreateCart.
+	self addServiceAddToCart.
+	self addServiceRemoveFromCart.
+	self addServiceListCart.
+	self addServiceCheckoutCart.	
+	self addServiceListPurchases.
+	
+	"webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
+		
+		[sentence := (request fields at:'sentence').
+		substrings := stringGenius substrings: sentence.
+		substringsAsJson:= WebUtils jsonEncode: (substrings).
+		""request send200Response: (substringsAsJson)""
+		request send200Response: (substringsAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		 ] 
+		on: Error 
+		do: [ :anError |
+			request send404Response: (anError messageText) ]]."
+	
+! !
+
+server := TusLibrosServerController listeningOn: 8003.!
+
+----SNAPSHOT----(1 December 2019 15:09:29) CuisUniversity-3958.image priorSource: 16237985!
