@@ -33197,3 +33197,360 @@ server := TusLibrosServerController listeningOn: 8005.!
 ----SNAPSHOT----(1 December 2019 15:42:38) CuisUniversity-3958.image priorSource: 16314818!
 
 ----SNAPSHOT----(1 December 2019 15:43:28) CuisUniversity-3958.image priorSource: 16314911!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:06:46' prior: 50838789!
+listPurchasesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: OrderedCollection new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 14:22:20' prior: 50841498!
+listPurchasesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:15:25' prior: 50841509!
+listPurchasesOf: aUser 
+	| sales |
+	sales := (self salesDoneBy: aUser)
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] .
+	^sales asArray .! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 14:22:20' prior: 50841519!
+listPurchasesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:22:33' prior: 50841530!
+listPurchasesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales do: [ :aSale |
+		aSale 
+	].
+	
+	
+	"
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] "! !
+!Sale methodsFor: 'nil' stamp: 'gc 12/1/2019 16:25:04'!
+ticket
+	^ticket! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:29:33' prior: 50841540!
+listPurchasesOf: aUser 
+	| sales ticket lineitems|
+	sales := self salesDoneBy: aUser.
+	lineitems _ sales inject: OrderedCollection new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook .
+		].
+	
+	
+	
+	"
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] "! !
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17CanNotAddToCartWhenSessionIsExpired stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotCheckOutCartWhenSessionIsExpired stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanRemoveItemsOfACreatedCart stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotRemoveItemToNotCreatedCart stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanNotRemoveItemNotInCart stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveFromCartWhenSessionIsExpired stamp: 'gc 12/1/2019 16:29:35'!
+PASSED!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:30:21' prior: 50841554!
+listPurchasesOf: aUser 
+	| sales ticket lineitems|
+	sales := self salesDoneBy: aUser.
+	lineitems _ sales inject: OrderedCollection new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook .
+		].
+	ticket _ Ticket of: lineitems.
+	^ticket asArray.
+	
+	
+	"
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] "! !
+
+server := TusLibrosServerController listeningOn: 8006.!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 14:22:20' prior: 50841655!
+listPurchasesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 14:22:20' prior: 50841674!
+listPurchasesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:43:07'!
+listPurchasesTotalsOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+
+!methodRemoval: TusLibrosSystemFacade #listPurchasesOf: stamp: 'gc 12/1/2019 16:43:07'!
+listPurchasesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self list: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] !
+!TusLibrosSystemFacade methodsFor: 'private' stamp: 'gc 12/1/2019 16:45:01'!
+listQuantitiesOf: aSale on: salesOrderedByBook
+
+	"Esto es un indicio de que por ahi conviene empezar a pensar en modelar un SaleBook - Hernan"
+	aSale lineItemsDo: [ :aLineItem | | oldQuantity newQuantity |
+		oldQuantity := salesOrderedByBook at: aLineItem item ifAbsentPut: [ 0 ].
+		newQuantity := oldQuantity + aLineItem quantity .
+		salesOrderedByBook at: aLineItem item put: newQuantity ]! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:45:04'!
+listPurchasesQuantitiesOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self listQuantitiesOf: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+!TusLibrosSystemFacade methodsFor: 'private' stamp: 'gc 12/1/2019 16:45:39'!
+listTotalsOf: aSale on: salesOrderedByBook
+
+	"Esto es un indicio de que por ahi conviene empezar a pensar en modelar un SaleBook - Hernan"
+	aSale lineItemsDo: [ :aLineItem | | oldTotal newTotal |
+		oldTotal := salesOrderedByBook at: aLineItem item ifAbsentPut: [ 0 ].
+		newTotal := oldTotal + aLineItem total.
+		salesOrderedByBook at: aLineItem item put: newTotal ]! !
+!TusLibrosSystemFacade methodsFor: 'as yet unclassified' stamp: 'gc 12/1/2019 16:45:39' prior: 50841694!
+listPurchasesTotalsOf: aUser 
+	| sales |
+	sales := self salesDoneBy: aUser.
+	^sales
+		inject: Dictionary new
+		into: [ :salesOrderedByBook :aSale |
+			self listTotalsOf: aSale on: salesOrderedByBook.
+			salesOrderedByBook ] ! !
+!TusLibrosSystemFacade methodsFor: 'as yet unclassified' stamp: 'gc 12/1/2019 16:45:39' prior: 50829079!
+listPurchasesOf: aUser authenticatingWith: aPassword
+
+	^self if: aUser authenticatesWith: aPassword do: [ | sales |
+		sales := self salesDoneBy: aUser.
+		sales
+			inject: Dictionary new
+			into: [ :salesOrderedByBook :aSale |
+				self listTotalsOf: aSale on: salesOrderedByBook.
+				salesOrderedByBook ] ]! !
+
+!methodRemoval: TusLibrosSystemFacade #list:on: stamp: 'gc 12/1/2019 16:45:39'!
+list: aSale on: salesOrderedByBook
+
+	"Esto es un indicio de que por ahi conviene empezar a pensar en modelar un SaleBook - Hernan"
+	aSale lineItemsDo: [ :aLineItem | | oldTotal newTotal |
+		oldTotal := salesOrderedByBook at: aLineItem item ifAbsentPut: [ 0 ].
+		newTotal := oldTotal + aLineItem total.
+		salesOrderedByBook at: aLineItem item put: newTotal ]!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:52:32'!
+listPurchases: aUser 
+	| quantities totals  |
+	quantities _ self listPurchasesQuantitiesOf: aUser .
+	totals _ self listPurchasesTotalsOf: aUser .
+	^quantities keys
+		inject: OrderedCollection new
+		into: [ :listedPurchases :anItem |
+			listedPurchases add: (Array with: anItem with: (quantities at: anItem ) with: (totals at: anItem )).
+		] ! !
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:53:00'!
+listPurchasesOf: aUser 
+	| quantities totals  |
+	quantities _ self listPurchasesQuantitiesOf: aUser .
+	totals _ self listPurchasesTotalsOf: aUser .
+	^quantities keys
+		inject: OrderedCollection new
+		into: [ :listedPurchases :anItem |
+			listedPurchases add: (Array with: anItem with: (quantities at: anItem ) with: (totals at: anItem )).
+		] ! !
+
+!methodRemoval: TusLibrosSystemFacade #listPurchases: stamp: 'gc 12/1/2019 16:53:00'!
+listPurchases: aUser 
+	| quantities totals  |
+	quantities _ self listPurchasesQuantitiesOf: aUser .
+	totals _ self listPurchasesTotalsOf: aUser .
+	^quantities keys
+		inject: OrderedCollection new
+		into: [ :listedPurchases :anItem |
+			listedPurchases add: (Array with: anItem with: (quantities at: anItem ) with: (totals at: anItem )).
+		] !
+
+server := TusLibrosServerController listeningOn: 8007.!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 16:55:09' prior: 50841805!
+listPurchasesOf: aUser 
+	| quantities totals  |
+	quantities _ self listPurchasesQuantitiesOf: aUser .
+	totals _ self listPurchasesTotalsOf: aUser .
+	^(quantities keys
+		inject: OrderedCollection new
+		into: [ :listedPurchases :anItem |
+			listedPurchases add: (Array with: anItem with: (quantities at: anItem ) with: (totals at: anItem )).
+		] ) asArray .! !
+
+server := TusLibrosServerController listeningOn: 8008.!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list purchases' stamp: 'gc 12/1/2019 16:58:02'!
+test99ListPurchasesIncludesBoughtItems
+
+	| cartId purchases |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 1 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	systemFacade
+		checkOutCartIdentifiedAs: cartId
+		withCreditCardNumbered: '1111222233334444'
+		ownedBy: 'Juan Perez'
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+
+	purchases := systemFacade listPurchasesOf: self validUser.
+
+	self assert: (purchases at: self validBook) equals: (testObjectsFactory itemSellByTheStorePrice * 2).
+	self assert: (purchases at: self anotherValidBook) equals: testObjectsFactory anotherItemSellByTheStorePrice.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test99ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 16:58:14'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test99ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 16:58:49'!
+ERROR!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'gc 12/1/2019 17:01:58' prior: 50841835!
+listPurchasesOf: aUser 
+	| quantities totals listedPurchases |
+	quantities _ self listPurchasesQuantitiesOf: aUser .
+	totals _ self listPurchasesTotalsOf: aUser .
+	listedPurchases _ OrderedCollection new.
+	quantities keys
+		do: [ :anItem |
+			listedPurchases add: (Array with: anItem with: (quantities at: anItem ) with: (totals at: anItem )).
+		].
+	^listedPurchases asArray! !
+
+!testRun: #TusLibrosSystemFacadeTest #test99ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 17:02:08'!
+ERROR!
+
+!methodRemoval: TusLibrosSystemFacadeTest #test99ListPurchasesIncludesBoughtItems stamp: 'gc 12/1/2019 17:02:29'!
+test99ListPurchasesIncludesBoughtItems
+
+	| cartId purchases |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 1 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	systemFacade
+		checkOutCartIdentifiedAs: cartId
+		withCreditCardNumbered: '1111222233334444'
+		ownedBy: 'Juan Perez'
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+
+	purchases := systemFacade listPurchasesOf: self validUser.
+
+	self assert: (purchases at: self validBook) equals: (testObjectsFactory itemSellByTheStorePrice * 2).
+	self assert: (purchases at: self anotherValidBook) equals: testObjectsFactory anotherItemSellByTheStorePrice.!
+
+server := TusLibrosServerController listeningOn: 8009.!
+
+----SNAPSHOT----(1 December 2019 17:04:10) CuisUniversity-3958.image priorSource: 16315004!
+
+----SNAPSHOT----(1 December 2019 17:04:27) CuisUniversity-3958.image priorSource: 16329036!
