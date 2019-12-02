@@ -1,5 +1,5 @@
 const getLocalAsJson = (path) => {
-  const port = 9010
+  const port = 8082
 
   return fetch(`http://localhost:${port}/${path}`, {
     method: "GET",

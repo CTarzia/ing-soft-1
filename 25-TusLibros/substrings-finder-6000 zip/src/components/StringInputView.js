@@ -4,7 +4,8 @@ class StringInputComponent extends React.Component {
 
     this.state = {
       clientId: '',
-      password: ''
+      password: '',
+      error: false
     }
   }
 
@@ -19,6 +20,10 @@ class StringInputComponent extends React.Component {
       password: event.target.value
     })
   };
+
+  componentWillUnmount() {
+    this.timeout && clearTimeout(this.timeout)
+  }
 
   handleSend() {
     const {
@@ -37,8 +42,18 @@ class StringInputComponent extends React.Component {
       .then(function (json) {
         router.navigate("/catalog", { cartId: json, user: clientId })
       })
-      .catch(function (error) {
-        console.log('Looks like there was a problem: \n', error);
+      .catch(() => {
+        this.setState({
+          error: true,
+          clientId: '',
+          password: ''
+        })
+        this.timeout = setTimeout(() => {
+          this.setState({
+            error: false
+          })
+          this.timeout = null
+        }, 3000);
       });
   }
 
@@ -78,6 +93,7 @@ class StringInputComponent extends React.Component {
           onClick={(ev)=>this.handleSend(ev)}>
           Create Cart
       </Button>
+      {this.state.error && <div className={classes.error}>Usuario o contraseña invalidos</div>}
       </div>
     )
   }

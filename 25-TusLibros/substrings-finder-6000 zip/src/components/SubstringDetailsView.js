@@ -52,13 +52,27 @@ class SubstringDetailsComponent extends React.Component {
     } = this.state
 
     if (loading) return <div>Loading...</div>
-    if (error) return <div>{error}</div>
     return (
       <div>
         <Typography variant="h4" component="h4" gutterBottom>
           Detalles de <b>{item.title}</b>
         </Typography>
-
+        <div className={classes.buttons}>
+        <IconButton
+          onClick={this.remove}
+        >
+          -
+        </IconButton>
+        <IconButton disabled>{this.state.quantity}</IconButton>
+        <IconButton
+          onClick={this.add}
+        >
+          +
+        </IconButton>
+        </div>
+        <div className={classes.container}>
+        <img src={item.image} className={classes.bookimage}/>
+        <div className={classes.fields}>
         <TextField
           id="outlined-read-only-input"
           label="Autor"
@@ -81,17 +95,8 @@ class SubstringDetailsComponent extends React.Component {
           }}
           variant="outlined"
         />
-        <IconButton
-          onClick={this.remove}
-        >
-          -
-        </IconButton>
-        <IconButton disabled>{this.state.quantity}</IconButton>
-        <IconButton
-          onClick={this.add}
-        >
-          +
-        </IconButton>
+        </div>  
+        </div>
       </div>
     )
   }

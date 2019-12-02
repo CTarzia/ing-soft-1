@@ -30,5 +30,7 @@ const {
   TableBody,
   TableRow,
   TableCell,
-  TableFooter
+  TableFooter,
+  Dialog,
+  DialogTitle
 } = MaterialUI;

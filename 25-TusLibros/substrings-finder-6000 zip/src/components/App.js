@@ -1,3 +1,36 @@
+const catalog = [
+  {
+      title: 'Iliada',
+      isbn: '1111',
+      author: 'Homer',
+      image: 'https://images-na.ssl-images-amazon.com/images/I/51l2fBXLWZL._SX331_BO1,204,203,200_.jpg',
+  },
+  {
+      title: 'Eneida',
+      isbn: '2222',
+      author: 'Virgil',
+      image: 'http://fundalma.org.ar/images/La-Eneida_thumb.jpg',
+  },
+  {
+      title: 'Introduction to Algorithms',
+      isbn: '3333',
+      author: 'Thomas H. Cormen',
+      image: 'https://images-na.ssl-images-amazon.com/images/I/51rPLfOvqxL._SX376_BO1,204,203,200_.jpg',
+  },
+  {
+      title: '1984',
+      isbn: '4444',
+      author: 'George Orwell',
+      image: 'https://images-eu.ssl-images-amazon.com/images/I/51ueoexgYqL.jpg',
+  },
+  {
+      title: 'Odisea',
+      isbn: '5555',
+      author: 'Homer',
+      image: 'https://biblok.es/images/products/Selecta/Cubierta_LA_ODISEA.jpg',
+  },
+]
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -28,12 +61,14 @@ class App extends React.Component {
         content = (<SubstringsView
         router={router}
         cartId={this.state.cartId}
+        catalog={catalog}
       />)
     } else if (this.state.path === "/cart") {
         content = (<SubstringsView
         router={router}
         cartId={this.state.cartId}
         cartView
+        catalog={catalog}
       />)
     } else if (this.state.path === "/details") {
       content = (<SubstringDetailsView
@@ -46,6 +81,14 @@ class App extends React.Component {
       content = (
         <CheckoutView
           ticket={this.state.ticket}
+          catalog={catalog}
+        />
+      )
+    } else if (this.state.path === '/history') {
+      content = (
+        <HistoryView
+          user={this.state.user}
+          catalog={catalog}
         />
       )
     }
